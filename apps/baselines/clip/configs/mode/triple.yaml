@@ -1,0 +1,17 @@
+# Copyright (c) Meta Platforms, Inc. and affiliates.
+# All rights reserved.
+#
+# This source code is licensed under the license found in the
+# LICENSE file in the root directory of this source tree.
+
+# Triple interleave: contrastive + BERT MLM + DINOv2 SSL.
+# Round-robin through all three modes; cross-tower sync after DINOv2 block.
+# Requires both `text_only_data` and `dinov2` configs.
+# @package mode
+
+name: triple
+interleave:
+  contrastive: 4
+  mlm: 1
+  dinov2: 1
+sync_vision_from_dinov2: true

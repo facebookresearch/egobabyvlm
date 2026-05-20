@@ -1,0 +1,13 @@
+# Copyright (c) Meta Platforms, Inc. and affiliates.
+# All rights reserved.
+#
+# This source code is licensed under the license found in the
+# LICENSE file in the root directory of this source tree.
+
+# Perception Encoder Core bigG-14 at 448px resolution (Meta-released weights).
+# Destination decided by the consumer's `defaults` line.
+
+model_name: PE-Core-bigG-14-448
+pretrained: meta
+mode: eval
+is_video_model: false

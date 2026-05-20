@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EgoBabyVLM Leaderboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="hero">
+    <div class="hero-bg" aria-hidden="true"></div>
+    <div class="container hero-inner">
+      <nav class="topnav">
+        <span class="brand">
+          <img src="resources/logo_meta.svg" alt="Meta" class="brand-meta" />
+          <span class="brand-divider" aria-hidden="true"></span>
+          <span class="brand-name">EgoBabyVLM</span>
+        </span>
+        <div class="topnav-links">
+          <a href="index.html">Home</a>
+          <a href="leaderboard.html">Leaderboard</a>
+          <a href="submit.html">Submit</a>
+        </div>
+      </nav>
+
+      <div class="hero-content">
+        <h1>Leaderboard</h1>
+        <p class="tagline">
+          Mean &plusmn; std across 3 seeds on the
+          <strong>EgoBabyVLM benchmark suite</strong>.
+        </p>
+        <div class="cta-stack">
+          <div class="cta">
+            <a class="btn btn-primary" href="https://arxiv.org/abs/2605.19130" target="_blank" rel="noopener noreferrer">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+              Paper
+            </a>
+            <a class="btn btn-github" href="https://github.com/facebookresearch/egobabyvlm" target="_blank" rel="noopener noreferrer">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5C5.73.5.5 5.73.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.56 0-.28-.01-1.02-.02-2-3.2.7-3.88-1.54-3.88-1.54-.52-1.33-1.28-1.69-1.28-1.69-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.29 1.18-3.1-.12-.29-.51-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11.04 11.04 0 0 1 5.79 0c2.21-1.49 3.18-1.18 3.18-1.18.62 1.59.23 2.76.11 3.05.74.81 1.18 1.84 1.18 3.1 0 4.42-2.69 5.4-5.25 5.68.41.36.78 1.07.78 2.16 0 1.56-.01 2.82-.01 3.2 0 .31.21.68.8.56C20.21 21.39 23.5 17.08 23.5 12 23.5 5.73 18.27.5 12 .5z"/></svg>
+              Code
+            </a>
+          </div>
+          <div class="cta">
+            <a class="btn btn-secondary" href="https://databrary.org/volume/1882" target="_blank" rel="noopener noreferrer">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/><path d="M3 12c0 1.66 4 3 9 3s9-1.34 9-3"/></svg>
+              BabyView Dataset
+            </a>
+            <a class="btn btn-secondary" href="https://github.com/facebookresearch/egobabyvlm/releases/download/Eval-Data/MachineDevBench.tar" download>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              Machine-DevBench (Eval)
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="org-strip" aria-label="Affiliations">
+      <img src="resources/logo_meta.png" alt="Meta" class="logo-wide logo-meta" />
+      <img src="resources/logo_stanford.png" alt="Stanford University" class="logo-wide" />
+      <img src="resources/logo_ens.png" alt="École Normale Supérieure" class="logo-tall" />
+      <img src="resources/logo_utokyo.png" alt="The University of Tokyo" class="logo-wide" />
+    </div>
+    <section id="leaderboard">
+      <div class="section-head">
+        <p class="muted">
+          <span class="pill pill-offshelf">off-the-shelf</span> rows are web-scale pretrained
+          references (not part of the challenge).<br/>
+          <span class="pill pill-topline">topline</span>
+          marks the curated COCO-MC upper-bound trained under the same recipe.<br />
+          <span class="pill pill-reference">reference</span> rows are alternative training corpora
+          (Ego4D, HowTo) included for comparison.<br/>
+          <span class="pill pill-baseline">baseline</span>
+          rows are the official BabyView challenge baselines.
+        </p>
+        <p class="muted" id="lb-status" style="margin-top: 0.5rem;">Loading submissions…</p>
+      </div>
+
+      <h3 class="table-title">Cross-modal language grounding — Machine-DevBench</h3>
+      <p class="muted table-subtitle">
+        Corpus-grounded probe of lexical (noun + adjective recognition) and
+        grammatical (eight sentence-level constructions) competence over
+        ~3,700 trials sampled from each model's own training vocabulary.
+      </p>
+      <div class="table-wrap">
+        <table class="leaderboard">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Model</th>
+              <th>Architecture</th>
+              <th>Training Data</th>
+              <th>Lexical Agg ↑</th>
+              <th>Grammatical Agg ↑</th>
+              <th>Overall Agg ↑</th>
+            </tr>
+          </thead>
+          <tbody id="lb-multimodal"></tbody>
+        </table>
+      </div>
+
+      <h3 class="table-title">Unimodal vision tasks</h3>
+      <p class="muted table-subtitle">
+        Object recognition aggregate (ImageNet-1k <em>k</em>NN / linear / ABX,
+        MNIST linear / ABX, COCO-Stuff segmentation) and Visual properties
+        aggregate (NYU Depth v2, CountBench linear / ABX) on the trained vision
+        encoder.
+        <strong>FT</strong> denotes the cross-modal finetuning objective
+        applied to a frozen <em>DINOv2 ViT-B/14</em> backbone.
+      </p>
+      <div class="table-wrap">
+        <table class="leaderboard">
+          <thead>
+            <tr>
+              <th>Training Data</th>
+              <th>FT</th>
+              <th>Object recogn. Agg ↑</th>
+              <th>Visual props. Agg ↑</th>
+              <th>Overall Agg ↑</th>
+            </tr>
+          </thead>
+          <tbody id="lb-vision">
+            <tr class="chance">
+              <td>Chance</td>
+              <td>—</td>
+              <td><span class="score">1.9</span></td>
+              <td><span class="score">3.7</span></td>
+              <td><span class="score">2.8</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3 class="table-title">Unimodal language tasks</h3>
+      <p class="muted table-subtitle">
+        Syntax aggregate (Zorro grammatical acceptability + LongTail-Swap
+        InflectionSwap / AgreementSwap variants) and Semantics aggregate
+        (LongTail-Swap WordSwap + Visual Property Swap) on the trained text
+        encoder. <strong>FT</strong> denotes the cross-modal finetuning
+        objective applied to the encoder.
+      </p>
+      <div class="table-wrap">
+        <table class="leaderboard">
+          <thead>
+            <tr>
+              <th>Training Data</th>
+              <th>Encoder</th>
+              <th>FT</th>
+              <th>Syntax Agg ↑</th>
+              <th>Semantics Agg ↑</th>
+              <th>Overall Agg ↑</th>
+            </tr>
+          </thead>
+          <tbody id="lb-language">
+            <tr class="chance">
+              <td>Chance</td>
+              <td>—</td>
+              <td>—</td>
+              <td><span class="score">50.0</span></td>
+              <td><span class="score">50.0</span></td>
+              <td><span class="score">50.0</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-inner">
+      <p class="footer-copyright">Copyright &copy; Meta Platforms, Inc.</p>
+      <p class="footer-links">
+        <a href="https://opensource.fb.com/legal/terms/" target="_blank" rel="noopener noreferrer">Terms</a>
+        <a href="https://opensource.fb.com/legal/privacy/" target="_blank" rel="noopener noreferrer">Privacy</a>
+        <a href="https://www.facebook.com/policies/cookies/" target="_blank" rel="noopener noreferrer">Cookies</a>
+      </p>
+    </div>
+  </footer>
+
+  <script>
+    // -------------- Leaderboard renderer --------------
+    // Loads submissions/index.json, then each submission JSON, and fills the
+    // three leaderboard tables.
+
+    const SUBMISSIONS_DIR = "submissions/";
+    const STATUS = document.getElementById("lb-status");
+
+    function el(tag, attrs, ...children) {
+      const e = document.createElement(tag);
+      if (attrs) {
+        for (const [k, v] of Object.entries(attrs)) {
+          if (v == null) continue;
+          if (k === "class") e.className = v;
+          else if (k === "html") e.innerHTML = v;
+          else e.setAttribute(k, v);
+        }
+      }
+      for (const c of children) {
+        if (c == null) continue;
+        e.appendChild(typeof c === "string" ? document.createTextNode(c) : c);
+      }
+      return e;
+    }
+
+    // Render a value like "53.4 ± 0.7" as bold score + faded std.
+    function scoreCell(value) {
+      const td = document.createElement("td");
+      if (value == null || value === "" || value === "—") {
+        td.textContent = "—";
+        return td;
+      }
+      const str = String(value);
+      const m = str.match(/^\s*([\d.]+)\s*(?:±\s*([\d.]+))?\s*$/);
+      if (m) {
+        td.appendChild(el("span", { class: "score" }, m[1]));
+        if (m[2]) {
+          td.appendChild(document.createTextNode(" "));
+          td.appendChild(el("span", { class: "std" }, "± " + m[2]));
+        }
+      } else {
+        td.appendChild(el("span", { class: "score" }, str));
+      }
+      return td;
+    }
+
+    // Extract the numeric mean from a score string like "53.4 ± 0.7" or "78.8".
+    // Returns -Infinity on null/missing so missing rows sort to the bottom.
+    function scoreVal(value) {
+      if (value == null || value === "" || value === "—") return -Infinity;
+      const m = String(value).match(/^\s*([\d.]+)/);
+      return m ? parseFloat(m[1]) : -Infinity;
+    }
+
+    function pillFor(category) {
+      const map = {
+        baseline: "baseline",
+        topline: "topline",
+        offshelf: "off-the-shelf",
+        reference: "reference",
+      };
+      const label = map[category] || category;
+      return el("span", { class: `pill pill-${category}` }, label);
+    }
+
+    function modelCell(sub) {
+      const td = document.createElement("td");
+      td.appendChild(el("strong", null, sub.model));
+      td.appendChild(document.createTextNode(" "));
+      td.appendChild(pillFor(sub.category));
+      return td;
+    }
+
+    function tdLabelWithPill(label, category) {
+      const td = document.createElement("td");
+      td.appendChild(document.createTextNode(label + " "));
+      td.appendChild(pillFor(category));
+      return td;
+    }
+
+    function renderMultimodal(subs) {
+      const tbody = document.getElementById("lb-multimodal");
+      tbody.innerHTML = "";
+      // Sort by Overall Agg descending; baseline rank follows the sorted order.
+      const ranked = subs
+        .filter(s => s.multimodal)
+        .sort((a, b) => scoreVal(b.multimodal.overall) - scoreVal(a.multimodal.overall));
+      let baselineRank = 0;
+      for (const sub of ranked) {
+        const m = sub.multimodal;
+        const tr = el("tr", { class: sub.category });
+        let rankLabel = "—";
+        if (sub.category === "baseline") rankLabel = String(++baselineRank);
+        tr.appendChild(el("td", null, rankLabel));
+        tr.appendChild(modelCell(sub));
+        tr.appendChild(el("td", null, sub.architecture || "—"));
+        tr.appendChild(el("td", null, sub.training_data || "—"));
+        tr.appendChild(scoreCell(m.lexical));
+        tr.appendChild(scoreCell(m.grammatical));
+        tr.appendChild(scoreCell(m.overall));
+        tbody.appendChild(tr);
+      }
+    }
+
+    function renderVision(subs) {
+      const tbody = document.getElementById("lb-vision");
+      // Detach the hardcoded chance row so we can re-anchor it at the bottom
+      // after sorting the dynamic rows.
+      const chanceRow = tbody.querySelector("tr.chance");
+      if (chanceRow) chanceRow.remove();
+      // Flatten subs into one row per (sub, vision-entry), then sort by overall desc.
+      const rows = [];
+      for (const sub of subs) {
+        if (!sub.vision) continue;
+        for (const v of sub.vision) rows.push({ sub, v });
+      }
+      rows.sort((a, b) => scoreVal(b.v.overall) - scoreVal(a.v.overall));
+      for (const { sub, v } of rows) {
+        const tr = el("tr", { class: sub.category });
+        tr.appendChild(tdLabelWithPill(sub.training_data, sub.category));
+        tr.appendChild(el("td", null, v.ft || "—"));
+        tr.appendChild(scoreCell(v.object_recognition));
+        tr.appendChild(scoreCell(v.visual_properties));
+        tr.appendChild(scoreCell(v.overall));
+        tbody.appendChild(tr);
+      }
+      if (chanceRow) tbody.appendChild(chanceRow);
+    }
+
+    function renderLanguage(subs) {
+      const tbody = document.getElementById("lb-language");
+      const chanceRow = tbody.querySelector("tr.chance");
+      if (chanceRow) chanceRow.remove();
+      const rows = [];
+      for (const sub of subs) {
+        if (!sub.language) continue;
+        for (const l of sub.language) rows.push({ sub, l });
+      }
+      rows.sort((a, b) => scoreVal(b.l.overall) - scoreVal(a.l.overall));
+      for (const { sub, l } of rows) {
+        const tr = el("tr", { class: sub.category });
+        tr.appendChild(tdLabelWithPill(sub.training_data, sub.category));
+        tr.appendChild(el("td", null, l.encoder || "—"));
+        tr.appendChild(el("td", null, l.ft || "—"));
+        tr.appendChild(scoreCell(l.syntax));
+        tr.appendChild(scoreCell(l.semantics));
+        tr.appendChild(scoreCell(l.overall));
+        tbody.appendChild(tr);
+      }
+      if (chanceRow) tbody.appendChild(chanceRow);
+    }
+
+    async function loadAll() {
+      try {
+        const idxRes = await fetch(SUBMISSIONS_DIR + "index.json", { cache: "no-cache" });
+        if (!idxRes.ok) throw new Error("index.json: " + idxRes.status);
+        const idx = await idxRes.json();
+        const files = idx.submissions || [];
+
+        const subs = await Promise.all(
+          files.map(async (f) => {
+            const r = await fetch(SUBMISSIONS_DIR + f, { cache: "no-cache" });
+            if (!r.ok) throw new Error(f + ": " + r.status);
+            return r.json();
+          })
+        );
+
+        renderMultimodal(subs);
+        renderVision(subs);
+        renderLanguage(subs);
+
+        STATUS.textContent = `Showing ${subs.length} submissions.`;
+      } catch (err) {
+        STATUS.innerHTML =
+          '<strong style="color:#b91c1c;">Failed to load submissions:</strong> ' +
+          (err && err.message ? err.message : err) +
+          '. If you opened this file directly, serve the folder over HTTP (e.g., <code>python3 -m http.server</code>) ' +
+          'because browsers block <code>fetch()</code> on <code>file://</code> URLs.';
+        console.error(err);
+      }
+    }
+
+    loadAll();
+  </script>
+</body>
+</html>

@@ -1,0 +1,31 @@
+{
+  "id": "coco_mc_llava",
+  "model": "LLaVA",
+  "team": "EgoBabyVLM (paper)",
+  "architecture": "generative",
+  "training_data": "COCO-MC",
+  "category": "topline",
+  "n_seeds": 3,
+  "multimodal": {
+    "lexical": "59.6 ± 2.3",
+    "grammatical": "64.2 ± 2.3",
+    "overall": "61.9 ± 2.3"
+  },
+  "vision": [
+    {
+      "ft": "LLaVA",
+      "object_recognition": "57.8 ± 0.4",
+      "visual_properties": "40.2 ± 2.9",
+      "overall": "49.0 ± 1.7"
+    }
+  ],
+  "language": [
+    {
+      "encoder": "GPT-2",
+      "ft": "LLaVA",
+      "syntax": "55.8 ± 0.8",
+      "semantics": "60.3 ± 0.5",
+      "overall": "58.1 ± 0.7"
+    }
+  ]
+}

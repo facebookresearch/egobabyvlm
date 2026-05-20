@@ -1,0 +1,56 @@
+# Copyright (c) Meta Platforms, Inc. and affiliates.
+# All rights reserved.
+#
+# This source code is licensed under the license found in the
+# LICENSE file in the root directory of this source tree.
+
+# @group vision
+# Semantic Segmentation on COCO-Stuff dataset (171 classes: 80 things + 91 stuff)
+
+defaults:
+  - semantic_segmentation
+  - _self_
+
+output_dir: "${oc.env:HOME}/egobabyvlm_experiments/evals"
+
+train_dataset:
+  _target_: "evaluation.data.semantic_segmentation.COCOStuffDataset"
+  name: "coco_stuff_171_train"
+  kwargs:
+    dataset_root: "${oc.env:COCOSTUFF_ROOT}/annotations"
+    image_dir: "${oc.env:COCOSTUFF_ROOT}/train2017"
+    mode: "train"
+    image_size: 448
+    annotation_file: "${oc.env:COCOSTUFF_ROOT}/annotations/stuffthings_train2017.json"
+
+val_dataset:
+  _target_: "evaluation.data.semantic_segmentation.COCOStuffDataset"
+  name: "coco_stuff_171_val"
+  kwargs:
+    dataset_root: "${oc.env:COCOSTUFF_ROOT}/annotations"
+    image_dir: "${oc.env:COCOSTUFF_ROOT}/val2017"
+    mode: "val"
+    image_size: 448
+    annotation_file: "${oc.env:COCOSTUFF_ROOT}/annotations/stuffthings_val2017.json"
+
+test_dataset: null
+
+backbone: ${model}
+
+pooling_strategies:
+  - pooling: "semantic_segmentation"
+    last_n_layers: 1
+  - pooling: "semantic_segmentation"
+    last_n_layers: 4
+
+learning_rates: [0.01]
+
+batch_size: 128
+epochs: 25
+drop_at: 20
+num_workers: 12
+eval_period_epochs: 1
+
+sync_bn: false
+ignore_index: 255
+seed: 42

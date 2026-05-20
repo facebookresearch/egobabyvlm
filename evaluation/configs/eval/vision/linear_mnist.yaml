@@ -1,0 +1,52 @@
+# Copyright (c) Meta Platforms, Inc. and affiliates.
+# All rights reserved.
+#
+# This source code is licensed under the license found in the
+# LICENSE file in the root directory of this source tree.
+
+# @group vision
+# Linear Probe MNIST Evaluation
+
+defaults:
+  - linear
+  - _self_
+
+output_dir: "${oc.env:HOME}/egobabyvlm_experiments/evals"
+
+train_dataset:
+  _target_: "evaluation.data.abx.MNISTClassificationDataset"
+  name: "mnist_train"
+  kwargs:
+    dataset_root: "${oc.env:MNIST_ROOT}"
+    mode: "train"
+
+val_dataset:
+  _target_: "evaluation.data.abx.MNISTClassificationDataset"
+  name: "mnist_val"
+  kwargs:
+    dataset_root: "${oc.env:MNIST_ROOT}"
+    mode: "test"
+
+test_dataset: null  # Use validation set as test set, or specify a separate test dataset
+
+
+pooling_strategies:
+  - {pooling: "cls", last_n_layers: 1}
+
+# Hyperparameter grid search
+learning_rates: [1e-5, 2e-5, 5e-5, 1e-4, 2e-4, 5e-4, 1e-3, 2e-3, 5e-3, 1e-2, 2e-2, 5e-2, 0.1, 0.2, 0.3, 0.5]
+
+# Training settings
+batch_size: 256
+epochs: 20
+epoch_length: 234  # 60000 / 256 = ~235 iters per real epoch
+num_workers: 12
+eval_period_iterations: 234
+
+# Data settings
+max_samples: null
+subset: null
+
+seed: 42
+
+model: ${model}

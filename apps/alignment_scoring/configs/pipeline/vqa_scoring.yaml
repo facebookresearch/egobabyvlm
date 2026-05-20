@@ -1,0 +1,50 @@
+# @package _global_
+
+# Copyright (c) Meta Platforms, Inc. and affiliates.
+# All rights reserved.
+#
+# This source code is licensed under the license found in the
+# LICENSE file in the root directory of this source tree.
+
+# PLM-based VQA scoring with matched + shuffled JSD aggregation.
+#
+# Each processor prompts PLM with "Does this figure show '<caption>'? Yes/No"
+# per (media, caption) pair and records P(Yes). Use matched =
+# (media, ground_truth_caption); shuffled = (media, random_other_caption).
+#
+# Override on the CLI:
+#   alignment-vqa-scoring \
+#     name=coco_v1 \
+#     matched_processor.dataset.manifest_path=/data/coco/captions_orig.json \
+#     shuffled_processor.dataset.manifest_path=/data/coco/captions_orig_shuffled.json
+
+defaults:
+  - /base_vqa_scoring_pipeline
+  - /dataset_path@matched_processor.dataset: coco
+  - /dataset_path@shuffled_processor.dataset: coco
+  - /model@matched_processor: plm_8b
+  - /model@shuffled_processor: plm_8b
+  - _self_
+
+name: ???
+
+output_dir: ${oc.env:HOME}/egobabyvlm_experiments/alignment_scoring/${name}
+
+matched_processor:
+  name: ${name}_matched
+  question: "Does this figure show '{text}'? Please answer 'Yes' or 'No'."
+  vqa_scoring: true
+  num_items_per_chunk: 500
+  max_gen_len: 1
+  temperature: 0.0
+
+shuffled_processor:
+  name: ${name}_shuffled
+  question: "Does this figure show '{text}'? Please answer 'Yes' or 'No'."
+  vqa_scoring: true
+  num_items_per_chunk: 500
+  max_gen_len: 1
+  temperature: 0.0
+
+launcher:
+  cluster: local

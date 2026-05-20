@@ -1,0 +1,23 @@
+# Copyright (c) Meta Platforms, Inc. and affiliates.
+# All rights reserved.
+#
+# This source code is licensed under the license found in the
+# LICENSE file in the root directory of this source tree.
+
+# @group text
+
+defaults:
+  - zorro_base
+  - _self_
+
+name: zorro
+
+output_dir: "${oc.env:HOME}/egobabyvlm_experiments/evals"
+
+data_dir: "${oc.env:ZORRO_DATA_ROOT}"
+input_str: "zorro"
+num_fewshot: 0
+
+model: ${model}
+
+seed: 42

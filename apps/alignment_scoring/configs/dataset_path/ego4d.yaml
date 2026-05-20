@@ -1,0 +1,12 @@
+# Copyright (c) Meta Platforms, Inc. and affiliates.
+# All rights reserved.
+#
+# This source code is licensed under the license found in the
+# LICENSE file in the root directory of this source tree.
+
+# Ego4D video clips, path-only — for STS / VQA / captioning where the model
+# does its own decoding.
+
+_target_: apps.alignment_scoring.data.video.VideoCaptionsPathDataset
+manifest_path: ???
+dataset_dir: ???

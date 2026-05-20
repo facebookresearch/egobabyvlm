@@ -1,0 +1,14 @@
+# Copyright (c) Meta Platforms, Inc. and affiliates.
+# All rights reserved.
+#
+# This source code is licensed under the license found in the
+# LICENSE file in the root directory of this source tree.
+
+# Pretrained DINOv2 ViT-S/14 from facebookresearch/dinov2 (torch.hub).
+# @package model.vision_encoder
+
+_target_: apps.baselines.clip.modeling.HubDINOv2VisionEncoder
+model_name: dinov2_vits14
+embedding_dim: ${model.embedding_dim}
+freeze: false
+image_size: 224

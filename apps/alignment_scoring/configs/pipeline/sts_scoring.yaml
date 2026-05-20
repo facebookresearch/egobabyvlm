@@ -1,0 +1,52 @@
+# @package _global_
+
+# Copyright (c) Meta Platforms, Inc. and affiliates.
+# All rights reserved.
+#
+# This source code is licensed under the license found in the
+# LICENSE file in the root directory of this source tree.
+
+# SONAR-based STS scoring with matched + shuffled JSD aggregation.
+#
+# Each processor joins two text manifests on media_id and encodes both with
+# SONAR. Use matched = (caption_a, caption_b_for_same_media); shuffled =
+# (caption_a, caption_b_for_a_random_other_media). The pipeline aggregates
+# JS divergence between the two cos-sim distributions.
+#
+# Override on the CLI:
+#   alignment-sts-scoring \
+#     name=coco_orig_vs_recap \
+#     matched_processor.dataset_a.manifest_path=/data/coco/captions_orig.json \
+#     matched_processor.dataset_b.manifest_path=/data/coco/captions_recap.json \
+#     shuffled_processor.dataset_a.manifest_path=/data/coco/captions_orig.json \
+#     shuffled_processor.dataset_b.manifest_path=/data/coco/captions_recap_shuffled.json \
+#     output_dir=/tmp/coco_orig_vs_recap
+
+defaults:
+  - /base_sts_scoring_pipeline
+  - /dataset_path@matched_processor.dataset_a: coco
+  - /dataset_path@matched_processor.dataset_b: coco
+  - /dataset_path@shuffled_processor.dataset_a: coco
+  - /dataset_path@shuffled_processor.dataset_b: coco
+  - _self_
+
+name: ???
+
+output_dir: ${oc.env:HOME}/egobabyvlm_experiments/alignment_scoring/${name}
+
+matched_processor:
+  name: ${name}_matched
+  encoder: text_sonar_basic_encoder
+  source_lang: eng_Latn
+  batch_size: 32
+  num_items_per_chunk: 2000
+
+shuffled_processor:
+  name: ${name}_shuffled
+  encoder: text_sonar_basic_encoder
+  source_lang: eng_Latn
+  batch_size: 32
+  num_items_per_chunk: 2000
+
+launcher:
+  cluster: local

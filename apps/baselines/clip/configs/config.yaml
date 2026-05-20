@@ -1,0 +1,27 @@
+# Copyright (c) Meta Platforms, Inc. and affiliates.
+# All rights reserved.
+#
+# This source code is licensed under the license found in the
+# LICENSE file in the root directory of this source tree.
+
+# Default composition for the contrastive trainer.
+# Override on the CLI:
+#   egobabyvlm-train-contrastive \
+#     name=coco_baseline \
+#     data.train_dataset.manifest_path=/data/coco/preprocessed_captions_train.json \
+#     data.train_dataset.image_root=/data/coco/all_images \
+#     checkpoint.save_dir=$HOME/runs/egobabyvlm/$name
+
+defaults:
+  - base_contrastive_trainer
+  - mode: contrastive
+  - model: default
+  - text_encoder@model.text_encoder: bert_base
+  - vision_encoder@model.vision_encoder: hub_dinov2_vitb14
+  - data: coco
+  - optim: adamw_default
+  - checkpoint: default
+  - wandb: default
+  - _self_
+
+name: ???

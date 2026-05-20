@@ -1,0 +1,66 @@
+# @package _global_
+
+# Copyright (c) Meta Platforms, Inc. and affiliates.
+# All rights reserved.
+#
+# This source code is licensed under the license found in the
+# LICENSE file in the root directory of this source tree.
+
+# DDP-aware LoRA finetune of CLIP / Perception Encoder. The trained adapter
+# weights are merged into the base model at save time so the saved checkpoint
+# is a drop-in replacement for any open_clip checkpoint elsewhere.
+#
+# Multi-GPU launch: prefix with `torchrun --nproc-per-node=N` (or `srun -n N`
+# under SLURM); the trainer reads RANK / LOCAL_RANK / WORLD_SIZE from env.
+#
+# Override on the CLI:
+#   alignment-finetune-lora \
+#     name=coco_lora \
+#     data_train.dataset.manifest_path=/data/coco/captions_train2017.json \
+#     data_train.dataset.dataset_dir=/data/coco/train2017 \
+#     data_val.dataset.manifest_path=/data/coco/captions_val2017.json \
+#     data_val.dataset.dataset_dir=/data/coco/val2017 \
+#     optim.epochs=10
+
+defaults:
+  - /base_finetune_lora
+  - /dataset@data_train.dataset: coco
+  - /dataset@data_val.dataset: coco
+  - /model: vit_b16_openai
+  - /lora@model.lora: default
+  - _self_
+
+name: ???
+
+output_dir: ${oc.env:HOME}/egobabyvlm_experiments/alignment_scoring/${name}
+
+model:
+  mode: train
+
+data_train:
+  batch_size: 64
+  num_workers: 4
+  pin_memory: true
+
+data_val:
+  batch_size: 64
+  num_workers: 4
+  pin_memory: true
+
+optim:
+  lr: 1e-4
+  min_lr: 1e-6
+  weight_decay: 0.05
+  epochs: 5
+  warmup_epochs: 1
+  dtype: bfloat16
+  logit_scale_lr_scale: 1.0
+  early_stopping: false
+  patience: 5
+
+log_interval: 50
+eval_interval: 1000000   # very large = epoch-end only by default
+max_checkpoints: 3
+
+wandb:
+  enabled: false

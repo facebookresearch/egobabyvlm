@@ -1,0 +1,17 @@
+# Copyright (c) Meta Platforms, Inc. and affiliates.
+# All rights reserved.
+#
+# This source code is licensed under the license found in the
+# LICENSE file in the root directory of this source tree.
+
+# Off-the-shelf OpenAI CLIP ViT-B/16 with the QuickGELU patch (matches the
+# original release's tokenizer/quantization behavior). Smallest model that's
+# useful for end-to-end smoke tests.
+#
+# The destination of these fields is decided by the consumer's `defaults` line
+# (e.g. ``model@matched_processor.model: vit_b16_openai``).
+
+model_name: ViT-B-16-quickgelu
+pretrained: openai
+mode: eval
+is_video_model: false

@@ -1,0 +1,36 @@
+# Copyright (c) Meta Platforms, Inc. and affiliates.
+# All rights reserved.
+#
+# This source code is licensed under the license found in the
+# LICENSE file in the root directory of this source tree.
+
+# @group multimodal
+# MachineDevBench single-style evaluation
+#
+# Override `data_root` to point at a benchmark folder (e.g. data/coco_20260422_123739).
+# `style` selects the visual style (`realistic`, `cartoon`, ...).
+# Set `tasks` to a list of task names (e.g. [lex_nouns, gram_negation]) to evaluate a subset.
+
+defaults:
+  - machine_devbench
+  - _self_
+
+_target_: "evaluation.multimodal.machine_devbench.base.MachineDevBenchEvalModule"
+
+name: "machine_devbench"
+
+output_dir: "${oc.env:HOME}/egobabyvlm_experiments/evals"
+
+data_root: "${oc.env:MACHINE_DEVBENCH_DATA_ROOT}"
+
+style: "realistic"
+
+tasks: null
+
+model: ${model}
+
+batch_size: 32
+
+num_workers: 8
+
+seed: 42

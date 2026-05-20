@@ -1,0 +1,31 @@
+{
+  "id": "ego4d_llava",
+  "model": "LLaVA",
+  "team": "EgoBabyVLM (paper)",
+  "architecture": "generative",
+  "training_data": "Ego4D",
+  "category": "reference",
+  "n_seeds": 3,
+  "multimodal": {
+    "lexical": "48.8 ± 1.9",
+    "grammatical": "49.9 ± 4.0",
+    "overall": "49.3 ± 3.0"
+  },
+  "vision": [
+    {
+      "ft": "LLaVA",
+      "object_recognition": "35.4 ± 8.6",
+      "visual_properties": "27.9 ± 4.4",
+      "overall": "31.6 ± 6.5"
+    }
+  ],
+  "language": [
+    {
+      "encoder": "GPT-2",
+      "ft": "LLaVA",
+      "syntax": "52.9 ± 2.9",
+      "semantics": "54.8 ± 1.1",
+      "overall": "53.9 ± 2.0"
+    }
+  ]
+}

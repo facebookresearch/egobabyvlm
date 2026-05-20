@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EgoBabyVLM Challenge — How to submit</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="hero">
+    <div class="hero-bg" aria-hidden="true"></div>
+    <div class="container hero-inner">
+      <nav class="topnav">
+        <span class="brand">
+          <img src="resources/logo_meta.svg" alt="Meta" class="brand-meta" />
+          <span class="brand-divider" aria-hidden="true"></span>
+          <span class="brand-name">EgoBabyVLM</span>
+        </span>
+        <div class="topnav-links">
+          <a href="index.html">Home</a>
+          <a href="leaderboard.html">Leaderboard</a>
+          <a href="submit.html">Submit</a>
+        </div>
+      </nav>
+
+      <div class="hero-content hero-content-wide">
+        <h1>Run, score, and submit</h1>
+        <p class="tagline">
+          Cache the eval datasets, validate the setup with an off-the-shelf
+          model, score your own model, then open a pull request with your
+          numbers and training code. Verified submissions ship with code we
+          can reproduce.
+        </p>
+        <div class="cta-stack">
+          <div class="cta">
+            <a class="btn btn-github" href="https://github.com/facebookresearch/egobabyvlm" target="_blank" rel="noopener noreferrer">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5C5.73.5.5 5.73.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.56 0-.28-.01-1.02-.02-2-3.2.7-3.88-1.54-3.88-1.54-.52-1.33-1.28-1.69-1.28-1.69-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.29 1.18-3.1-.12-.29-.51-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11.04 11.04 0 0 1 5.79 0c2.21-1.49 3.18-1.18 3.18-1.18.62 1.59.23 2.76.11 3.05.74.81 1.18 1.84 1.18 3.1 0 4.42-2.69 5.4-5.25 5.68.41.36.78 1.07.78 2.16 0 1.56-.01 2.82-.01 3.2 0 .31.21.68.8.56C20.21 21.39 23.5 17.08 23.5 12 23.5 5.73 18.27.5 12 .5z"/></svg>
+              Code
+            </a>
+            <a class="btn btn-leaderboard" href="leaderboard.html">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 21h8"/><path d="M12 17v4"/><path d="M7 4h10v5a5 5 0 0 1-10 0V4z"/><path d="M17 4h3v3a3 3 0 0 1-3 3"/><path d="M7 4H4v3a3 3 0 0 0 3 3"/></svg>
+              Leaderboard
+            </a>
+          </div>
+          <div class="cta">
+            <a class="btn btn-secondary" href="https://databrary.org/volume/1882" target="_blank" rel="noopener noreferrer">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/><path d="M3 12c0 1.66 4 3 9 3s9-1.34 9-3"/></svg>
+              BabyView Dataset
+            </a>
+            <a class="btn btn-secondary" href="https://github.com/facebookresearch/egobabyvlm/releases/download/Eval-Data/MachineDevBench.tar" download>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              Machine-DevBench (Eval)
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="org-strip" aria-label="Affiliations">
+      <img src="resources/logo_meta.png" alt="Meta" class="logo-wide logo-meta" />
+      <img src="resources/logo_stanford.png" alt="Stanford University" class="logo-wide" />
+      <img src="resources/logo_ens.png" alt="École Normale Supérieure" class="logo-tall" />
+      <img src="resources/logo_utokyo.png" alt="The University of Tokyo" class="logo-wide" />
+    </div>
+
+    <section id="instructions">
+      <h2>What a submission is</h2>
+      <p class="muted" style="max-width: 78ch; margin-bottom: 1.25rem;">
+        A submission is leaderboard scores plus, ideally, the training
+        code that produced them. The reference codebase ships
+        installable CLI entry points, Hydra configs, and four trainers
+        that reproduce the paper baselines &mdash; useful as starting
+        points, but the challenge encourages alternative architectures,
+        objectives, and curricula.
+      </p>
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <h3>Cache the eval datasets</h3>
+          <p>
+            See <code>docs/eval_data.md</code> in the
+            <a href="https://github.com/facebookresearch/egobabyvlm" target="_blank" rel="noopener noreferrer">repo</a>.
+            The download scripts handle the open-access ones automatically;
+            only ImageNet and NYUv2 need a one-time manual prep documented inline.
+          </p>
+          <p style="margin-top: 0.6rem;">
+            <strong>Machine-DevBench</strong> ships as a single tarball
+            on the GitHub release. Grab it with
+            <code>python -m scripts.eval_data.download_machine_devbench</code>
+            (or click the <em>Machine-DevBench (Eval)</em> button on the
+            landing page) and point
+            <code>MACHINE_DEVBENCH_DATA_ROOT</code> at the extracted
+            directory.
+          </p>
+          <p style="margin-top: 0.6rem;">
+            <strong>LT-Swap</strong> ships per-corpus pair files for the
+            four training corpora the paper uses (BabyView, Ego4D, HowTo,
+            COCO-MC). Grab them with
+            <code>python -m scripts.eval_data.download_ltswap</code> and
+            point <code>LTSWAP_DATA_ROOT</code> at the per-corpus subdir
+            matching your training data. These shipped files are mainly
+            for reproducing / comparing to the paper — if you trained on
+            a different snapshot, subset, or preprocessing of one of
+            these corpora (or on something else entirely), regenerate
+            the pair files from your own corpus via
+            <code>apps/swapbench/</code> so the long-tail vocabulary
+            matches what your model actually saw.
+          </p>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <h3>Validate the setup</h3>
+          <p>
+            Run <code>evaluation/eval_launcher</code> against an off-the-shelf
+            model (<code>model=dino</code>, <code>model=clip_image</code>,
+            <code>model=bert_base</code>) to sanity-check that the three eval
+            families execute on your machine and reproduce numbers in the
+            ballpark of the leaderboard's off-the-shelf rows.
+          </p>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <h3>Train your model on BabyView</h3>
+          <p>
+            Any architecture, any objective, as long as the training data
+            comes only from BabyView 2025.1 (no extra image / video / text
+            / audio data for pretraining, fine-tuning, or evaluation). The
+            shipped baselines under <code>apps/baselines/</code> are
+            optional starting points.
+          </p>
+          <p style="margin-top: 0.6rem;">
+            <strong>Tip:</strong> for validation and method exploration
+            we recommend training on
+            <a href="https://ego4d-data.org/" target="_blank" rel="noopener noreferrer">Ego4D</a>
+            first &mdash; it's naturalistic egocentric video too (just
+            not developmentally plausible) and is faster to iterate on.
+            Re-train your final submission on BabyView.
+          </p>
+        </div>
+        <div class="step">
+          <div class="step-num">4</div>
+          <h3>Score and open a PR</h3>
+          <p>
+            Re-run <code>eval_launcher</code> against your model over the
+            three families, then open a pull request with a JSON file
+            containing your scores <strong>and a link to the training
+            code</strong> so the submission can be reproduced. See the
+            <a href="#submit">submission details &rarr;</a>.
+          </p>
+          <p style="margin-top: 0.6rem;">
+            Submissions are marked <strong>verified</strong> when we can
+            reproduce the scores from the provided code. Leaderboard-only
+            submissions (a paper / report with numbers but no runnable
+            code) are still welcome and will appear on the board, but
+            won't carry the verified mark.
+          </p>
+          <p style="margin-top: 0.6rem;">
+            Alternative architectures plug in by implementing one of the
+            protocols in <code>core/protocols/feature_extractor.py</code>
+            (<code>ImageFeatureExtractor</code>,
+            <code>TextFeatureExtractor</code>,
+            <code>MultiModalFeatureExtractor</code>) and adding an
+            <code>evaluation/configs/model/&lt;your_name&gt;.yaml</code>
+            with <code>_target_</code> pointing at your class.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section id="submit" class="card">
+      <h2>Submitting your results</h2>
+      <p>
+        Submissions reuse the shared <code>evaluation/eval_launcher</code>
+        so all entries are scored on identical task definitions.
+      </p>
+
+      <h3 style="margin-top: 1.25rem;">1. Install</h3>
+      <p>
+        The full environment is pinned in <code>pixi.toml</code> (Python
+        3.12, PyTorch 2.8 + CUDA 12.6).
+      </p>
+<pre># install pixi: https://pixi.sh/latest/installation/
+pixi install -e dev</pre>
+
+      <h3 style="margin-top: 1.25rem;">2. Run the three evaluation families</h3>
+      <p>
+        Download the eval datasets once (see <code>docs/eval_data.md</code>
+        in the repo), then point the launcher at your trained model:
+      </p>
+<pre># Vision
+python -m evaluation.eval_launcher \
+    eval=vision/vision_pipeline \
+    model=dino \
+    name=my_run
+
+# Cross-modal grounding (Machine-DevBench, realistic + cartoon)
+python -m evaluation.eval_launcher \
+    eval=multimodal/machine_devbench_pipeline \
+    model=clip_image \
+    name=my_run
+
+# Language
+python -m evaluation.eval_launcher \
+    eval=text/text_pipeline \
+    model=bert_base \
+    name=my_run</pre>
+      <p class="muted">
+        Override <code>model=…</code> to swap encoders, or any individual
+        task YAML in <code>evaluation/configs/eval/</code>. Run ≥ 3 seeds
+        per condition and report <em>mean ± std</em> for each subgroup and
+        the overall.
+      </p>
+
+      <h3 style="margin-top: 1.25rem;">3. Open a pull request</h3>
+      <p>
+        Fork this repository and add a new file under
+        <code>submissions/&lt;your_run_id&gt;.json</code> (one JSON per
+        training run). Then append the filename to the
+        <code>"submissions"</code> list in
+        <code>submissions/index.json</code> so the leaderboard picks it up.
+        Each submission JSON has the following shape:
+      </p>
+<pre class="compact">{
+  "id": "babyview_my_method",
+  "model": "MyModel",
+  "team": "My Lab",
+  "architecture": "contrastive",
+  "training_data": "BabyView",
+  "category": "baseline",
+  "n_seeds": 3,
+  "multimodal": {
+    "lexical": "55.1 ± 0.6",
+    "grammatical": "54.9 ± 1.2",
+    "overall": "55.0 ± 0.9"
+  },
+  "vision": [
+    { "ft": "MyMethod",
+      "object_recognition": "48.0 ± 0.3",
+      "visual_properties": "35.1 ± 0.4",
+      "overall": "41.5 ± 0.3" }
+  ],
+  "language": [
+    { "encoder": "BERT", "ft": "MyMethod",
+      "syntax": "73.0 ± 0.4",
+      "semantics": "72.1 ± 0.3",
+      "overall": "72.5 ± 0.3" }
+  ]
+}</pre>
+      <ul>
+        <li><code>id</code> — unique slug, must match the filename
+          (without <code>.json</code>).</li>
+        <li><code>model</code>, <code>team</code>,
+          <code>architecture</code>, <code>training_data</code>,
+          <code>n_seeds</code> — descriptive metadata.</li>
+        <li><code>category</code> — one of <code>baseline</code> /
+          <code>topline</code> / <code>reference</code> /
+          <code>offshelf</code>; controls the row pill and styling.</li>
+        <li><code>multimodal</code> (object) — mean ± std for
+          <code>lexical</code>, <code>grammatical</code>,
+          <code>overall</code> on Machine-DevBench. Omit if not run.</li>
+        <li><code>vision</code> (array) — one entry per FT condition; each
+          with <code>ft</code>, <code>object_recognition</code>,
+          <code>visual_properties</code>, <code>overall</code>.
+          Omit if not run.</li>
+        <li><code>language</code> (array) — one entry per
+          (<code>encoder</code>, <code>ft</code>) condition; each with
+          <code>syntax</code>, <code>semantics</code>, <code>overall</code>.
+          Omit if not run.</li>
+        <li>Optional: <code>report_url</code>, <code>code_url</code>.</li>
+      </ul>
+      <p>
+        Organizers will verify the submission with the same launcher and
+        update the leaderboard.
+      </p>
+      <p class="muted" style="margin-top: 0.75rem;">
+        <strong>Eligibility:</strong> for the official challenge track, no
+        external image, video, text, or audio data may be used at any stage
+        — including encoder pretraining. Reference rows trained on Ego4D /
+        HowTo / COCO are listed for context only.
+      </p>
+      <p style="margin-top: 1rem;">
+        See the full results on the <a href="leaderboard.html">leaderboard page →</a>
+      </p>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-inner">
+      <p class="footer-copyright">Copyright &copy; Meta Platforms, Inc.</p>
+      <p class="footer-links">
+        <a href="https://opensource.fb.com/legal/terms/" target="_blank" rel="noopener noreferrer">Terms</a>
+        <a href="https://opensource.fb.com/legal/privacy/" target="_blank" rel="noopener noreferrer">Privacy</a>
+        <a href="https://www.facebook.com/policies/cookies/" target="_blank" rel="noopener noreferrer">Cookies</a>
+      </p>
+    </div>
+  </footer>
+</body>
+</html>

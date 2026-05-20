@@ -1,0 +1,13 @@
+# Copyright (c) Meta Platforms, Inc. and affiliates.
+# All rights reserved.
+#
+# This source code is licensed under the license found in the
+# LICENSE file in the root directory of this source tree.
+
+# Baseline contrastive: image-text InfoNCE only. Single optimizer, single loader.
+# @package mode
+
+name: contrastive
+interleave:
+  contrastive: 1
+sync_vision_from_dinov2: false

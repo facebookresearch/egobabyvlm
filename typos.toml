@@ -1,0 +1,21 @@
+# Copyright (c) Meta Platforms, Inc. and affiliates.
+# All rights reserved.
+#
+# This source code is licensed under the license found in the
+# LICENSE file in the root directory of this source tree.
+
+[files]
+extend-exclude = [
+    "apps/alignment_scoring/third_party/perception_models/apps/",
+    "apps/alignment_scoring/third_party/perception_models/core/",
+    "apps/baselines/dinov2/third_party/dinov2/",
+    "apps/swapbench/third_party/lt_swap/",
+]
+
+[default.extend-words]
+# ML acronyms that typos misreads.
+NCE = "NCE"  # InfoNCE / Noise-Contrastive Estimation
+# English suffixes used as data in apps/benchmark_creation morphology heuristics.
+ful = "ful"
+# French proper nouns (affiliations on the website).
+Normale = "Normale"  # École Normale Supérieure

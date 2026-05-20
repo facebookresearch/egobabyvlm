@@ -1,0 +1,31 @@
+{
+  "id": "babyview_llava",
+  "model": "LLaVA",
+  "team": "EgoBabyVLM (paper)",
+  "architecture": "generative",
+  "training_data": "BabyView",
+  "category": "baseline",
+  "n_seeds": 3,
+  "multimodal": {
+    "lexical": "51.2 ± 2.5",
+    "grammatical": "49.7 ± 4.3",
+    "overall": "50.5 ± 3.4"
+  },
+  "vision": [
+    {
+      "ft": "LLaVA",
+      "object_recognition": "43.2 ± 0.6",
+      "visual_properties": "30.3 ± 1.2",
+      "overall": "36.7 ± 0.9"
+    }
+  ],
+  "language": [
+    {
+      "encoder": "GPT-2",
+      "ft": "LLaVA",
+      "syntax": "55.9 ± 2.2",
+      "semantics": "53.2 ± 0.7",
+      "overall": "54.6 ± 1.4"
+    }
+  ]
+}

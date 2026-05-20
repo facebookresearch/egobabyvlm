@@ -1,0 +1,33 @@
+{
+  "id": "babyview_no_ft",
+  "model": "BabyView (no FT)",
+  "team": "EgoBabyVLM (paper)",
+  "architecture": "—",
+  "training_data": "BabyView",
+  "category": "baseline",
+  "n_seeds": 3,
+  "vision": [
+    {
+      "ft": "none",
+      "object_recognition": "50.9 ± 0.2",
+      "visual_properties": "39.2 ± 0.6",
+      "overall": "45.1 ± 0.4"
+    }
+  ],
+  "language": [
+    {
+      "encoder": "BERT",
+      "ft": "none",
+      "syntax": "72.9 ± 0.2",
+      "semantics": "71.8 ± 0.5",
+      "overall": "72.4 ± 0.3"
+    },
+    {
+      "encoder": "GPT-2",
+      "ft": "none",
+      "syntax": "61.7 ± 0.9",
+      "semantics": "55.8 ± 1.3",
+      "overall": "58.8 ± 1.1"
+    }
+  ]
+}

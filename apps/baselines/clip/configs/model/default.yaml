@@ -1,0 +1,14 @@
+# Copyright (c) Meta Platforms, Inc. and affiliates.
+# All rights reserved.
+#
+# This source code is licensed under the license found in the
+# LICENSE file in the root directory of this source tree.
+
+# Default multimodal model: shared embedding dim + temperature, plus references
+# to the text and vision encoder groups (set via the top-level config.yaml).
+# @package model
+
+embedding_dim: 512
+normalize_features: true
+temperature: 0.07
+fix_temperature: false

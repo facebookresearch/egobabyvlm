@@ -1,0 +1,27 @@
+# Copyright (c) Meta Platforms, Inc. and affiliates.
+# All rights reserved.
+#
+# This source code is licensed under the license found in the
+# LICENSE file in the root directory of this source tree.
+
+# COCO Karpathy-format image-caption manifest. Override `manifest_path` and
+# `image_root` for your local copy.
+# @package data
+
+train_dataset:
+  _target_: apps.baselines.clip.data.CocoCaptionsDataset
+  manifest_path: ???
+  image_root: ???
+  multiple_captions: true
+
+val_dataset:
+  _target_: apps.baselines.clip.data.CocoCaptionsDataset
+  manifest_path: ???
+  image_root: ${data.train_dataset.image_root}
+  multiple_captions: false
+
+batch_size: 64
+val_batch_size: 64
+num_workers: 4
+pin_memory: true
+augment: false

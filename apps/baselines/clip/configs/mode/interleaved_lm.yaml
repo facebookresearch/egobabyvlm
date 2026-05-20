@@ -1,0 +1,15 @@
+# Copyright (c) Meta Platforms, Inc. and affiliates.
+# All rights reserved.
+#
+# This source code is licensed under the license found in the
+# LICENSE file in the root directory of this source tree.
+
+# Interleaved BERT MLM: every N contrastive steps, run one BERT MLM step.
+# Requires `text_only_data` to be set (e.g. via CLI: text_only_data=default).
+# @package mode
+
+name: interleaved_lm
+interleave:
+  contrastive: 10
+  mlm: 1
+sync_vision_from_dinov2: false

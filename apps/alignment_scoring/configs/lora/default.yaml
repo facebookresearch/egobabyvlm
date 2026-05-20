@@ -1,0 +1,14 @@
+# Copyright (c) Meta Platforms, Inc. and affiliates.
+# All rights reserved.
+#
+# This source code is licensed under the license found in the
+# LICENSE file in the root directory of this source tree.
+
+# PEFT LoRA config — applied to all-linear modules of the open_clip model.
+
+_target_: peft.LoraConfig
+r: 8
+lora_alpha: 16
+target_modules: all-linear
+lora_dropout: 0.1
+bias: none

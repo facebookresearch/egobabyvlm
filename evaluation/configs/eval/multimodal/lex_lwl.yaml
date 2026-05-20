@@ -1,0 +1,30 @@
+# Copyright (c) Meta Platforms, Inc. and affiliates.
+# All rights reserved.
+#
+# This source code is licensed under the license found in the
+# LICENSE file in the root directory of this source tree.
+
+# @group multimodal
+# DevBench Lex-LWL Evaluation
+
+defaults:
+  - devbench
+  - _self_
+
+output_dir: "${oc.env:HOME}/egobabyvlm_experiments/evals"
+
+_target_: "evaluation.multimodal.devbench.base.DevBenchLexLWLEvalModule"
+
+name: "lex-lwl"
+
+dataset:
+  _target_: "evaluation.data.devbench.DevBenchDataset"
+  name: "lex-lwl"
+  kwargs:
+    dataset_folder: "${oc.env:DEVBENCH_DATA_ROOT}/lex-lwl"
+
+human_data_path: "${oc.env:DEVBENCH_DATA_ROOT}/lex-lwl/human.csv"
+
+model: ${model}
+
+seed: 42

@@ -1,0 +1,40 @@
+# Copyright (c) Meta Platforms, Inc. and affiliates.
+# All rights reserved.
+#
+# This source code is licensed under the license found in the
+# LICENSE file in the root directory of this source tree.
+
+# @group vision
+# KNN MNIST Evaluation
+
+defaults:
+  - knn
+  - _self_
+
+output_dir: "${oc.env:HOME}/egobabyvlm_experiments/evals"
+
+train_dataset:
+  _target_: "evaluation.data.abx.MNISTClassificationDataset"
+  name: "mnist_train"
+  kwargs:
+    dataset_root: "${oc.env:MNIST_ROOT}"
+    mode: "train"
+
+val_dataset:
+  _target_: "evaluation.data.abx.MNISTClassificationDataset"
+  name: "mnist_val"
+  kwargs:
+    dataset_root: "${oc.env:MNIST_ROOT}"
+    mode: "test"
+
+test_dataset: null
+
+nb_knn: [3, 5, 10, 20]
+temperature: 0.07
+batch_size: 1024
+num_workers: 22
+n_per_class_list: [-1]
+n_tries: 1
+seed: 42
+
+model: ${model}

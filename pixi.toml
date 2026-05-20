@@ -1,0 +1,160 @@
+# Copyright (c) Meta Platforms, Inc. and affiliates.
+# All rights reserved.
+#
+# This source code is licensed under the license found in the
+# LICENSE file in the root directory of this source tree.
+
+[project]
+name = "egobabyvlm"
+channels = ["conda-forge"]
+platforms = ["linux-64"]
+
+[system-requirements]
+cuda = "12.6"
+
+[dependencies]
+python = "3.12.*"
+ffmpeg = ">=7,<8"
+pip = "*"
+setuptools = "<81"
+wheel = "*"
+nltk = "==3.9.1"
+numpy = ">=2.1.2"
+omegaconf = "==2.3.0"
+hydra-core = ">=1.3"
+tqdm = ">=4.66.6"
+pandas = ">=2.2.3"
+scipy = ">=1.15.2"
+scikit-learn = "*"
+matplotlib = ">=3.9.2"
+seaborn = ">=0.13.2"
+pillow = "*"
+opencv = ">=4.11.0"
+pycocotools = ">=2.0.11"
+pyyaml = ">=6.0.2"
+fsspec = ">=2023.1.0,<=2026.2.0"
+# Native deps for fairseq2/sonar (the bundled perception_models doesn't need them, but
+# sonar's text inference does).
+libsndfile = ">=1.2"
+tbb = ">=2021.8"
+# fairseq2 + accelerate both pin psutil to the 5.x line; conda-forge's default is 7.x.
+psutil = ">=5.9,<6"
+# fairseq2 pins packaging<25; conda-forge's default is 26.x.
+packaging = ">=24.1,<25"
+
+[pypi-dependencies]
+egobabyvlm = { path = ".", editable = true }
+torch = { version = "==2.8.0", index = "https://download.pytorch.org/whl/cu126" }
+torchvision = { version = "==0.23.0", index = "https://download.pytorch.org/whl/cu126" }
+torchmetrics = "==1.7.4"
+stopes = { git = "https://github.com/facebookresearch/stopes.git", rev = "main" }
+submitit = ">=1.5.2"
+hydra-submitit-launcher = ">=1.2.0"
+"lm-eval" = { git = "https://github.com/babylm/evaluation-pipeline-2023.git", rev = "main" }
+promptsource = { git = "https://github.com/bigscience-workshop/promptsource.git", rev = "eval-hackathon" }
+rds2py = "==0.7.0"
+"open-clip-torch" = ">=3.2.0"
+
+# Alignment-scoring stack: contrastive scoring (CLIP/PE), STS (SONAR), captioning + VQA
+# (bundled perception_models PLM), and LoRA finetuning. Versions pinned to the
+# environment used in the paper for reproducibility.
+peft = "==0.18.1"
+transformers = "==4.57.6"
+tokenizers = ">=0.22"
+accelerate = "*"
+sonar-space = "==0.5.0"
+fairseq2 = "==0.5.2"
+fairseq2n = "==0.5.2"
+huggingface-hub = ">=0.32,<1"
+safetensors = ">=0.6"
+tiktoken = ">=0.10"
+blobfile = ">=3.0"
+sentencepiece = ">=0.2"
+iopath = ">=0.1.10"
+timm = ">=1.0.24"
+einops = ">=0.8"
+xformers = "==0.0.32.post2"
+torchcodec = "==0.7.0"
+decord = ">=0.6"
+av = "*"
+
+# Contrastive trainer stack (apps/baselines/clip/training): the bundled dinov2 SSL
+# integration needs fvcore.Checkpointer; trainer logging uses W&B.
+fvcore = ">=0.1.5"
+wandb = ">=0.19"
+
+# Benchmark generation stack (apps/benchmark_creation): FLUX image generation
+# via diffusers, vLLM-compatible OpenAI client for LLM-driven prompt rewriting,
+# requests for vLLM server health probes.
+diffusers = ">=0.30"
+openai = ">=1.0"
+requests = ">=2.31"
+
+# LLaVA training stack (apps/baselines/llava): HuggingFace Trainer + DeepSpeed
+# ZeRO-2/3 for the multi-GPU finetune.
+deepspeed = ">=0.14"
+
+# Data preprocessing stack (apps/data_preprocessing): WhisperX for word-level
+# audio transcription, joblib for the CPU-bound VTC filter fan-out.
+whisperx = ">=3.4"
+joblib = ">=1.4"
+
+# SwapBench (apps/swapbench): the bundled LT-Swap generation needs pyspellchecker
+# for the upstream get_word_lists / build_longtail scripts.
+pyspellchecker = ">=0.8"
+
+[pypi-options]
+# lm-eval (babylm fork) and promptsource hardpin ancient torch/transformers/nltk/streamlit/datasets/openai;
+# we override them with our modern versions just like the upstream pyproject does via [tool.uv].
+dependency-overrides = { torch = "==2.8.0", transformers = "==4.57.6", nltk = "==3.9.1", openai = ">=1.0", streamlit = ">=0.82.0", "black" = ">21.12b0", datasets = ">=3.5.0", pyarrow = ">=21.0.0", psutil = ">=5.9,<6", numpy = ">=2.1.2", packaging = ">=24.1,<25", "huggingface-hub" = ">=0.32,<1", safetensors = ">=0.6", tiktoken = ">=0.10", "importlib-metadata" = ">=7.0", "importlib-resources" = ">=6.4", "mypy-extensions" = ">=1.0", rich = ">=13.7", sacrebleu = ">=2.4", "typing-extensions" = ">=4.12", torcheval = ">=0.0.6", editdistance = ">=0.8", tqdm = ">=4.62", blobfile = ">=3.0" }
+# lm-eval's setup.py imports nltk at install time, so it needs to see the resolved env.
+no-build-isolation = ["lm-eval"]
+
+[feature.dev.dependencies]
+ruff = "==0.11.9"
+typos = "==1.32.0"
+mypy = ">=1.13.0"
+pytest = ">=8.3.3"
+pre-commit = ">=4.0.1"
+# GNU Octave: open-source Matlab-compatible interpreter, used by the NYUv2
+# train-split prep (BTS sync_project_frames_multi_threads.m + the NYU Depth
+# Toolbox V2 helpers it depends on). Required only by the operator preparing
+# NYU train data; the eval pipeline itself doesn't import Octave.
+octave = ">=8"
+
+[feature.dev.tasks]
+lint = "ruff check ."
+format-check = "ruff format --check ."
+typos-check = "typos ."
+test = "pytest --verbose"
+ci = { depends-on = ["lint", "format-check", "typos-check", "test"] }
+
+# vLLM server lives in its own feature/solve-group so its torch / numpy /
+# packaging pins don't fight with the main env's pinned (torch==2.8.0 +
+# xformers==0.0.32.post2 + fairseq2==0.5.2) stack. Production code only needs
+# the OpenAI HTTP client (in the main env) to talk to a running vLLM server;
+# only the operator launching the server needs this env.
+[feature.vllm.dependencies]
+python = "3.12.*"
+pip = "*"
+# vllm 0.20.2 caps setuptools<81; conda-forge defaults to 82.x.
+setuptools = ">=77,<81"
+
+# vLLM publishes only manylinux_2_35 wheels (built against newer glibc).
+# Advertise the host glibc version (Ubuntu 22.04 ships glibc 2.35) only for
+# this feature so wheel selection in the main env is unaffected.
+[feature.vllm.system-requirements]
+libc = { family = "glibc", version = "2.35" }
+
+[feature.vllm.pypi-dependencies]
+vllm = "==0.20.2"
+# Launcher deps (apps.benchmark_creation.utils.vllm_server): submitit for SLURM
+# job submission, openai/requests for the get_client/health-probe helpers.
+submitit = ">=1.5"
+openai = ">=1.0"
+requests = ">=2.31"
+
+[environments]
+default = { solve-group = "default" }
+dev = { features = ["dev"], solve-group = "default" }
+vllm = { features = ["vllm"], no-default-feature = true }

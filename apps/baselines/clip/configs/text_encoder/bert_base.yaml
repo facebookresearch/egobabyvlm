@@ -1,0 +1,15 @@
+# Copyright (c) Meta Platforms, Inc. and affiliates.
+# All rights reserved.
+#
+# This source code is licensed under the license found in the
+# LICENSE file in the root directory of this source tree.
+
+# BERT-base text encoder (uncased), CLS pooling.
+# @package model.text_encoder
+
+_target_: apps.baselines.clip.modeling.TextEncoder
+hf_model_name: bert-base-uncased
+embedding_dim: ${model.embedding_dim}
+dropout: 0.1
+freeze: false
+pooling: cls

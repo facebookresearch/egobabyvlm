@@ -1,0 +1,19 @@
+# Copyright (c) Meta Platforms, Inc. and affiliates.
+# All rights reserved.
+#
+# This source code is licensed under the license found in the
+# LICENSE file in the root directory of this source tree.
+
+_target_: "apps.baselines.clip.contrastive_text_extractor.ContrastiveTextFeatureExtractor"
+name: "contrastive_text"
+kwargs:
+  checkpoint_path: "???"
+  finetune: true
+  train_file: "???"
+  validation_file: null
+  finetune_epochs: 30
+  finetune_lr: 1.0e-4
+  finetune_batch_size: 128
+  max_seq_length: 512
+  mlm_probability: 0.15
+  seed: 42

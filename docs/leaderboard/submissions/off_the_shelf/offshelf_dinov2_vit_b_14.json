@@ -1,0 +1,17 @@
+{
+  "id": "offshelf_dinov2_vit_b_14",
+  "model": "DINOv2 ViT-B/14",
+  "team": "Off-the-shelf reference",
+  "architecture": "vision encoder",
+  "training_data": "Web-scale",
+  "category": "offshelf",
+  "n_seeds": 1,
+  "vision": [
+    {
+      "ft": "none",
+      "object_recognition": "76.3 ± 0.2",
+      "visual_properties": "43.5 ± 0.7",
+      "overall": "59.9 ± 0.4"
+    }
+  ]
+}

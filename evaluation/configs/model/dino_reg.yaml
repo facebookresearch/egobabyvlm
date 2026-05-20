@@ -1,0 +1,11 @@
+# Copyright (c) Meta Platforms, Inc. and affiliates.
+# All rights reserved.
+#
+# This source code is licensed under the license found in the
+# LICENSE file in the root directory of this source tree.
+
+_target_: "apps.baselines.dinov2.extractor.DINOv2FeatureExtractor"
+name: "dinov2-vitb14-reg"
+kwargs:
+  pretrained_weights: "dinov2_vitb14_reg"
+  config_file: null

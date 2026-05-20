@@ -1,0 +1,11 @@
+# Copyright (c) Meta Platforms, Inc. and affiliates.
+# All rights reserved.
+#
+# This source code is licensed under the license found in the
+# LICENSE file in the root directory of this source tree.
+
+# Perception-LM 1B — smallest variant, useful for smoke tests and quick iteration.
+# Uses HuggingFace Hub for the checkpoint download.
+
+ckpt: facebook/Perception-LM-1B
+dtype: bf16

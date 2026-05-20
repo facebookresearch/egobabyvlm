@@ -1,0 +1,31 @@
+{
+  "id": "howto_llava",
+  "model": "LLaVA",
+  "team": "EgoBabyVLM (paper)",
+  "architecture": "generative",
+  "training_data": "HowTo",
+  "category": "reference",
+  "n_seeds": 3,
+  "multimodal": {
+    "lexical": "52.4 ± 1.2",
+    "grammatical": "50.7 ± 3.9",
+    "overall": "51.5 ± 2.5"
+  },
+  "vision": [
+    {
+      "ft": "LLaVA",
+      "object_recognition": "44.2 ± 3.4",
+      "visual_properties": "32.8 ± 2.3",
+      "overall": "38.5 ± 2.8"
+    }
+  ],
+  "language": [
+    {
+      "encoder": "GPT-2",
+      "ft": "LLaVA",
+      "syntax": "53.0 ± 1.6",
+      "semantics": "57.4 ± 0.6",
+      "overall": "55.2 ± 1.1"
+    }
+  ]
+}

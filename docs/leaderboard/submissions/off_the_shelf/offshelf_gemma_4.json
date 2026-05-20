@@ -1,0 +1,14 @@
+{
+  "id": "offshelf_gemma_4",
+  "model": "Gemma 4",
+  "team": "Off-the-shelf reference",
+  "architecture": "generative",
+  "training_data": "Web-scale",
+  "category": "offshelf",
+  "n_seeds": 1,
+  "multimodal": {
+    "lexical": "92.1",
+    "grammatical": "75.5",
+    "overall": "83.8"
+  }
+}

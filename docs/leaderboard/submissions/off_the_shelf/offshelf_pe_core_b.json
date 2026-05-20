@@ -1,0 +1,14 @@
+{
+  "id": "offshelf_pe_core_b",
+  "model": "PE-Core-B",
+  "team": "Off-the-shelf reference",
+  "architecture": "contrastive",
+  "training_data": "Web-scale",
+  "category": "offshelf",
+  "n_seeds": 1,
+  "multimodal": {
+    "lexical": "98.7",
+    "grammatical": "78.6",
+    "overall": "88.6"
+  }
+}

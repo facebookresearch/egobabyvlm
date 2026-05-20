@@ -1,0 +1,37 @@
+compute_precision:
+  teacher:
+    dino_head:
+      mixed_precision:
+        reduce_dtype: fp32
+    ibot_head:
+      mixed_precision:
+        reduce_dtype: fp32
+dino:
+  head_n_prototypes: 131072
+ibot:
+  separate_head: true
+  head_n_prototypes: 131072
+train:
+  dataset_path: BabyView;split=TRAIN;root=${oc.env:BABYVIEW_DATA_ROOT};extra=${oc.env:BABYVIEW_EXTRA_ROOT}
+  output_dir: ${oc.env:DINOV2_OUTPUT_DIR,./dinov2_output/babyview_vitb14}
+  seed: 42
+  OFFICIAL_EPOCH_LENGTH: 1812
+  centering: sinkhorn_knopp
+student:
+  arch: vit_base
+  patch_size: 14
+  ffn_layer: swiglufused
+  block_chunks: 2
+teacher:
+  momentum_teacher: 0.994
+optim:
+  epochs: 500
+  weight_decay_end: 0.2
+  base_lr: 8.0e-05
+  lr: 2.0e-05
+  warmup_epochs: 80
+  layerwise_decay: 1.0
+crops:
+  local_crops_size: 98
+evaluation:
+  eval_period_iterations: 36625

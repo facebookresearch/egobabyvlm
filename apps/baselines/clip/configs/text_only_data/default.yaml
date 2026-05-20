@@ -1,0 +1,16 @@
+# Copyright (c) Meta Platforms, Inc. and affiliates.
+# All rights reserved.
+#
+# This source code is licensed under the license found in the
+# LICENSE file in the root directory of this source tree.
+
+# Text-only corpus for the BERT MLM head (interleaved_lm and triple modes).
+# One example per line. Override `train_file` for your corpus.
+# @package text_only_data
+
+train_file: ???
+val_file: null
+max_seq_len: 512
+mlm_probability: 0.15
+batch_size: 64
+num_workers: 2

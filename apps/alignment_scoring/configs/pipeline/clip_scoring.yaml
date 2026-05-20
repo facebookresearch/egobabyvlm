@@ -1,0 +1,47 @@
+# @package _global_
+
+# Copyright (c) Meta Platforms, Inc. and affiliates.
+# All rights reserved.
+#
+# This source code is licensed under the license found in the
+# LICENSE file in the root directory of this source tree.
+
+# CLIP alignment scoring: matched vs shuffled cosine sims, JS divergence.
+#
+# Override matched + shuffled manifests on the CLI:
+#   alignment-clip-scoring \
+#     name=coco_v1 \
+#     matched_processor.data.dataset.manifest_path=/data/coco/train2017_captions.json \
+#     shuffled_processor.data.dataset.manifest_path=/data/coco/train2017_captions_shuffled.json \
+#     output_dir=/tmp/coco_v1
+
+defaults:
+  - /base_clip_scoring_pipeline
+  - /dataset@matched_processor.data.dataset: coco
+  - /dataset@shuffled_processor.data.dataset: coco
+  - /model@matched_processor.model: pe_core_bigg
+  - /model@shuffled_processor.model: pe_core_bigg
+  - _self_
+
+name: ???
+
+output_dir: ${oc.env:HOME}/egobabyvlm_experiments/alignment_scoring/${name}
+
+matched_processor:
+  name: ${name}_matched
+  data:
+    batch_size: 32
+    num_workers: 4
+    pin_memory: true
+  num_items_per_chunk: 2000
+
+shuffled_processor:
+  name: ${name}_shuffled
+  data:
+    batch_size: 32
+    num_workers: 4
+    pin_memory: true
+  num_items_per_chunk: 2000
+
+launcher:
+  cluster: local

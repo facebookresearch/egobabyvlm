@@ -1,0 +1,240 @@
+# Copyright (c) Meta Platforms, Inc. and affiliates.
+# All rights reserved.
+#
+# This source code is licensed under the license found in the
+# LICENSE file in the root directory of this source tree.
+
+[build-system]
+requires = ["setuptools>=75.3.0,<81"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "egobabyvlm"
+version = "0.0.1"
+requires-python = "==3.12.*"
+dependencies = []
+
+[project.scripts]
+alignment-clip-scoring = "apps.alignment_scoring.pipelines.clip_scoring:main"
+alignment-sts-scoring = "apps.alignment_scoring.pipelines.sts_scoring:main"
+alignment-captioning = "apps.alignment_scoring.pipelines.captioning:main"
+alignment-vqa-scoring = "apps.alignment_scoring.pipelines.vqa_scoring:main"
+alignment-finetune-lora = "apps.alignment_scoring.pipelines.finetune_lora:main"
+alignment-create-shuffled-manifest = "apps.alignment_scoring.scripts.create_shuffled_manifest:main"
+egobabyvlm-train-contrastive = "apps.baselines.clip.training.train:main"
+egobabyvlm-export-text-encoder-to-hf = "apps.baselines.clip.scripts.export_text_encoder_to_hf:main"
+egobabyvlm-extract-frames = "apps.data_preprocessing.frames.extract_frames:main"
+egobabyvlm-transcribe-whisperx = "apps.data_preprocessing.transcription.whisperx_transcribe:main"
+egobabyvlm-filter-vtc = "apps.data_preprocessing.transcription.filter_with_vtc:main"
+egobabyvlm-build-clip-manifest = "apps.data_preprocessing.manifests.build_manifest:main"
+egobabyvlm-swapbench-build-word-lists = "apps.swapbench.longtail_swap.build_word_lists:main"
+egobabyvlm-swapbench-lt-swap = "apps.swapbench.longtail_swap.generate:main"
+egobabyvlm-swapbench-vp-swap = "apps.swapbench.visual_property_swap.generate:main"
+
+[dependency-groups]
+dev = [
+    "pre-commit>=4.0.1",
+    "ruff==0.11.9",
+    "typos==1.32.0",
+    "ipykernel>=6.29.5",
+    "mypy>=1.13.0",
+    "pytest>=8.3.3",
+]
+
+[tool.setuptools.packages.find]
+where = [".", "apps/baselines/dinov2/third_party"]
+include = ["core*", "evaluation*", "apps*", "dinov2*"]
+
+[tool.ruff]
+line-length = 119
+extend-exclude = [
+    "apps/alignment_scoring/third_party/perception_models/apps/**",
+    "apps/alignment_scoring/third_party/perception_models/core/**",
+    "apps/baselines/dinov2/third_party/dinov2/**",
+    "apps/swapbench/third_party/lt_swap/**",
+]
+
+[tool.ruff.lint]
+ignore = [
+    "COM812", # Incompatible format recommendation. Officially suggested to remove.
+    "D",      # Documentation.
+    "EM101",  # Exceptions can have literal string.
+    "EM102",  # f-string in exceptions are ok.
+    "ERA001", # Commented code is ok.
+    "ISC001", # Incompatible format recommendation. Officially suggested to remove.
+    "PD011",  # Leads to false positives.
+    "PT009",  # Allow unittest assertion
+    "PT027",  # Allow unittest raises assertion
+    "PTH206", # Needed in polars expressions.
+    "S101",   # Assert are ok.
+    "S311",   # Standard random is ok.
+    "S602",   # Subprocess are ok.
+    "S603",   # Subprocess are ok.
+    "TRY003", # Exceptions can have long error messages.
+]
+select = ["ALL"]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**" = [
+    "PLR2004", # Magic values are fine in test assertions.
+    "S108",    # Hardcoded /tmp paths are fine in tests (not actually written).
+    "SLF001",  # Private member access is fine when testing private helpers.
+    "FBT001",  # Boolean positional args allowed in parametrized test cases.
+    "TC003",   # No need to gate stdlib imports behind TYPE_CHECKING in tests.
+]
+"evaluation/**" = [
+    "A001",    # Shadowing built-ins is allowed in pre-existing signatures.
+    "A002",    # Shadowing built-ins is allowed in pre-existing signatures.
+    "ANN001",  # Missing type annotation on pre-existing function args.
+    "ANN201",  # Missing return type on pre-existing public functions.
+    "ANN202",  # Missing return type on pre-existing private functions.
+    "ANN401",  # `Any` is allowed for hydra-instantiated targets.
+    "ARG002",  # Unused method args appear in stopes lifecycle hooks.
+    "BLE001",  # Bare except is fine for fallback paths.
+    "C414",    # Unnecessary list() in sorted() not enforced.
+    "C901",    # Cyclomatic complexity not enforced.
+    "E501",    # Line length not enforced.
+    "FBT001",  # Boolean positional args allowed in pre-existing signatures.
+    "FBT002",  # Boolean defaults allowed in pre-existing signatures.
+    "N806",    # Uppercase locals allowed.
+    "NPY002",  # Older numpy random API allowed.
+    "PLR0912", # Too many branches not enforced.
+    "PLR0913", # Too many arguments not enforced.
+    "PLR0915", # Too many statements not enforced.
+    "PLR2004", # Magic values allowed in eval-task setup.
+    "PLW2901", # Loop variable overwrite allowed.
+    "RET504",  # Return-then-assign allowed.
+    "RUF001",  # Ambiguous unicode literals appear in eval rule names.
+    "RUF002",  # Ambiguous unicode literals in docstrings.
+    "SIM108",  # Ternary preference not enforced.
+    "SIM113",  # Enumerate preference not enforced.
+    "TRY400",  # Logger.exception preference not enforced.
+    "TRY401",  # Redundant exception in logger.exception not enforced.
+]
+"apps/baselines/**" = [
+    "ANN001",  # Missing type annotation on pre-existing function args.
+    "C901",    # Cyclomatic complexity not enforced.
+    "PLR0912", # Too many branches not enforced.
+    "PLR0913", # Too many arguments not enforced.
+    "RET504",  # Return-then-assign allowed.
+    "SLF001",  # Private member access allowed for monkey-patched open_clip internals.
+]
+"scripts/**" = [
+    "C901",    # Orchestrator main() is allowed to be branchy.
+    "S607",    # `git`, `wget` etc. are looked up on PATH by design.
+    "T201",    # CLI scripts intentionally print to stdout.
+    "TC003",   # No need to gate stdlib imports behind TYPE_CHECKING in scripts.
+    "TRY400",  # logging.error is fine; we don't need full tracebacks in scripts.
+]
+"tests/integration/_run_eval_module.py" = [
+    "T201",    # The runner prints results to stdout for debugging.
+]
+"apps/alignment_scoring/**" = [
+    "ANN001",  # Missing type annotation on pre-existing function args.
+    "ANN401",  # `Any` is allowed for hydra-instantiated config args.
+    "BLE001",  # Bare except is fine for fallback paths.
+    "B007",    # Unused loop variables in pre-existing logic.
+    "C901",    # Cyclomatic complexity not enforced.
+    "PLR0912", # Too many branches not enforced.
+    "PLR0913", # Too many arguments not enforced.
+    "PLR0915", # Too many statements not enforced.
+    "PLR2004", # Magic values allowed.
+    "SLF001",  # Private member access allowed for the perception_models internals.
+    "TC001",   # Allow runtime annotations on local types.
+    "TC002",   # Allow runtime annotations on third-party imports.
+    "TC003",   # Allow runtime annotations on stdlib imports.
+]
+
+[tool.ruff.lint.pep8-naming]
+extend-ignore-names = ["F"] # from torch.nn import functional as F
+
+[tool.ruff.lint.flake8-self]
+extend-ignore-names = [
+    "_foreach_mul",
+    "_foreach_sub",
+    "_foreach_norm",
+    "_appdirs",
+    "_inductor",
+]
+
+[tool.mypy]
+exclude = [
+    # Third-party code we don't own — mypy errors live in their tracker, not ours.
+    "apps/alignment_scoring/third_party/perception_models/.*",
+    "apps/baselines/dinov2/third_party/dinov2/.*",
+    "apps/swapbench/third_party/lt_swap/.*",
+]
+
+[[tool.mypy.overrides]]
+# perception_models — type errors belong to upstream, not us.
+module = ["apps.alignment_scoring.third_party.*"]
+ignore_errors = true
+
+[[tool.mypy.overrides]]
+# dinov2 — type errors belong to upstream, not us.
+module = ["apps.baselines.dinov2.third_party.*"]
+ignore_errors = true
+
+[[tool.mypy.overrides]]
+# facebookresearch/lt-swap — type errors belong to upstream, not us.
+module = ["apps.swapbench.third_party.*"]
+ignore_errors = true
+
+[[tool.mypy.overrides]]
+# Heavy ML deps that don't ship type stubs.
+module = [
+    "torchaudio",
+    "torchcodec",
+    "torchcodec.*",
+    "torchvision",
+    "torchvision.*",
+    "open_clip",
+    "open_clip.*",
+    "open_clip_train",
+    "open_clip_train.*",
+    "decord",
+    "scipy",
+    "scipy.*",
+    "sklearn",
+    "sklearn.*",
+    "seaborn",
+    "tqdm",
+    "stopes.*",
+    "lm_eval",
+    "lm_eval.*",
+    "sonar",
+    "sonar.*",
+    "fairseq2",
+    "fairseq2.*",
+    "xformers",
+    "xformers.*",
+    "sentencepiece",
+    "rds2py",
+    "pycocotools",
+    "pycocotools.*",
+    "datasets",
+    "wandb",
+    "dinov2",
+    "dinov2.*",
+    "h5py",
+    "nltk",
+    "nltk.*",
+    "diffusers",
+    "diffusers.*",
+    "yaml",
+    "requests",
+    "pandas",
+    "pandas.*",
+    "joblib",
+    "joblib.*",
+    "whisperx",
+    "whisperx.*",
+]
+ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+markers = [
+    "integration: tests that hit the network or run heavy models; opt in with `pytest -m integration`",
+    "gpu: tests that require a CUDA GPU; opt in with `pytest -m gpu`",
+]
+addopts = "-m 'not integration and not gpu'"

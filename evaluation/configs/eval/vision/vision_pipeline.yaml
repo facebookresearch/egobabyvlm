@@ -1,0 +1,95 @@
+# Copyright (c) Meta Platforms, Inc. and affiliates.
+# All rights reserved.
+#
+# This source code is licensed under the license found in the
+# LICENSE file in the root directory of this source tree.
+
+# Vision Pipeline Configuration
+# Runs all vision evaluation tasks in parallel with a shared backbone.
+#
+# Usage:
+#   python eval_launcher.py eval=vision/vision_pipeline model=dino_howto_backbone
+#   python eval_launcher.py eval=vision/vision_pipeline model=my_dino
+
+defaults:
+  - vision_pipeline_base
+  # ImageNet tasks
+  - /eval@tasks.knn_imagenet: vision/knn_imagenet
+  - /eval@tasks.linear_imagenet: vision/linear_imagenet
+  - /eval@tasks.abx_imagenet: vision/abx_imagenet
+  # CountBench tasks
+  - /eval@tasks.linear_countbench: vision/linear_countbench
+  - /eval@tasks.abx_countbench: vision/abx_countbench
+  # MNIST tasks
+  - /eval@tasks.linear_mnist: vision/linear_mnist
+  - /eval@tasks.abx_mnist: vision/abx_mnist
+  # Semantic Segmentation
+  - /eval@tasks.semantic_seg: vision/semantic_seg_coco_171
+  # Depth Estimation
+  - /eval@tasks.depth: vision/depth_nyu
+  - _self_
+
+_target_: "evaluation.vision.pipeline.VisionPipeline"
+
+name: "vision_pipeline"
+
+output_dir: "${oc.env:HOME}/egobabyvlm_experiments/evals"
+
+model: ${model}
+
+seed: 42
+
+launcher:
+  _target_: "stopes.core.Launcher"
+  cluster: "slurm"
+  log_folder: ${hydra:sweep.dir}/executor_logs
+  config_dump_dir: ${hydra:sweep.dir}/config_logs
+  cache:
+    caching_dir: ${hydra:sweep.dir}/cache
+  update_parameters:
+    slurm_qos: "???"
+    slurm_account: "???"
+    slurm_setup:
+      - "unset SLURM_CPU_BIND SLURM_CPU_BIND_TYPE"
+
+aggregate_results: true
+
+tasks:
+  # Classification tasks (use model field)
+  knn_imagenet:
+    model: ${model}
+    output_dir: ${eval.output_dir}
+    seed: ${eval.seed}
+  linear_imagenet:
+    model: ${model}
+    output_dir: ${eval.output_dir}
+    seed: ${eval.seed}
+  abx_imagenet:
+    model: ${model}
+    output_dir: ${eval.output_dir}
+    seed: ${eval.seed}
+  linear_countbench:
+    model: ${model}
+    output_dir: ${eval.output_dir}
+    seed: ${eval.seed}
+  abx_countbench:
+    model: ${model}
+    output_dir: ${eval.output_dir}
+    seed: ${eval.seed}
+  linear_mnist:
+    model: ${model}
+    output_dir: ${eval.output_dir}
+    seed: ${eval.seed}
+  abx_mnist:
+    model: ${model}
+    output_dir: ${eval.output_dir}
+    seed: ${eval.seed}
+  # Dense prediction tasks (use backbone field)
+  semantic_seg:
+    backbone: ${model}
+    output_dir: ${eval.output_dir}
+    seed: ${eval.seed}
+  depth:
+    backbone: ${model}
+    output_dir: ${eval.output_dir}
+    seed: ${eval.seed}

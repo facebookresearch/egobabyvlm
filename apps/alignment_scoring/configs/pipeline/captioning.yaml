@@ -1,0 +1,38 @@
+# @package _global_
+
+# Copyright (c) Meta Platforms, Inc. and affiliates.
+# All rights reserved.
+#
+# This source code is licensed under the license found in the
+# LICENSE file in the root directory of this source tree.
+
+# PLM captioning. Re-captions a manifest with Perception-LM and writes the new
+# captions back into a copy of the manifest at output_manifest_path.
+#
+# Override on the CLI:
+#   alignment-captioning \
+#     name=coco_recap \
+#     generation.dataset.manifest_path=/data/coco/captions_train2017.json \
+#     generation.dataset.dataset_dir=/data/coco/train2017 \
+#     output_manifest_path=/tmp/coco_recaptioned.json
+
+defaults:
+  - /base_captioning_pipeline
+  - /dataset_path@generation.dataset: coco
+  - /model@generation: plm_8b
+  - _self_
+
+name: ???
+
+output_dir: ${oc.env:HOME}/egobabyvlm_experiments/alignment_scoring/${name}
+output_manifest_path: ${output_dir}/recaptioned.json
+
+generation:
+  name: ${name}
+  question: "Describe this image in detail."
+  num_items_per_chunk: 500
+  max_gen_len: 256
+  temperature: 0.6
+
+launcher:
+  cluster: local

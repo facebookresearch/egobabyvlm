@@ -1,0 +1,19 @@
+# @package _global_
+
+# Copyright (c) Meta Platforms, Inc. and affiliates.
+# All rights reserved.
+#
+# This source code is licensed under the license found in the
+# LICENSE file in the root directory of this source tree.
+
+defaults:
+  - base_config
+  - eval: ???
+  - model: null
+  - _self_
+
+hydra:
+  verbose: false
+  mode: MULTIRUN
+  sweep:
+    dir: slurm

@@ -1,0 +1,31 @@
+# Copyright (c) Meta Platforms, Inc. and affiliates.
+# All rights reserved.
+#
+# This source code is licensed under the license found in the
+# LICENSE file in the root directory of this source tree.
+
+# @group vision
+# ABX ImageNet Evaluation
+
+defaults:
+  - abx
+  - _self_
+
+output_dir: "${oc.env:HOME}/egobabyvlm_experiments/evals"
+
+dataset:
+  _target_: "evaluation.data.abx.DinoImagenetClassificationDataset"
+  name: "imagenet"
+  kwargs:
+    dataset_str: "ImageNet;split=VAL;root=${oc.env:IMAGENET_ROOT};extra=${oc.env:IMAGENET_EXTRA}"
+
+pooling: "cls"
+last_n_layers: 1
+
+num_triplets: 100
+batch_size: 512
+max_samples: 50000
+num_workers: 12
+seed: 42
+
+model: ${model}

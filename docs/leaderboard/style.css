@@ -1,0 +1,787 @@
+/*
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+ * All rights reserved.
+ *
+ * This source code is licensed under the license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
+
+:root {
+  /* Meta brand palette — see https://about.meta.com/brand/. */
+  --meta-blue: #0064e0;
+  --meta-blue-light: #0081fb;
+  --meta-blue-deep: #0050b5;
+  --meta-purple: #9747ff;
+  --meta-pink: #fe385c;
+  --meta-soft-blue: #e7f3ff;
+  --meta-ink: #1c2b33;
+
+  --bg: #f5f8fc;
+  --surface: #ffffff;
+  --fg: var(--meta-ink);
+  --muted: #5e6b75;
+  --border: #dbe3ed;
+  --border-strong: #b8c4d4;
+  --accent: var(--meta-blue);
+  --accent-2: var(--meta-blue-light);
+  --accent-soft: var(--meta-soft-blue);
+  --topline-bg: #fef3c7;
+  --topline-border: #fcd34d;
+  --topline-text: #92400e;
+  --baseline-bg: #ecfdf5;
+  --baseline-border: #6ee7b7;
+  --baseline-text: #065f46;
+  --offshelf-bg: var(--meta-soft-blue);
+  --offshelf-border: #93c5fd;
+  --offshelf-text: #0050b5;
+  --reference-bg: #f5f3ff;
+  --reference-border: #c4b5fd;
+  --reference-text: #5b21b6;
+  --chance-bg: #f1f5f9;
+  --shadow-sm: 0 1px 2px rgba(28, 43, 51, 0.08);
+  --shadow-md: 0 8px 24px rgba(28, 43, 51, 0.10);
+  --shadow-lg: 0 24px 48px -12px rgba(0, 100, 224, 0.22);
+}
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Helvetica, Arial, sans-serif;
+  color: var(--fg);
+  background: var(--bg);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Top branded accent stripe — Meta infinity gradient on every page. */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 5px;
+  background: linear-gradient(90deg,
+    var(--meta-blue) 0%,
+    var(--meta-blue-light) 30%,
+    var(--meta-purple) 65%,
+    var(--meta-pink) 100%);
+  z-index: 100;
+  pointer-events: none;
+}
+
+.container {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+/* ---------- Hero ---------- */
+.hero {
+  position: relative;
+  color: #fff;
+  padding: 2rem 0 5rem;
+  margin-bottom: 3rem;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(1100px 600px at 80% -10%, rgba(151, 71, 255, 0.55), transparent 60%),
+    radial-gradient(900px 500px at 0% 20%, rgba(0, 129, 251, 0.6), transparent 60%),
+    radial-gradient(700px 400px at 100% 100%, rgba(254, 56, 92, 0.28), transparent 65%),
+    linear-gradient(135deg, #03143a 0%, #0050b5 55%, #0064e0 100%);
+  z-index: -1;
+}
+
+.hero-bg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px);
+  background-size: 22px 22px;
+  opacity: 0.4;
+  mask-image: linear-gradient(to bottom, black 30%, transparent 100%);
+}
+
+.topnav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.25rem 0 2.5rem;
+}
+
+/* ---------- Affiliations / org logo strip ---------- */
+/* Placed on the light section between the hero and main content so the
+   logos display in their original colors without needing a white pill. */
+.org-strip {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1.75rem 2.5rem;
+  padding: 1.25rem 0 1.5rem;
+  margin: 0 0 2rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.org-strip img {
+  display: block;
+  width: auto;
+  object-fit: contain;
+  flex: 0 0 auto;
+  opacity: 0.95;
+  transition: opacity 0.15s ease;
+}
+
+.org-strip img:hover { opacity: 1; }
+
+/* Wide horizontal text logos (Meta, Stanford, UTokyo). */
+.org-strip img.logo-wide { height: 40px; }
+
+/* The Meta wordmark is visually heavier than the other wide logos at the
+   same height; shrink it slightly so the strip reads more evenly. */
+.org-strip img.logo-wide.logo-meta { height: 28px; }
+
+/* Tall / square logos (ENS). Nudged up a few px so its visual center
+   aligns better with the wide wordmarks. */
+.org-strip img.logo-tall { height: 68px; transform: translateY(-6px); }
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: #fff;
+  text-decoration: none;
+}
+
+.brand-meta {
+  height: 22px;
+  width: auto;
+  display: block;
+  /* Force the Meta wordmark to white so it reads on the dark hero. */
+  filter: brightness(0) invert(1);
+}
+
+.brand-divider {
+  display: inline-block;
+  width: 1px;
+  height: 22px;
+  background: rgba(255, 255, 255, 0.35);
+}
+
+.brand-name { font-size: 1rem; font-weight: 700; }
+
+.topnav-links a {
+  color: rgba(255, 255, 255, 0.85);
+  text-decoration: none;
+  margin-left: 1.5rem;
+  font-weight: 500;
+  font-size: 0.95rem;
+  transition: color 0.15s ease;
+}
+.topnav-links a:hover { color: #fff; }
+
+.hero-content { max-width: 760px; }
+
+/* Wider variant for landing-page hero (less vertical space). */
+.hero-content-wide { max-width: 1040px; }
+.hero-content-wide .tagline,
+.hero-content-wide .paper-subtitle,
+.hero-content-wide .authors,
+.hero-content-wide .affiliations,
+.hero-content-wide .contrib-notes { max-width: 100%; }
+
+.hero h1 {
+  font-size: clamp(2.25rem, 4.5vw, 3.5rem);
+  margin: 0 0 1rem;
+  letter-spacing: -0.03em;
+  font-weight: 800;
+  background: linear-gradient(110deg,
+    #ffffff 0%,
+    #cfe1ff 30%,
+    var(--meta-blue-light) 55%,
+    var(--meta-purple) 80%,
+    var(--meta-pink) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.tagline {
+  font-size: 1.15rem;
+  color: #d6e7ff;
+  margin: 0 0 2rem;
+  max-width: 60ch;
+}
+
+.paper-subtitle {
+  font-size: 1.05rem;
+  color: #b8d4ff;
+  font-style: italic;
+  margin: -0.5rem 0 1.25rem;
+  max-width: 70ch;
+  font-weight: 500;
+}
+
+/* ---------- Authors / affiliations ---------- */
+.authors {
+  margin: 0 0 0.85rem;
+  font-size: 0.98rem;
+  color: #e0edff;
+  line-height: 1.7;
+  max-width: 78ch;
+}
+
+.authors .author {
+  display: inline;
+  margin-right: 0.55rem;
+  white-space: nowrap;
+}
+
+.authors .author a {
+  color: #8fb8ff;
+  text-decoration: none;
+  border-bottom: 1px dotted rgba(143, 184, 255, 0.5);
+}
+.authors .author a:hover { color: #fff; border-bottom-color: #fff; }
+
+.authors sup,
+.affiliations sup,
+.contrib-notes sup {
+  font-size: 0.7em;
+  color: #b8d4ff;
+  margin-left: 0.05em;
+}
+
+.affiliations {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 1.1rem;
+  font-size: 0.86rem;
+  color: #b8d4ff;
+  margin: 0 0 0.5rem;
+  max-width: 78ch;
+}
+
+.contrib-notes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 1.1rem;
+  font-size: 0.82rem;
+  color: rgba(184, 212, 255, 0.85);
+  margin: 0 0 1.75rem;
+  max-width: 78ch;
+}
+
+.contrib-notes a {
+  color: #b8d4ff;
+}
+.contrib-notes a:hover { color: #fff; }
+
+.cta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.85rem;
+  align-items: center;
+}
+
+/* Stack of CTA rows (e.g. row 1: Paper/Code/Leaderboard, row 2: datasets). */
+.cta-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 1.6rem;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.75rem 1.25rem;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 0.97rem;
+  text-decoration: none;
+  border: 1px solid transparent;
+  transition: transform 0.12s ease, box-shadow 0.12s ease, background 0.15s ease;
+}
+
+.btn svg { width: 18px; height: 18px; }
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--meta-blue) 0%, var(--meta-blue-light) 100%);
+  color: #fff;
+  box-shadow: 0 8px 20px rgba(0, 100, 224, 0.4);
+}
+
+.btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 12px 28px rgba(0, 100, 224, 0.55);
+}
+
+.btn-secondary {
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.25);
+}
+
+.btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.16);
+}
+
+.btn-github {
+  background: linear-gradient(135deg, #f59e0b, #ef4444);
+  color: #fff;
+  box-shadow: 0 8px 20px rgba(239, 68, 68, 0.32);
+}
+
+.btn-github:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 12px 28px rgba(239, 68, 68, 0.42);
+}
+
+.btn-leaderboard {
+  position: relative;
+  overflow: hidden;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.18) 0%, rgba(255, 255, 255, 0) 55%),
+    linear-gradient(135deg, var(--meta-blue-light) 0%, var(--meta-purple) 55%, var(--meta-pink) 100%);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  box-shadow:
+    0 10px 24px rgba(0, 129, 251, 0.35),
+    0 2px 6px rgba(254, 56, 92, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.35);
+  text-shadow: 0 1px 1px rgba(15, 23, 42, 0.18);
+}
+
+.btn-leaderboard svg {
+  filter: drop-shadow(0 1px 1px rgba(15, 23, 42, 0.25));
+}
+
+.btn-leaderboard::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(120deg, transparent 30%, rgba(255, 255, 255, 0.35) 50%, transparent 70%);
+  background-size: 200% 100%;
+  background-position: 200% 0;
+  opacity: 0;
+  transition: opacity 0.2s ease, background-position 0.6s ease;
+  pointer-events: none;
+}
+
+.btn-leaderboard:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    0 16px 34px rgba(151, 71, 255, 0.45),
+    0 4px 10px rgba(254, 56, 92, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.45);
+}
+
+.btn-leaderboard:hover::after {
+  opacity: 1;
+  background-position: -50% 0;
+}
+
+.hero-stats {
+  display: flex;
+  gap: 2.25rem;
+  margin-top: 2.5rem;
+  padding-top: 1.75rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.stat { display: flex; flex-direction: column; }
+.stat-value {
+  font-size: 1.65rem;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: -0.02em;
+}
+.stat-label {
+  font-size: 0.82rem;
+  color: rgba(184, 212, 255, 0.85);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+/* ---------- Sections ---------- */
+main { padding-bottom: 4rem; }
+
+section { margin-bottom: 3.5rem; }
+
+h2 {
+  font-size: 1.75rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin: 0 0 1rem;
+}
+
+h3 {
+  font-size: 1.05rem;
+  font-weight: 600;
+  margin: 0 0 0.5rem;
+  color: #1e293b;
+}
+
+p { margin: 0 0 1rem; }
+
+.muted { color: var(--muted); font-size: 0.95rem; }
+
+code {
+  background: var(--accent-soft);
+  color: var(--meta-blue-deep);
+  padding: 0.12rem 0.4rem;
+  border-radius: 5px;
+  font-size: 0.88em;
+  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+a { color: var(--accent); }
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--meta-blue);
+  border-radius: 16px;
+  padding: 1.75rem 2rem;
+  box-shadow: var(--shadow-sm);
+  min-width: 0;
+}
+
+.card pre {
+  max-width: 100%;
+  box-sizing: border-box;
+  overflow-x: auto;
+  background: #0f172a;
+  color: #e2e8f0;
+  padding: 0.85rem 1rem;
+  border-radius: 10px;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.86rem;
+  margin: 0.85rem 0;
+}
+
+.card pre.compact { font-size: 0.82rem; }
+
+.section-head { margin-bottom: 1.25rem; }
+
+/* ---------- Steps ---------- */
+.steps {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+}
+
+.step {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 1.4rem 1.4rem 1.5rem;
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+  /* Grid tracks default to min-content width, which lets long unbreakable
+     strings (e.g. <code>core/protocols/feature_extractor.py</code>) push
+     the card past its column. Setting min-width: 0 + overflow-wrap:
+     anywhere lets the text wrap mid-token when needed. */
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.step code {
+  word-break: break-word;
+}
+
+.step:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--border-strong);
+}
+
+.step-num {
+  display: inline-grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: linear-gradient(135deg, var(--meta-blue) 0%, var(--meta-blue-light) 100%);
+  color: #fff;
+  font-weight: 700;
+  font-size: 0.9rem;
+  margin-bottom: 0.85rem;
+  box-shadow: 0 4px 10px rgba(0, 100, 224, 0.35);
+}
+
+.step p {
+  font-size: 0.93rem;
+  color: #334155;
+  margin: 0;
+}
+
+/* ---------- Leaderboard ---------- */
+.table-wrap {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  box-shadow: var(--shadow-md);
+  overflow: hidden;
+}
+
+table.leaderboard {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+}
+
+table.leaderboard th,
+table.leaderboard td {
+  padding: 0.95rem 1.1rem;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+  vertical-align: middle;
+}
+
+table.leaderboard tbody tr:last-child td { border-bottom: none; }
+
+table.leaderboard thead th {
+  background: #f8fafc;
+  font-weight: 600;
+  color: #475569;
+  font-size: 0.8rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  border-bottom: 1px solid var(--border-strong);
+}
+
+table.leaderboard tbody tr {
+  transition: background 0.12s ease;
+}
+
+table.leaderboard tbody tr:hover { background: #f8fafc; }
+
+tr.topline {
+  background: linear-gradient(90deg, var(--topline-bg) 0%, #fffbeb 100%);
+}
+tr.topline:hover { background: #fde68a; }
+
+tr.baseline {
+  background: linear-gradient(90deg, var(--baseline-bg) 0%, #f0fdf4 100%);
+}
+tr.baseline:hover { background: #d1fae5; }
+
+tr.offshelf {
+  background: linear-gradient(90deg, var(--offshelf-bg) 0%, #f5f9ff 100%);
+}
+tr.offshelf:hover { background: #dbeafe; }
+
+tr.reference {
+  background: linear-gradient(90deg, var(--reference-bg) 0%, #faf8ff 100%);
+}
+tr.reference:hover { background: #ede9fe; }
+
+tr.chance {
+  background: var(--chance-bg);
+  color: var(--muted);
+  font-style: italic;
+}
+tr.chance .score { color: var(--muted); font-weight: 600; font-size: 0.95rem; }
+
+.score {
+  font-weight: 700;
+  font-size: 1.05rem;
+  color: #0f172a;
+  font-variant-numeric: tabular-nums;
+}
+
+.std {
+  color: var(--muted);
+  font-size: 0.85rem;
+  margin-left: 0.15rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.pill {
+  display: inline-block;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 0.2rem 0.55rem;
+  border-radius: 999px;
+  margin-left: 0.45rem;
+  vertical-align: middle;
+  border: 1px solid;
+}
+
+.pill-topline {
+  background: var(--topline-bg);
+  color: var(--topline-text);
+  border-color: var(--topline-border);
+}
+
+.pill-baseline {
+  background: var(--baseline-bg);
+  color: var(--baseline-text);
+  border-color: var(--baseline-border);
+}
+
+.pill-offshelf {
+  background: var(--offshelf-bg);
+  color: var(--offshelf-text);
+  border-color: var(--offshelf-border);
+}
+
+.pill-reference {
+  background: var(--reference-bg);
+  color: var(--reference-text);
+  border-color: var(--reference-border);
+}
+
+/* ---------- Table titles ---------- */
+.table-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #1e293b;
+  margin: 2.25rem 0 0.35rem;
+  letter-spacing: -0.01em;
+}
+
+#leaderboard .table-title:first-of-type { margin-top: 1.5rem; }
+
+.table-subtitle {
+  margin: 0 0 0.85rem;
+  font-size: 0.9rem;
+  max-width: 78ch;
+}
+
+/* ---------- Submit list ---------- */
+#submit ul {
+  margin: 0.5rem 0 0.75rem;
+  padding-left: 1.2rem;
+}
+
+/* ---------- Eval families list (About card) ---------- */
+.eval-families {
+  list-style: none;
+  padding: 0;
+  margin: 0.75rem 0 1.25rem;
+  display: grid;
+  gap: 0.85rem;
+}
+
+.eval-families > li {
+  background: #f8fafc;
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--meta-blue);
+  border-radius: 10px;
+  padding: 0.85rem 1.1rem;
+}
+
+.eval-families > li > strong {
+  display: block;
+  font-size: 1rem;
+  color: var(--meta-blue-deep);
+  margin-bottom: 0.4rem;
+}
+
+.eval-families ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 0.25rem;
+}
+
+.eval-families ul li {
+  font-size: 0.93rem;
+  color: #334155;
+  line-height: 1.55;
+}
+
+.eval-families .grp {
+  font-weight: 600;
+  color: #1e293b;
+  margin-right: 0.25rem;
+}
+
+.eval-families .eval-note {
+  margin: 0.55rem 0 0;
+  font-size: 0.85rem;
+  color: var(--muted);
+  font-style: italic;
+}
+
+/* ---------- Footer ---------- */
+footer {
+  border-top: 1px solid var(--border);
+  padding: 1.5rem 0;
+  background: var(--surface);
+}
+
+.footer-inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.6rem 1.5rem;
+}
+
+.footer-copyright {
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+.footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 1.25rem;
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+.footer-links a {
+  color: var(--muted);
+  text-decoration: none;
+}
+
+.footer-links a:hover {
+  color: var(--meta-blue);
+  text-decoration: underline;
+}
+
+footer p { margin: 0; font-size: 0.9rem; color: var(--muted); }
+
+/* ---------- Responsive ---------- */
+@media (max-width: 720px) {
+  .topnav { padding-bottom: 1.75rem; }
+  .topnav-links a { margin-left: 0.95rem; font-size: 0.88rem; }
+  .brand-name { display: none; }
+
+  .org-strip { gap: 1rem 1.25rem; padding: 0.6rem 0.9rem; justify-content: center; }
+  .org-strip img.logo-wide { height: 26px; }
+  .org-strip img.logo-wide.logo-meta { height: 19px; }
+  .org-strip img.logo-tall { height: 44px; transform: translateY(-4px); }
+
+  .hero { padding: 1.5rem 0 4rem; }
+  .hero-stats { gap: 1.5rem; }
+  .stat-value { font-size: 1.35rem; }
+
+  table.leaderboard { font-size: 0.85rem; }
+  table.leaderboard th, table.leaderboard td { padding: 0.7rem 0.6rem; }
+  .table-wrap { border-radius: 12px; overflow-x: auto; }
+
+  .card { padding: 1.4rem 1.25rem; }
+}

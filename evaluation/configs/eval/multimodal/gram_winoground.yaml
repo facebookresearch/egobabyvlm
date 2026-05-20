@@ -1,0 +1,30 @@
+# Copyright (c) Meta Platforms, Inc. and affiliates.
+# All rights reserved.
+#
+# This source code is licensed under the license found in the
+# LICENSE file in the root directory of this source tree.
+
+# @group multimodal
+# DevBench Gram-Winoground Evaluation
+
+defaults:
+  - devbench
+  - _self_
+
+output_dir: "${oc.env:HOME}/egobabyvlm_experiments/evals"
+
+_target_: "evaluation.multimodal.devbench.base.DevBenchGramWinogroundEvalModule"
+
+name: "gram-winoground"
+
+dataset:
+  _target_: "evaluation.data.devbench.DevBenchDataset"
+  name: "gram-winoground"
+  kwargs:
+    dataset_folder: "${oc.env:DEVBENCH_DATA_ROOT}/gram-winoground"
+
+human_data_path: "${oc.env:DEVBENCH_DATA_ROOT}/gram-winoground/winoground-human.jsonl"
+
+model: ${model}
+
+seed: 42

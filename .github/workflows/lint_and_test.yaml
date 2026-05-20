@@ -1,0 +1,128 @@
+# Copyright (c) Meta Platforms, Inc. and affiliates.
+# All rights reserved.
+#
+# This source code is licensed under the license found in the
+# LICENSE file in the root directory of this source tree.
+
+name: Lint and Test
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  lint:
+    name: Linting
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - uses: prefix-dev/setup-pixi@v0.8.10
+        env:
+          UV_HTTP_TIMEOUT: "300"
+        with:
+          pixi-version: v0.68.0
+          environments: dev
+          cache: false
+          locked: false
+          frozen: true
+
+      - name: Ruff check
+        run: pixi run -e dev lint
+
+      - name: Ruff format check
+        run: pixi run -e dev format-check
+
+  typos:
+    name: Spell Check
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - uses: prefix-dev/setup-pixi@v0.8.10
+        env:
+          UV_HTTP_TIMEOUT: "300"
+        with:
+          pixi-version: v0.68.0
+          environments: dev
+          cache: false
+          locked: false
+          frozen: true
+
+      - name: Typos check
+        run: pixi run -e dev typos-check
+
+  mypy:
+    name: Type Checking
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Check for source directories
+        id: src
+        run: |
+          if [ -d core ] || [ -d evaluation ] || [ -d apps ]; then
+            echo "exists=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "exists=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - uses: prefix-dev/setup-pixi@v0.8.10
+        if: steps.src.outputs.exists == 'true'
+        env:
+          UV_HTTP_TIMEOUT: "300"
+        with:
+          pixi-version: v0.68.0
+          environments: dev
+          cache: false
+          locked: false
+          frozen: true
+
+      - name: MyPy
+        if: steps.src.outputs.exists == 'true'
+        run: |
+          targets=""
+          [ -d core ] && targets="$targets core"
+          [ -d evaluation ] && targets="$targets evaluation"
+          [ -d apps ] && targets="$targets apps"
+          pixi run -e dev mypy --exclude 'apps/alignment_scoring/third_party/perception_models/.*' $targets
+
+  test:
+    name: Tests
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - uses: prefix-dev/setup-pixi@v0.8.10
+        env:
+          UV_HTTP_TIMEOUT: "300"
+        with:
+          pixi-version: v0.68.0
+          environments: dev
+          cache: false
+          locked: false
+          frozen: true
+
+      - name: Run tests
+        run: pixi run -e dev test

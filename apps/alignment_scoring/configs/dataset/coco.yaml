@@ -1,0 +1,12 @@
+# Copyright (c) Meta Platforms, Inc. and affiliates.
+# All rights reserved.
+#
+# This source code is licensed under the license found in the
+# LICENSE file in the root directory of this source tree.
+
+# COCO captions dataset (training split). Override `manifest_path` and
+# `dataset_dir` for your local copy.
+
+_target_: apps.alignment_scoring.data.coco.CocoCaptionsDataset
+manifest_path: ???
+dataset_dir: ???

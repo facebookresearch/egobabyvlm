@@ -1,0 +1,26 @@
+# Copyright (c) Meta Platforms, Inc. and affiliates.
+# All rights reserved.
+#
+# This source code is licensed under the license found in the
+# LICENSE file in the root directory of this source tree.
+
+# HowTo100M narration manifest (one utterance per row; multiple frames per utterance).
+# @package data
+
+train_dataset:
+  _target_: apps.baselines.clip.data.HowToCaptionsDataset
+  manifest_path: ???
+  image_root: ???
+  multiple_frames: true
+
+val_dataset:
+  _target_: apps.baselines.clip.data.HowToCaptionsDataset
+  manifest_path: ???
+  image_root: ${data.train_dataset.image_root}
+  multiple_frames: false
+
+batch_size: 64
+val_batch_size: 64
+num_workers: 4
+pin_memory: true
+augment: false

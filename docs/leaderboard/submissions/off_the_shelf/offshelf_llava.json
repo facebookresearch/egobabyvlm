@@ -1,0 +1,14 @@
+{
+  "id": "offshelf_llava",
+  "model": "LLaVA",
+  "team": "Off-the-shelf reference",
+  "architecture": "generative",
+  "training_data": "Web-scale",
+  "category": "offshelf",
+  "n_seeds": 1,
+  "multimodal": {
+    "lexical": "90.0",
+    "grammatical": "96.8",
+    "overall": "93.4"
+  }
+}

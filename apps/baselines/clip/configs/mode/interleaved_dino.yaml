@@ -1,0 +1,20 @@
+# Copyright (c) Meta Platforms, Inc. and affiliates.
+# All rights reserved.
+#
+# This source code is licensed under the license found in the
+# LICENSE file in the root directory of this source tree.
+
+# Interleaved DINOv2 SSL: alternate contrastive blocks with DINOv2 SSL blocks.
+# After each DINOv2 block, copy teacher backbone → contrastive vision encoder.
+# Requires `dinov2` config (e.g. via CLI: dinov2=vitb14_coco).
+#
+# Cross-tower sync only works when the SSL student backbone and the contrastive
+# vision encoder share the same architecture and image size — the trainer
+# raises at construction otherwise.
+# @package mode
+
+name: interleaved_dino
+interleave:
+  contrastive: 4
+  dinov2: 1
+sync_vision_from_dinov2: true

@@ -1,0 +1,52 @@
+{
+  "schema_version": 1,
+  "description": "Index of all EgoBabyVLM Challenge submissions. Each file under submissions/ describes one training run with optional multimodal, vision, and language results. The order in this list controls the display order on the leaderboard.",
+  "evaluation_families": {
+    "multimodal": {
+      "benchmark": "Machine-DevBench",
+      "subgroups": [
+        "lexical",
+        "grammatical"
+      ],
+      "aggregate": "overall"
+    },
+    "vision": {
+      "benchmark": "Unimodal vision tasks",
+      "subgroups": [
+        "object_recognition",
+        "visual_properties"
+      ],
+      "aggregate": "overall",
+      "vision_encoder": "DINOv2 ViT-B/14"
+    },
+    "language": {
+      "benchmark": "Unimodal language tasks",
+      "subgroups": [
+        "syntax",
+        "semantics"
+      ],
+      "aggregate": "overall",
+      "text_encoders": [
+        "BERT (CLIP+)",
+        "GPT-2 (LLaVA)"
+      ]
+    }
+  },
+  "submissions": [
+    "baselines/babyview_clip_plus.json",
+    "baselines/babyview_llava.json",
+    "baselines/babyview_no_ft.json",
+    "toplines/coco_mc_clip_plus.json",
+    "toplines/coco_mc_llava.json",
+    "reference/ego4d_clip_plus.json",
+    "reference/ego4d_llava.json",
+    "reference/howto_clip_plus.json",
+    "reference/howto_llava.json",
+    "off_the_shelf/offshelf_pe_core_b.json",
+    "off_the_shelf/offshelf_llava.json",
+    "off_the_shelf/offshelf_gemma_4.json",
+    "off_the_shelf/offshelf_clip_l.json",
+    "off_the_shelf/offshelf_dinov2_vit_b_14.json",
+    "off_the_shelf/offshelf_clip_vit_b_16.json"
+  ]
+}

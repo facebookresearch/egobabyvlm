@@ -1,0 +1,30 @@
+# Copyright (c) Meta Platforms, Inc. and affiliates.
+# All rights reserved.
+#
+# This source code is licensed under the license found in the
+# LICENSE file in the root directory of this source tree.
+
+# benchmark_creation path configuration.
+#
+# Relative paths are resolved against the package root (benchmark_creation/).
+#
+# To override these defaults without editing this file, set the environment
+# variable BENCHMARK_CREATION_PATHS to the path of your own YAML file, e.g.:
+#
+#   export BENCHMARK_CREATION_PATHS=~/.config/benchmark_creation/paths.yaml
+#
+# Any keys present in the override file take precedence over this default.
+
+# Base directory for outputs, logs, submitit, generated images, etc.
+outputs_root: ./MachineDevBench
+
+# --- Dataset manifests ---
+# Per-corpus manifest paths. Loaders accept either plaintext (one utterance
+# per line) or JSON / JSON-lines; .gz is detected and decompressed
+# transparently. Override these values with paths to your own manifests
+# (either by editing this file or via BENCHMARK_CREATION_PATHS).
+howto100m_manifest: path/to/howto100m_manifest.json
+ego4d_manifest: path/to/ego4d_manifest.json
+# COCO is one caption per line; TextDataset loads it directly.
+coco_captions: path/to/coco_captions.txt
+babyview_manifest: path/to/babyview_manifest.txt

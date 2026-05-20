@@ -1,0 +1,47 @@
+# Copyright (c) Meta Platforms, Inc. and affiliates.
+# All rights reserved.
+#
+# This source code is licensed under the license found in the
+# LICENSE file in the root directory of this source tree.
+
+# @group vision
+# Depth Estimation on NYU dataset (DINOv3-style BN on backbone features)
+
+defaults:
+  - depth_estimation
+  - _self_
+
+output_dir: "${oc.env:HOME}/egobabyvlm_experiments/evals"
+
+train_dataset:
+  _target_: "evaluation.data.depth.NYUv2DepthEstimationDataset"
+  name: "nyu_train"
+  kwargs:
+    dataset_root: "${oc.env:NYU_ROOT}"
+    mode: "train"
+    depth_image_size: [480, 640]
+
+val_dataset:
+  _target_: "evaluation.data.depth.NYUv2DepthEstimationDataset"
+  name: "nyu_val"
+  kwargs:
+    dataset_root: "${oc.env:NYU_ROOT}"
+    mode: "test"
+    depth_image_size: [480, 640]
+
+test_dataset:
+  _target_: "evaluation.data.depth.NYUv2DepthEstimationDataset"
+  name: "nyu_test"
+  kwargs:
+    dataset_root: "${oc.env:NYU_ROOT}"
+    mode: "test"
+    depth_image_size: [480, 640]
+
+backbone: ${model}
+depth_image_size: [480, 640]
+
+batch_size: 16
+epochs: 25
+num_workers: 22
+use_tta: true
+seed: 42

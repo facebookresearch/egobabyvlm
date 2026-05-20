@@ -1,0 +1,13 @@
+# Copyright (c) Meta Platforms, Inc. and affiliates.
+# All rights reserved.
+#
+# This source code is licensed under the license found in the
+# LICENSE file in the root directory of this source tree.
+
+# ContrastiveFeatureExtractor wrapping a trained-from-scratch (or converted-from-legacy)
+# contrastive checkpoint. Override `kwargs.checkpoint_path` for your run.
+_target_: "apps.baselines.clip.trained_extractor.ContrastiveFeatureExtractor"
+name: "contrastive"
+kwargs:
+  checkpoint_path: ???
+  normalize: true

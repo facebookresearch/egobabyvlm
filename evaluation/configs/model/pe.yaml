@@ -1,0 +1,11 @@
+# Copyright (c) Meta Platforms, Inc. and affiliates.
+# All rights reserved.
+#
+# This source code is licensed under the license found in the
+# LICENSE file in the root directory of this source tree.
+
+_target_: "apps.baselines.clip.openclip_extractor.CLIPFeatureExtractor"
+name: "pe-core"
+kwargs:
+  model_name: "PE-Core-bigG-14-448"
+  pretrained: "meta"

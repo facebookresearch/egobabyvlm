@@ -1,0 +1,31 @@
+{
+  "id": "coco_mc_clip_plus",
+  "model": "CLIP+",
+  "team": "EgoBabyVLM (paper)",
+  "architecture": "contrastive",
+  "training_data": "COCO-MC",
+  "category": "topline",
+  "n_seeds": 3,
+  "multimodal": {
+    "lexical": "68.8 ± 1.8",
+    "grammatical": "64.1 ± 3.0",
+    "overall": "66.5 ± 2.4"
+  },
+  "vision": [
+    {
+      "ft": "CLIP+",
+      "object_recognition": "66.4 ± 0.1",
+      "visual_properties": "44.5 ± 0.8",
+      "overall": "55.5 ± 0.4"
+    }
+  ],
+  "language": [
+    {
+      "encoder": "BERT",
+      "ft": "CLIP+",
+      "syntax": "71.5 ± 0.3",
+      "semantics": "81.4 ± 0.1",
+      "overall": "76.4 ± 0.2"
+    }
+  ]
+}

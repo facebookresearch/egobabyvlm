@@ -1,0 +1,341 @@
+{
+  "schema_version": 3,
+  "description": "EgoBabyVLM Challenge leaderboard. Scores are accuracy (%) across three evaluation families: cross-modal language grounding (Machine-DevBench), unimodal vision tasks, and unimodal language tasks. Mean ± std across 3 seeds unless noted. Categories: 'baseline' = official BabyView-trained challenge baselines; 'topline' = same recipe trained on curated COCO-MC (upper-bound reference); 'offshelf' = web-scale pretrained references not trained under the challenge protocol; 'reference' = alternative training corpora (Ego4D, HowTo) included for comparison.",
+  "evaluation_families": {
+    "multimodal": {
+      "benchmark": "Machine-DevBench",
+      "subgroups": ["lexical", "grammatical"],
+      "aggregate": "overall"
+    },
+    "vision": {
+      "benchmark": "Unimodal vision tasks",
+      "subgroups": ["object_recognition", "visual_properties"],
+      "aggregate": "overall",
+      "vision_encoder": "DINOv2 ViT-B/14"
+    },
+    "language": {
+      "benchmark": "Unimodal language tasks",
+      "subgroups": ["syntax", "semantics"],
+      "aggregate": "overall",
+      "text_encoders": ["BERT (CLIP+)", "GPT-2 (LLaVA)"]
+    }
+  },
+  "entries": [
+    {
+      "model": "CLIP+",
+      "team": "EgoBabyVLM (paper)",
+      "architecture": "contrastive",
+      "training_data": "BabyView",
+      "category": "baseline",
+      "n_seeds": 3,
+      "multimodal": {
+        "lexical": "53.4 ± 0.7",
+        "grammatical": "53.8 ± 2.4",
+        "overall": "53.6 ± 1.5"
+      },
+      "vision": {
+        "ft": "CLIP+",
+        "object_recognition": "46.4 ± 0.0",
+        "visual_properties": "33.8 ± 0.3",
+        "overall": "40.0 ± 0.2"
+      },
+      "language": {
+        "encoder": "BERT",
+        "ft": "CLIP+",
+        "syntax": "71.8 ± 0.0",
+        "semantics": "71.0 ± 0.0",
+        "overall": "71.4 ± 0.0"
+      }
+    },
+    {
+      "model": "LLaVA",
+      "team": "EgoBabyVLM (paper)",
+      "architecture": "generative",
+      "training_data": "BabyView",
+      "category": "baseline",
+      "n_seeds": 3,
+      "multimodal": {
+        "lexical": "51.2 ± 2.5",
+        "grammatical": "49.7 ± 4.3",
+        "overall": "50.5 ± 3.4"
+      },
+      "vision": {
+        "ft": "LLaVA",
+        "object_recognition": "43.2 ± 0.6",
+        "visual_properties": "30.3 ± 0.5",
+        "overall": "36.7 ± 0.9"
+      },
+      "language": {
+        "encoder": "GPT-2",
+        "ft": "LLaVA",
+        "syntax": "55.9 ± 2.2",
+        "semantics": "53.2 ± 0.7",
+        "overall": "54.6 ± 1.4"
+      }
+    },
+    {
+      "model": "BabyView (no FT)",
+      "team": "EgoBabyVLM (paper)",
+      "architecture": "—",
+      "training_data": "BabyView",
+      "category": "baseline",
+      "n_seeds": 3,
+      "vision": {
+        "ft": "none",
+        "object_recognition": "50.9 ± 0.2",
+        "visual_properties": "39.2 ± 0.6",
+        "overall": "45.1 ± 0.4"
+      },
+      "language": {
+        "encoder": "BERT",
+        "ft": "none",
+        "syntax": "72.9 ± 0.2",
+        "semantics": "71.8 ± 0.5",
+        "overall": "72.4 ± 0.3"
+      },
+      "language_gpt2": {
+        "encoder": "GPT-2",
+        "ft": "none",
+        "syntax": "61.7 ± 0.9",
+        "semantics": "55.8 ± 1.3",
+        "overall": "58.8 ± 1.1"
+      }
+    },
+    {
+      "model": "CLIP+",
+      "team": "EgoBabyVLM (paper)",
+      "architecture": "contrastive",
+      "training_data": "COCO-MC",
+      "category": "topline",
+      "n_seeds": 3,
+      "multimodal": {
+        "lexical": "68.8 ± 1.8",
+        "grammatical": "64.1 ± 3.0",
+        "overall": "66.5 ± 2.4"
+      },
+      "vision": {
+        "ft": "CLIP+",
+        "object_recognition": "66.4 ± 0.1",
+        "visual_properties": "44.5 ± 0.8",
+        "overall": "55.5 ± 0.4"
+      },
+      "language": {
+        "encoder": "BERT",
+        "ft": "CLIP+",
+        "syntax": "71.5 ± 0.3",
+        "semantics": "81.4 ± 0.4",
+        "overall": "76.4 ± 0.2"
+      }
+    },
+    {
+      "model": "LLaVA",
+      "team": "EgoBabyVLM (paper)",
+      "architecture": "generative",
+      "training_data": "COCO-MC",
+      "category": "topline",
+      "n_seeds": 3,
+      "multimodal": {
+        "lexical": "59.6 ± 2.3",
+        "grammatical": "64.2 ± 2.3",
+        "overall": "61.9 ± 2.3"
+      },
+      "vision": {
+        "ft": "LLaVA",
+        "object_recognition": "57.5 ± 0.4",
+        "visual_properties": "40.2 ± 2.9",
+        "overall": "48.9 ± 1.8"
+      },
+      "language": {
+        "encoder": "GPT-2",
+        "ft": "LLaVA",
+        "syntax": "55.0 ± 2.6",
+        "semantics": "61.2 ± 0.7",
+        "overall": "58.1 ± 0.7"
+      }
+    },
+    {
+      "model": "CLIP+",
+      "team": "EgoBabyVLM (paper)",
+      "architecture": "contrastive",
+      "training_data": "Ego4D",
+      "category": "reference",
+      "n_seeds": 3,
+      "multimodal": {
+        "lexical": "50.2 ± 2.8",
+        "grammatical": "51.5 ± 2.9",
+        "overall": "50.8 ± 3.4"
+      },
+      "vision": {
+        "ft": "CLIP+",
+        "object_recognition": "52.9 ± 0.2",
+        "visual_properties": "37.6 ± 0.2",
+        "overall": "45.2 ± 0.2"
+      },
+      "language": {
+        "encoder": "BERT",
+        "ft": "CLIP+",
+        "syntax": "73.5 ± 1.2",
+        "semantics": "72.4 ± 0.2",
+        "overall": "73.0 ± 0.7"
+      }
+    },
+    {
+      "model": "LLaVA",
+      "team": "EgoBabyVLM (paper)",
+      "architecture": "generative",
+      "training_data": "Ego4D",
+      "category": "reference",
+      "n_seeds": 3,
+      "multimodal": {
+        "lexical": "48.8 ± 1.9",
+        "grammatical": "49.9 ± 4.0",
+        "overall": "49.3 ± 3.0"
+      },
+      "vision": {
+        "ft": "LLaVA",
+        "object_recognition": "35.4 ± 8.6",
+        "visual_properties": "27.9 ± 4.4",
+        "overall": "31.6 ± 6.5"
+      },
+      "language": {
+        "encoder": "GPT-2",
+        "ft": "LLaVA",
+        "syntax": "52.9 ± 2.9",
+        "semantics": "54.8 ± 1.1",
+        "overall": "53.9 ± 2.2"
+      }
+    },
+    {
+      "model": "CLIP+",
+      "team": "EgoBabyVLM (paper)",
+      "architecture": "contrastive",
+      "training_data": "HowTo",
+      "category": "reference",
+      "n_seeds": 3,
+      "multimodal": {
+        "lexical": "60.6 ± 2.4",
+        "grammatical": "51.6 ± 3.6",
+        "overall": "56.1 ± 2.8"
+      },
+      "vision": {
+        "ft": "CLIP+",
+        "object_recognition": "55.1 ± 0.1",
+        "visual_properties": "39.5 ± 0.4",
+        "overall": "47.3 ± 0.2"
+      },
+      "language": {
+        "encoder": "BERT",
+        "ft": "CLIP+",
+        "syntax": "71.8 ± 0.7",
+        "semantics": "72.7 ± 0.3",
+        "overall": "72.3 ± 0.5"
+      }
+    },
+    {
+      "model": "LLaVA",
+      "team": "EgoBabyVLM (paper)",
+      "architecture": "generative",
+      "training_data": "HowTo",
+      "category": "reference",
+      "n_seeds": 3,
+      "multimodal": {
+        "lexical": "52.4 ± 1.2",
+        "grammatical": "50.7 ± 3.9",
+        "overall": "51.5 ± 2.5"
+      },
+      "vision": {
+        "ft": "LLaVA",
+        "object_recognition": "44.2 ± 3.4",
+        "visual_properties": "32.8 ± 2.3",
+        "overall": "38.5 ± 2.8"
+      },
+      "language": {
+        "encoder": "GPT-2",
+        "ft": "LLaVA",
+        "syntax": "53.0 ± 1.6",
+        "semantics": "57.4 ± 0.6",
+        "overall": "55.2 ± 1.1"
+      }
+    },
+    {
+      "model": "PE-Core-B",
+      "team": "Off-the-shelf reference",
+      "architecture": "contrastive",
+      "training_data": "Web-scale",
+      "category": "offshelf",
+      "n_seeds": 1,
+      "multimodal": {
+        "lexical": "98.7",
+        "grammatical": "78.6",
+        "overall": "88.6"
+      }
+    },
+    {
+      "model": "LLaVA",
+      "team": "Off-the-shelf reference",
+      "architecture": "generative",
+      "training_data": "Web-scale",
+      "category": "offshelf",
+      "n_seeds": 1,
+      "multimodal": {
+        "lexical": "90.0",
+        "grammatical": "96.8",
+        "overall": "93.4"
+      }
+    },
+    {
+      "model": "Gemma 4",
+      "team": "Off-the-shelf reference",
+      "architecture": "generative",
+      "training_data": "Web-scale",
+      "category": "offshelf",
+      "n_seeds": 1,
+      "multimodal": {
+        "lexical": "92.1",
+        "grammatical": "75.5",
+        "overall": "83.8"
+      }
+    },
+    {
+      "model": "CLIP-L",
+      "team": "Off-the-shelf reference",
+      "architecture": "contrastive",
+      "training_data": "Web-scale",
+      "category": "offshelf",
+      "n_seeds": 1,
+      "multimodal": {
+        "lexical": "87.3",
+        "grammatical": "70.4",
+        "overall": "78.8"
+      }
+    },
+    {
+      "model": "DINOv2 ViT-B/14",
+      "team": "Off-the-shelf reference",
+      "architecture": "vision encoder",
+      "training_data": "Web-scale",
+      "category": "offshelf",
+      "n_seeds": 1,
+      "vision": {
+        "ft": "none",
+        "object_recognition": "76.3 ± 0.4",
+        "visual_properties": "43.5 ± 0.7",
+        "overall": "59.9 ± 0.4"
+      }
+    },
+    {
+      "model": "CLIP ViT-B/16",
+      "team": "Off-the-shelf reference",
+      "architecture": "vision encoder",
+      "training_data": "Web-scale",
+      "category": "offshelf",
+      "n_seeds": 1,
+      "vision": {
+        "ft": "none",
+        "object_recognition": "75.5 ± 0.5",
+        "visual_properties": "45.7 ± 0.8",
+        "overall": "60.6 ± 0.4"
+      }
+    }
+  ]
+}

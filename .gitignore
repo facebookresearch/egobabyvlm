@@ -1,0 +1,79 @@
+# Build Artifacts
+build/
+
+# Core Dumps
+/core.*
+
+# Byte-Compiled Modules
+__pycache__/
+
+# Packaging Artifacts
+*.egg-info
+*.whl
+
+# IDEs and Tools
+.idea/
+.gdb_history
+.vscode
+.claude/
+
+# Other
+.DS_Store
+
+# Jupyter
+**/.ipynb_checkpoints
+notebooks
+shell
+sweep_logs
+MachineDevBench
+MachineDevBench_logs
+.pixi
+
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# ruff
+.ruff_cache/
+.ruff_output/
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+cover/
+
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# wandb (top-level run directory only — don't shadow apps/*/configs/wandb/)
+/wandb/
+
+# stopes / hydra runtime artifacts
+cache/
+config_logs/
+executor_logs/
+slurm/
+outputs/
+
+# files
+.mp4
+.tar
+.tar.gz
+.wav

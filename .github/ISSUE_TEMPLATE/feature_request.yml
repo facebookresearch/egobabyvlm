@@ -1,0 +1,30 @@
+name: Feature request
+description: Suggest a new feature, baseline, eval, or other addition.
+labels: ["enhancement"]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: What problem does this solve?
+      description: |
+        Describe the use case. What are you trying to do that the current
+        codebase doesn't support, or supports awkwardly?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed solution
+      description: How would you like this to work? API sketches and example usage welcome.
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: What else did you try or rule out?
+  - type: textarea
+    id: context
+    attributes:
+      label: Additional context
+      description: Links, papers, prior art, anything else that helps.

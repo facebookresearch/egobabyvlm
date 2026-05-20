@@ -1,0 +1,31 @@
+# Copyright (c) Meta Platforms, Inc. and affiliates.
+# All rights reserved.
+#
+# This source code is licensed under the license found in the
+# LICENSE file in the root directory of this source tree.
+
+# @group vision
+# ABX CountBench Evaluation
+
+defaults:
+  - abx
+  - _self_
+
+output_dir: "${oc.env:HOME}/egobabyvlm_experiments/evals"
+
+dataset:
+  _target_: "evaluation.data.abx.CountBenchClassificationDataset"
+  name: "countbench"
+  kwargs:
+    mode: "train"
+    seed: ${...seed}
+
+pooling: "cls"
+last_n_layers: 1
+
+num_triplets: 100
+batch_size: 512
+num_workers: 12
+seed: 42
+
+model: ${model}

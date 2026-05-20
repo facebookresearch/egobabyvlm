@@ -1,0 +1,21 @@
+# Copyright (c) Meta Platforms, Inc. and affiliates.
+# All rights reserved.
+#
+# This source code is licensed under the license found in the
+# LICENSE file in the root directory of this source tree.
+
+# Image generation style prefixes for benchmark_creation.
+#
+# Each style maps to a text prefix that is prepended to the scene description
+# before passing it to the diffusion model.
+
+cartoon:
+  prefix: >-
+    A simple children's book illustration, clean lines, bright colors,
+    white background, no text, no watermark.
+
+realistic:
+  prefix: >-
+    A clear, realistic photo of the following scene.
+    Plain simple background, well-lit, easy to understand.
+    No clutter, no text, no watermark.

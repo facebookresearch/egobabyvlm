@@ -1,0 +1,31 @@
+{
+  "id": "ego4d_clip_plus",
+  "model": "CLIP+",
+  "team": "EgoBabyVLM (paper)",
+  "architecture": "contrastive",
+  "training_data": "Ego4D",
+  "category": "reference",
+  "n_seeds": 3,
+  "multimodal": {
+    "lexical": "50.2 ± 2.8",
+    "grammatical": "51.5 ± 3.9",
+    "overall": "50.8 ± 3.4"
+  },
+  "vision": [
+    {
+      "ft": "CLIP+",
+      "object_recognition": "52.9 ± 0.2",
+      "visual_properties": "37.6 ± 0.2",
+      "overall": "45.2 ± 0.2"
+    }
+  ],
+  "language": [
+    {
+      "encoder": "BERT",
+      "ft": "CLIP+",
+      "syntax": "73.5 ± 1.2",
+      "semantics": "72.4 ± 0.2",
+      "overall": "73.0 ± 0.7"
+    }
+  ]
+}

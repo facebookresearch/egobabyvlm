@@ -1,0 +1,14 @@
+{
+  "id": "offshelf_clip_l",
+  "model": "CLIP-L",
+  "team": "Off-the-shelf reference",
+  "architecture": "contrastive",
+  "training_data": "Web-scale",
+  "category": "offshelf",
+  "n_seeds": 1,
+  "multimodal": {
+    "lexical": "87.3",
+    "grammatical": "70.4",
+    "overall": "78.8"
+  }
+}

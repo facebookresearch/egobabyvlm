@@ -1,0 +1,67 @@
+# Copyright (c) Meta Platforms, Inc. and affiliates.
+# All rights reserved.
+#
+# This source code is licensed under the license found in the
+# LICENSE file in the root directory of this source tree.
+
+# DevBench Pipeline Configuration
+# Runs all DevBench multimodal evaluation tasks in parallel with a shared model.
+
+defaults:
+  - devbench_pipeline_base
+  - /eval@tasks.gram_trog: multimodal/gram_trog
+  - /eval@tasks.gram_winoground: multimodal/gram_winoground
+  - /eval@tasks.lex_lwl: multimodal/lex_lwl
+  - /eval@tasks.lex_viz_vocab: multimodal/lex_viz_vocab
+  - /eval@tasks.sem_things: multimodal/sem_things
+  - /eval@tasks.sem_viz_obj_cat: multimodal/sem_viz_obj_cat
+  - _self_
+
+_target_: "evaluation.multimodal.devbench.pipeline.DevBenchPipeline"
+
+name: "devbench_pipeline"
+
+output_dir: "${oc.env:HOME}/egobabyvlm_experiments/evals"
+
+model: ${model}
+
+seed: 42
+
+launcher:
+  _target_: "stopes.core.Launcher"
+  cluster: "slurm"
+  log_folder: ${hydra:sweep.dir}/executor_logs
+  config_dump_dir: ${hydra:sweep.dir}/config_logs
+  cache:
+    caching_dir: ${hydra:sweep.dir}/cache
+  update_parameters:
+    slurm_qos: "???"
+    slurm_account: "???"
+
+aggregate_results: true
+
+tasks:
+  gram_trog:
+    model: ${model}
+    output_dir: ${eval.output_dir}
+    seed: ${eval.seed}
+  gram_winoground:
+    model: ${model}
+    output_dir: ${eval.output_dir}
+    seed: ${eval.seed}
+  lex_lwl:
+    model: ${model}
+    output_dir: ${eval.output_dir}
+    seed: ${eval.seed}
+  lex_viz_vocab:
+    model: ${model}
+    output_dir: ${eval.output_dir}
+    seed: ${eval.seed}
+  sem_things:
+    model: ${model}
+    output_dir: ${eval.output_dir}
+    seed: ${eval.seed}
+  sem_viz_obj_cat:
+    model: ${model}
+    output_dir: ${eval.output_dir}
+    seed: ${eval.seed}

@@ -1,0 +1,31 @@
+{
+  "id": "howto_clip_plus",
+  "model": "CLIP+",
+  "team": "EgoBabyVLM (paper)",
+  "architecture": "contrastive",
+  "training_data": "HowTo",
+  "category": "reference",
+  "n_seeds": 3,
+  "multimodal": {
+    "lexical": "60.6 ± 2.1",
+    "grammatical": "51.6 ± 3.6",
+    "overall": "56.1 ± 2.8"
+  },
+  "vision": [
+    {
+      "ft": "CLIP+",
+      "object_recognition": "55.1 ± 0.1",
+      "visual_properties": "39.5 ± 0.4",
+      "overall": "47.3 ± 0.2"
+    }
+  ],
+  "language": [
+    {
+      "encoder": "BERT",
+      "ft": "CLIP+",
+      "syntax": "71.8 ± 0.7",
+      "semantics": "72.7 ± 0.3",
+      "overall": "72.3 ± 0.5"
+    }
+  ]
+}

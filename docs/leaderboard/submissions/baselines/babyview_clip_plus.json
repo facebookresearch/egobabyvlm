@@ -1,0 +1,31 @@
+{
+  "id": "babyview_clip_plus",
+  "model": "CLIP+",
+  "team": "EgoBabyVLM (paper)",
+  "architecture": "contrastive",
+  "training_data": "BabyView",
+  "category": "baseline",
+  "n_seeds": 3,
+  "multimodal": {
+    "lexical": "53.4 ± 0.7",
+    "grammatical": "53.8 ± 2.4",
+    "overall": "53.6 ± 1.5"
+  },
+  "vision": [
+    {
+      "ft": "CLIP+",
+      "object_recognition": "50.9 ± 0.4",
+      "visual_properties": "38.0 ± 0.4",
+      "overall": "44.4 ± 0.4"
+    }
+  ],
+  "language": [
+    {
+      "encoder": "BERT",
+      "ft": "CLIP+",
+      "syntax": "71.8 ± 0.0",
+      "semantics": "71.0 ± 0.0",
+      "overall": "71.4 ± 0.0"
+    }
+  ]
+}

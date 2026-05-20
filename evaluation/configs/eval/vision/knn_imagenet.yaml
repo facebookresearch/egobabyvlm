@@ -1,0 +1,39 @@
+# Copyright (c) Meta Platforms, Inc. and affiliates.
+# All rights reserved.
+#
+# This source code is licensed under the license found in the
+# LICENSE file in the root directory of this source tree.
+
+# @group vision
+# KNN ImageNet Evaluation
+
+defaults:
+  - knn
+  - _self_
+
+output_dir: "${oc.env:HOME}/egobabyvlm_experiments/evals"
+
+train_dataset:
+  _target_: "evaluation.data.abx.DinoImagenetClassificationDataset"
+  name: "imagenet_train"
+  kwargs:
+    dataset_str: "ImageNet;split=TRAIN;root=${oc.env:IMAGENET_ROOT};extra=${oc.env:IMAGENET_EXTRA}"
+
+val_dataset:
+  _target_: "evaluation.data.abx.DinoImagenetClassificationDataset"
+  name: "imagenet_val"
+  kwargs:
+    dataset_str: "ImageNet;split=VAL;root=${oc.env:IMAGENET_ROOT};extra=${oc.env:IMAGENET_EXTRA}"
+
+pooling: "cls"
+last_n_layers: 1
+
+nb_knn: [10, 20, 100, 200]
+temperature: 0.07
+batch_size: 1024
+num_workers: 22
+n_per_class_list: [100, -1]
+n_tries: 1
+seed: 42
+
+model: ${model}

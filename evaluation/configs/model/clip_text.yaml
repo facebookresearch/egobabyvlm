@@ -1,0 +1,11 @@
+# Copyright (c) Meta Platforms, Inc. and affiliates.
+# All rights reserved.
+#
+# This source code is licensed under the license found in the
+# LICENSE file in the root directory of this source tree.
+
+_target_: "apps.baselines.clip.openclip_extractor.CLIPTextFeatureExtractor"
+name: "clip-vit-base-text"
+kwargs:
+  model_name: "ViT-B-16-quickgelu"
+  pretrained: "openai"

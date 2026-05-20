@@ -1,0 +1,48 @@
+# Copyright (c) Meta Platforms, Inc. and affiliates.
+# All rights reserved.
+#
+# This source code is licensed under the license found in the
+# LICENSE file in the root directory of this source tree.
+
+# Text Pipeline Configuration
+
+defaults:
+  - text_pipeline_base
+  - /eval@tasks.zorro: text/zorro
+  - /eval@tasks.ltswap: text/ltswap
+  - _self_
+
+_target_: "evaluation.text.pipeline.TextPipeline"
+
+name: "text_pipeline"
+
+output_dir: "${oc.env:HOME}/egobabyvlm_experiments/evals"
+
+model: ${model}
+
+seed: 42
+
+launcher:
+  _target_: "stopes.core.Launcher"
+  cluster: "slurm"
+  log_folder: ${hydra:sweep.dir}/executor_logs
+  config_dump_dir: ${hydra:sweep.dir}/config_logs
+  cache:
+    caching_dir: ${hydra:sweep.dir}/cache
+  update_parameters:
+    slurm_qos: "???"
+    slurm_account: "???"
+    slurm_setup:
+      - "unset SLURM_CPU_BIND SLURM_CPU_BIND_TYPE"
+
+aggregate_results: true
+
+tasks:
+  zorro:
+    model: ${model}
+    output_dir: ${eval.output_dir}
+    seed: ${eval.seed}
+  ltswap:
+    model: ${model}
+    output_dir: ${eval.output_dir}
+    seed: ${eval.seed}

@@ -1,0 +1,18 @@
+# Copyright (c) Meta Platforms, Inc. and affiliates.
+# All rights reserved.
+#
+# This source code is licensed under the license found in the
+# LICENSE file in the root directory of this source tree.
+
+# DINOv2 backbone loaded from a custom SSL teacher checkpoint.
+# Both checkpoint_path and config_path are required — set them on the CLI:
+#   vision_encoder=custom_dinov2 \
+#   model.vision_encoder.checkpoint_path=/path/to/teacher_checkpoint.pth \
+#   model.vision_encoder.config_path=/path/to/config.yaml
+# @package model.vision_encoder
+
+_target_: apps.baselines.clip.modeling.CustomDINOv2VisionEncoder
+checkpoint_path: ???
+config_path: ???
+embedding_dim: ${model.embedding_dim}
+freeze: false
