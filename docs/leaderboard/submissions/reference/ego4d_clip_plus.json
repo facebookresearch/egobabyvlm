@@ -1,7 +1,7 @@
 {
   "id": "ego4d_clip_plus",
   "model": "CLIP+",
-  "team": "EgoBabyVLM (paper)",
+  "team": "Meta FAIR",
   "architecture": "contrastive",
   "training_data": "Ego4D",
   "category": "reference",

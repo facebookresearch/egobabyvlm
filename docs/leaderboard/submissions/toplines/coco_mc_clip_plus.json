@@ -1,7 +1,7 @@
 {
   "id": "coco_mc_clip_plus",
   "model": "CLIP+",
-  "team": "EgoBabyVLM (paper)",
+  "team": "Meta FAIR",
   "architecture": "contrastive",
   "training_data": "COCO-MC",
   "category": "topline",

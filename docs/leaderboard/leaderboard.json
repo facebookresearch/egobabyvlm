@@ -1,6 +1,6 @@
 {
   "schema_version": 3,
-  "description": "EgoBabyVLM Challenge leaderboard. Scores are accuracy (%) across three evaluation families: cross-modal language grounding (Machine-DevBench), unimodal vision tasks, and unimodal language tasks. Mean ± std across 3 seeds unless noted. Categories: 'baseline' = official BabyView-trained challenge baselines; 'topline' = same recipe trained on curated COCO-MC (upper-bound reference); 'offshelf' = web-scale pretrained references not trained under the challenge protocol; 'reference' = alternative training corpora (Ego4D, HowTo) included for comparison.",
+  "description": "Challenge leaderboard for benchmarking cross-modal learning from naturalistic egocentric video data. Scores are accuracy (%) across three evaluation families: cross-modal language grounding (Machine-DevBench), unimodal vision tasks and unimodal language tasks. Mean ± std across 3 seeds unless noted. Categories: 'baseline' = official BabyView-trained challenge baselines; 'topline' = same recipe trained on curated COCO-MC (upper-bound reference); 'offshelf' = web-scale pretrained references not trained under the challenge protocol; 'reference' = alternative training corpora (Ego4D, HowTo) included for comparison.",
   "evaluation_families": {
     "multimodal": {
       "benchmark": "Machine-DevBench",
@@ -23,7 +23,7 @@
   "entries": [
     {
       "model": "CLIP+",
-      "team": "EgoBabyVLM (paper)",
+      "team": "Meta FAIR",
       "architecture": "contrastive",
       "training_data": "BabyView",
       "category": "baseline",
@@ -49,7 +49,7 @@
     },
     {
       "model": "LLaVA",
-      "team": "EgoBabyVLM (paper)",
+      "team": "Meta FAIR",
       "architecture": "generative",
       "training_data": "BabyView",
       "category": "baseline",
@@ -75,7 +75,7 @@
     },
     {
       "model": "BabyView (no FT)",
-      "team": "EgoBabyVLM (paper)",
+      "team": "Meta FAIR",
       "architecture": "—",
       "training_data": "BabyView",
       "category": "baseline",
@@ -103,7 +103,7 @@
     },
     {
       "model": "CLIP+",
-      "team": "EgoBabyVLM (paper)",
+      "team": "Meta FAIR",
       "architecture": "contrastive",
       "training_data": "COCO-MC",
       "category": "topline",
@@ -129,7 +129,7 @@
     },
     {
       "model": "LLaVA",
-      "team": "EgoBabyVLM (paper)",
+      "team": "Meta FAIR",
       "architecture": "generative",
       "training_data": "COCO-MC",
       "category": "topline",
@@ -155,7 +155,7 @@
     },
     {
       "model": "CLIP+",
-      "team": "EgoBabyVLM (paper)",
+      "team": "Meta FAIR",
       "architecture": "contrastive",
       "training_data": "Ego4D",
       "category": "reference",
@@ -181,7 +181,7 @@
     },
     {
       "model": "LLaVA",
-      "team": "EgoBabyVLM (paper)",
+      "team": "Meta FAIR",
       "architecture": "generative",
       "training_data": "Ego4D",
       "category": "reference",
@@ -207,7 +207,7 @@
     },
     {
       "model": "CLIP+",
-      "team": "EgoBabyVLM (paper)",
+      "team": "Meta FAIR",
       "architecture": "contrastive",
       "training_data": "HowTo",
       "category": "reference",
@@ -233,7 +233,7 @@
     },
     {
       "model": "LLaVA",
-      "team": "EgoBabyVLM (paper)",
+      "team": "Meta FAIR",
       "architecture": "generative",
       "training_data": "HowTo",
       "category": "reference",

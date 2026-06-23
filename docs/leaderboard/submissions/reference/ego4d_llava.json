@@ -1,7 +1,7 @@
 {
   "id": "ego4d_llava",
   "model": "LLaVA",
-  "team": "EgoBabyVLM (paper)",
+  "team": "Meta FAIR",
   "architecture": "generative",
   "training_data": "Ego4D",
   "category": "reference",

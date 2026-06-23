@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "description": "Index of all EgoBabyVLM Challenge submissions. Each file under submissions/ describes one training run with optional multimodal, vision, and language results. The order in this list controls the display order on the leaderboard.",
+  "description": "Index of all challenge submissions. Each file under submissions/ describes one training run with optional multimodal, vision and language results. The order in this list controls the display order on the leaderboard.",
   "evaluation_families": {
     "multimodal": {
       "benchmark": "Machine-DevBench",

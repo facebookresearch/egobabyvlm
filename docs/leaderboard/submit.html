@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>EgoBabyVLM Challenge — How to submit</title>
+  <title>How to submit</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400..700;1,400..500&display=swap" />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
@@ -14,11 +14,11 @@
     <div class="hero-bg" aria-hidden="true"></div>
     <div class="container hero-inner">
       <nav class="topnav">
-        <span class="brand">
-          <img src="resources/logo_meta.svg" alt="Meta" class="brand-meta" />
-          <span class="brand-divider" aria-hidden="true"></span>
-          <span class="brand-name">EgoBabyVLM</span>
-        </span>
+        <div class="hero-attribution">
+          <img src="resources/meta_lockup_negative.svg" alt="Meta" class="hero-attribution-logo" />
+          <span class="hero-attribution-divider" aria-hidden="true"></span>
+          <span class="hero-attribution-text">A Meta FAIR release</span>
+        </div>
         <div class="topnav-links">
           <a href="index.html">Home</a>
           <a href="leaderboard.html">Leaderboard</a>
@@ -27,12 +27,12 @@
       </nav>
 
       <div class="hero-content hero-content-wide">
-        <h1>Run, score, and submit</h1>
+        <h1>Run, score and submit</h1>
         <p class="tagline">
           Cache the eval datasets, validate the setup with an off-the-shelf
           model, score your own model, then open a pull request with your
-          numbers and training code. Verified submissions ship with code we
-          can reproduce.
+          numbers. Submissions linking to runnable training code are marked
+          reproducible.
         </p>
         <div class="cta-stack">
           <div class="cta">
@@ -48,11 +48,11 @@
           <div class="cta">
             <a class="btn btn-secondary" href="https://databrary.org/volume/1882" target="_blank" rel="noopener noreferrer">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/><path d="M3 12c0 1.66 4 3 9 3s9-1.34 9-3"/></svg>
-              BabyView Dataset
+              BabyView dataset
             </a>
             <a class="btn btn-secondary" href="https://github.com/facebookresearch/egobabyvlm/releases/download/Eval-Data/MachineDevBench.tar" download>
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-              Machine-DevBench (Eval)
+              Machine-DevBench (eval)
             </a>
           </div>
         </div>
@@ -61,22 +61,15 @@
   </header>
 
   <main class="container">
-    <div class="org-strip" aria-label="Affiliations">
-      <img src="resources/logo_meta.png" alt="Meta" class="logo-wide logo-meta" />
-      <img src="resources/logo_stanford.png" alt="Stanford University" class="logo-wide" />
-      <img src="resources/logo_ens.png" alt="École Normale Supérieure" class="logo-tall" />
-      <img src="resources/logo_utokyo.png" alt="The University of Tokyo" class="logo-wide" />
-    </div>
-
     <section id="instructions">
       <h2>What a submission is</h2>
       <p class="muted" style="max-width: 78ch; margin-bottom: 1.25rem;">
         A submission is leaderboard scores plus, ideally, the training
         code that produced them. The reference codebase ships
-        installable CLI entry points, Hydra configs, and four trainers
+        installable CLI entry points, Hydra configs and four trainers
         that reproduce the paper baselines &mdash; useful as starting
         points, but the challenge encourages alternative architectures,
-        objectives, and curricula.
+        objectives and curricula.
       </p>
       <div class="steps">
         <div class="step">
@@ -92,7 +85,7 @@
             <strong>Machine-DevBench</strong> ships as a single tarball
             on the GitHub release. Grab it with
             <code>python -m scripts.eval_data.download_machine_devbench</code>
-            (or click the <em>Machine-DevBench (Eval)</em> button on the
+            (or click the <em>Machine-DevBench (eval)</em> button on the
             landing page) and point
             <code>MACHINE_DEVBENCH_DATA_ROOT</code> at the extracted
             directory.
@@ -105,7 +98,7 @@
             point <code>LTSWAP_DATA_ROOT</code> at the per-corpus subdir
             matching your training data. These shipped files are mainly
             for reproducing / comparing to the paper — if you trained on
-            a different snapshot, subset, or preprocessing of one of
+            a different snapshot, subset or preprocessing of one of
             these corpora (or on something else entirely), regenerate
             the pair files from your own corpus via
             <code>apps/swapbench/</code> so the long-tail vocabulary
@@ -129,7 +122,7 @@
           <p>
             Any architecture, any objective, as long as the training data
             comes only from BabyView 2025.1 (no extra image / video / text
-            / audio data for pretraining, fine-tuning, or evaluation). The
+            / audio data for pretraining, fine-tuning or evaluation). The
             shipped baselines under <code>apps/baselines/</code> are
             optional starting points.
           </p>
@@ -148,16 +141,16 @@
           <p>
             Re-run <code>eval_launcher</code> against your model over the
             three families, then open a pull request with a JSON file
-            containing your scores <strong>and a link to the training
-            code</strong> so the submission can be reproduced. See the
+            containing your scores and a link to the training code so the
+            submission can be reproduced. See the
             <a href="#submit">submission details &rarr;</a>.
           </p>
           <p style="margin-top: 0.6rem;">
-            Submissions are marked <strong>verified</strong> when we can
-            reproduce the scores from the provided code. Leaderboard-only
-            submissions (a paper / report with numbers but no runnable
-            code) are still welcome and will appear on the board, but
-            won't carry the verified mark.
+            Submissions linking to runnable training code are marked
+            <strong>reproducible</strong>. Organizers don't rerun the code —
+            the mark just signals anyone could. Leaderboard-only submissions
+            (paper or report without runnable code) are welcome but
+            unmarked.
           </p>
           <p style="margin-top: 0.6rem;">
             Alternative architectures plug in by implementing one of the
@@ -210,7 +203,7 @@ python -m evaluation.eval_launcher \
     model=bert_base \
     name=my_run</pre>
       <p class="muted">
-        Override <code>model=…</code> to swap encoders, or any individual
+        Override <code>model=…</code> to swap encoders or any individual
         task YAML in <code>evaluation/configs/eval/</code>. Run ≥ 3 seeds
         per condition and report <em>mean ± std</em> for each subgroup and
         the overall.
@@ -274,12 +267,11 @@ python -m evaluation.eval_launcher \
         <li>Optional: <code>report_url</code>, <code>code_url</code>.</li>
       </ul>
       <p>
-        Organizers will verify the submission with the same launcher and
-        update the leaderboard.
+        Organizers will review the submission and update the leaderboard.
       </p>
       <p class="muted" style="margin-top: 0.75rem;">
         <strong>Eligibility:</strong> for the official challenge track, no
-        external image, video, text, or audio data may be used at any stage
+        external image, video, text or audio data may be used at any stage
         — including encoder pretraining. Reference rows trained on Ego4D /
         HowTo / COCO are listed for context only.
       </p>
@@ -291,11 +283,14 @@ python -m evaluation.eval_launcher \
 
   <footer>
     <div class="container footer-inner">
-      <p class="footer-copyright">Copyright &copy; Meta Platforms, Inc.</p>
+      <div class="footer-brand">
+        <img src="resources/meta_lockup_positive.svg" alt="Meta" class="footer-logo" />
+        <p class="footer-copyright">&copy; 2026 Meta</p>
+      </div>
       <p class="footer-links">
-        <a href="https://opensource.fb.com/legal/terms/" target="_blank" rel="noopener noreferrer">Terms</a>
-        <a href="https://opensource.fb.com/legal/privacy/" target="_blank" rel="noopener noreferrer">Privacy</a>
-        <a href="https://www.facebook.com/policies/cookies/" target="_blank" rel="noopener noreferrer">Cookies</a>
+        <a href="https://www.facebook.com/terms.php/" target="_blank" rel="noopener noreferrer">Terms</a>
+        <a href="https://www.facebook.com/privacy/policy/" target="_blank" rel="noopener noreferrer">Privacy</a>
+        <a href="https://www.facebook.com/privacy/policies/cookies/" target="_blank" rel="noopener noreferrer">Cookies</a>
       </p>
     </div>
   </footer>

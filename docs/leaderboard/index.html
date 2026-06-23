@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>EgoBabyVLM Challenge</title>
+  <title>Benchmarking cross-modal learning from naturalistic egocentric video data</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400..700;1,400..500&display=swap" />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
@@ -14,11 +14,11 @@
     <div class="hero-bg" aria-hidden="true"></div>
     <div class="container hero-inner">
       <nav class="topnav">
-        <span class="brand">
-          <img src="resources/logo_meta.svg" alt="Meta" class="brand-meta" />
-          <span class="brand-divider" aria-hidden="true"></span>
-          <span class="brand-name">EgoBabyVLM</span>
-        </span>
+        <div class="hero-attribution">
+          <img src="resources/meta_lockup_negative.svg" alt="Meta" class="hero-attribution-logo" />
+          <span class="hero-attribution-divider" aria-hidden="true"></span>
+          <span class="hero-attribution-text">A Meta FAIR release</span>
+        </div>
         <div class="topnav-links">
           <a href="index.html">Home</a>
           <a href="leaderboard.html">Leaderboard</a>
@@ -27,13 +27,13 @@
       </nav>
 
       <div class="hero-content hero-content-wide">
-        <h1>EgoBabyVLM Challenge</h1>
-        <p class="paper-subtitle">Benchmarking Cross-Modal Learning from Naturalistic Egocentric Video Data</p>
+        <h1>Benchmarking cross-modal learning from naturalistic egocentric video data</h1>
         <p class="tagline">
           Train a vision–language model on the BabyView corpus
-          (≈863 h of head-mounted-camera infant video)
+          (≈863 h of head-mounted-camera video from children, collected
+          by Stanford University and hosted on NYU Databrary)
           <strong>and nothing&nbsp;else</strong>. Beat the baselines on a
-          fixed benchmark suite, and close the gap to web-scale
+          fixed benchmark suite and close the gap to web-scale
           pretrained&nbsp;models.
         </p>
 
@@ -94,11 +94,11 @@
           <div class="cta">
             <a class="btn btn-secondary" href="https://databrary.org/volume/1882" target="_blank" rel="noopener noreferrer">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/><path d="M3 12c0 1.66 4 3 9 3s9-1.34 9-3"/></svg>
-              BabyView Dataset
+              BabyView dataset
             </a>
             <a class="btn btn-secondary" href="https://github.com/facebookresearch/egobabyvlm/releases/download/Eval-Data/MachineDevBench.tar" download>
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-              Machine-DevBench (Eval)
+              Machine-DevBench (eval)
             </a>
           </div>
         </div>
@@ -114,31 +114,26 @@
   </header>
 
   <main class="container">
-    <div class="org-strip" aria-label="Affiliations">
-      <img src="resources/logo_meta.png" alt="Meta" class="logo-wide logo-meta" />
-      <img src="resources/logo_stanford.png" alt="Stanford University" class="logo-wide" />
-      <img src="resources/logo_ens.png" alt="École Normale Supérieure" class="logo-tall" />
-      <img src="resources/logo_utokyo.png" alt="The University of Tokyo" class="logo-wide" />
-    </div>
-
     <section id="about" class="card">
-      <h2>About the Challenge</h2>
+      <h2>About the challenge</h2>
       <p>
         Human infants acquire language from sparse, weakly-aligned multimodal
         input — yet today's vision–language models (VLMs), trained on
         curated web data, fail to generalize to the kinds of egocentric
-        streams produced by wearable cameras and head-cams. The
-        <strong>EgoBabyVLM Challenge</strong> asks: how far can we close that
+        streams produced by wearable cameras and head-cams.
+        <strong>This challenge</strong> asks: how far can we close that
         gap <em>algorithmically</em>, without changing the data?
       </p>
       <p>
         Participants train a VLM on the
         <a href="https://databrary.org/volume/1882">BabyView 2025.1</a>
-        corpus (≈863 h of head-mounted-camera video from children) <strong>and
-        nothing else</strong>: no extra image, video, text, or audio data may
-        be used for any encoder pretraining, fine-tuning, or evaluation.
-        Submissions are scored on three families of tasks, each with subgroup
-        aggregates and an overall score:
+        corpus (≈863 h of head-mounted-camera video from children,
+        collected by Stanford University and hosted on NYU Databrary)
+        <strong>and nothing else</strong>: no extra image, video, text
+        or audio data may be used for any encoder pretraining,
+        fine-tuning or evaluation. Submissions are scored on three
+        families of tasks, each with subgroup aggregates and an overall
+        score:
       </p>
       <ul class="eval-families">
         <li>
@@ -168,7 +163,7 @@
         Naturalistic egocentric input drives contrastive and generative
         baselines to near-chance on the cross-modal probes, while curated
         captions (COCO) approach off-the-shelf CLIP. Beating the baselines
-        will likely require new training objectives, architectures, or
+        will likely require new training objectives, architectures or
         curricula — not new data.
       </p>
       <p style="margin-top: 1.25rem;">
@@ -201,11 +196,14 @@
 
   <footer>
     <div class="container footer-inner">
-      <p class="footer-copyright">Copyright &copy; Meta Platforms, Inc.</p>
+      <div class="footer-brand">
+        <img src="resources/meta_lockup_positive.svg" alt="Meta" class="footer-logo" />
+        <p class="footer-copyright">&copy; 2026 Meta</p>
+      </div>
       <p class="footer-links">
-        <a href="https://opensource.fb.com/legal/terms/" target="_blank" rel="noopener noreferrer">Terms</a>
-        <a href="https://opensource.fb.com/legal/privacy/" target="_blank" rel="noopener noreferrer">Privacy</a>
-        <a href="https://www.facebook.com/policies/cookies/" target="_blank" rel="noopener noreferrer">Cookies</a>
+        <a href="https://www.facebook.com/terms.php/" target="_blank" rel="noopener noreferrer">Terms</a>
+        <a href="https://www.facebook.com/privacy/policy/" target="_blank" rel="noopener noreferrer">Privacy</a>
+        <a href="https://www.facebook.com/privacy/policies/cookies/" target="_blank" rel="noopener noreferrer">Cookies</a>
       </p>
     </div>
   </footer>

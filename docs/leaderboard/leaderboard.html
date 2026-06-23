@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>EgoBabyVLM Leaderboard</title>
+  <title>Leaderboard</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400..700;1,400..500&display=swap" />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
@@ -14,11 +14,11 @@
     <div class="hero-bg" aria-hidden="true"></div>
     <div class="container hero-inner">
       <nav class="topnav">
-        <span class="brand">
-          <img src="resources/logo_meta.svg" alt="Meta" class="brand-meta" />
-          <span class="brand-divider" aria-hidden="true"></span>
-          <span class="brand-name">EgoBabyVLM</span>
-        </span>
+        <div class="hero-attribution">
+          <img src="resources/meta_lockup_negative.svg" alt="Meta" class="hero-attribution-logo" />
+          <span class="hero-attribution-divider" aria-hidden="true"></span>
+          <span class="hero-attribution-text">A Meta FAIR release</span>
+        </div>
         <div class="topnav-links">
           <a href="index.html">Home</a>
           <a href="leaderboard.html">Leaderboard</a>
@@ -29,8 +29,7 @@
       <div class="hero-content">
         <h1>Leaderboard</h1>
         <p class="tagline">
-          Mean &plusmn; std across 3 seeds on the
-          <strong>EgoBabyVLM benchmark suite</strong>.
+          Compare submitted methods across the benchmark suite.
         </p>
         <div class="cta-stack">
           <div class="cta">
@@ -46,11 +45,11 @@
           <div class="cta">
             <a class="btn btn-secondary" href="https://databrary.org/volume/1882" target="_blank" rel="noopener noreferrer">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/><path d="M3 12c0 1.66 4 3 9 3s9-1.34 9-3"/></svg>
-              BabyView Dataset
+              BabyView dataset
             </a>
             <a class="btn btn-secondary" href="https://github.com/facebookresearch/egobabyvlm/releases/download/Eval-Data/MachineDevBench.tar" download>
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-              Machine-DevBench (Eval)
+              Machine-DevBench (eval)
             </a>
           </div>
         </div>
@@ -59,12 +58,6 @@
   </header>
 
   <main class="container">
-    <div class="org-strip" aria-label="Affiliations">
-      <img src="resources/logo_meta.png" alt="Meta" class="logo-wide logo-meta" />
-      <img src="resources/logo_stanford.png" alt="Stanford University" class="logo-wide" />
-      <img src="resources/logo_ens.png" alt="École Normale Supérieure" class="logo-tall" />
-      <img src="resources/logo_utokyo.png" alt="The University of Tokyo" class="logo-wide" />
-    </div>
     <section id="leaderboard">
       <div class="section-head">
         <p class="muted">
@@ -76,6 +69,9 @@
           (Ego4D, HowTo) included for comparison.<br/>
           <span class="pill pill-baseline">baseline</span>
           rows are the official BabyView challenge baselines.
+        </p>
+        <p class="muted" style="margin-top: 0.5rem;">
+          Scores are mean &plusmn; std across 3 seeds unless noted.
         </p>
         <p class="muted" id="lb-status" style="margin-top: 0.5rem;">Loading submissions…</p>
       </div>
@@ -93,10 +89,10 @@
               <th>#</th>
               <th>Model</th>
               <th>Architecture</th>
-              <th>Training Data</th>
-              <th>Lexical Agg ↑</th>
-              <th>Grammatical Agg ↑</th>
-              <th>Overall Agg ↑</th>
+              <th>Training data</th>
+              <th>Lexical agg ↑</th>
+              <th>Grammatical agg ↑</th>
+              <th>Overall agg ↑</th>
             </tr>
           </thead>
           <tbody id="lb-multimodal"></tbody>
@@ -116,11 +112,11 @@
         <table class="leaderboard">
           <thead>
             <tr>
-              <th>Training Data</th>
+              <th>Training data</th>
               <th>FT</th>
-              <th>Object recogn. Agg ↑</th>
-              <th>Visual props. Agg ↑</th>
-              <th>Overall Agg ↑</th>
+              <th>Object recogn. agg ↑</th>
+              <th>Visual props. agg ↑</th>
+              <th>Overall agg ↑</th>
             </tr>
           </thead>
           <tbody id="lb-vision">
@@ -147,12 +143,12 @@
         <table class="leaderboard">
           <thead>
             <tr>
-              <th>Training Data</th>
+              <th>Training data</th>
               <th>Encoder</th>
               <th>FT</th>
-              <th>Syntax Agg ↑</th>
-              <th>Semantics Agg ↑</th>
-              <th>Overall Agg ↑</th>
+              <th>Syntax agg ↑</th>
+              <th>Semantics agg ↑</th>
+              <th>Overall agg ↑</th>
             </tr>
           </thead>
           <tbody id="lb-language">
@@ -172,18 +168,21 @@
 
   <footer>
     <div class="container footer-inner">
-      <p class="footer-copyright">Copyright &copy; Meta Platforms, Inc.</p>
+      <div class="footer-brand">
+        <img src="resources/meta_lockup_positive.svg" alt="Meta" class="footer-logo" />
+        <p class="footer-copyright">&copy; 2026 Meta</p>
+      </div>
       <p class="footer-links">
-        <a href="https://opensource.fb.com/legal/terms/" target="_blank" rel="noopener noreferrer">Terms</a>
-        <a href="https://opensource.fb.com/legal/privacy/" target="_blank" rel="noopener noreferrer">Privacy</a>
-        <a href="https://www.facebook.com/policies/cookies/" target="_blank" rel="noopener noreferrer">Cookies</a>
+        <a href="https://www.facebook.com/terms.php/" target="_blank" rel="noopener noreferrer">Terms</a>
+        <a href="https://www.facebook.com/privacy/policy/" target="_blank" rel="noopener noreferrer">Privacy</a>
+        <a href="https://www.facebook.com/privacy/policies/cookies/" target="_blank" rel="noopener noreferrer">Cookies</a>
       </p>
     </div>
   </footer>
 
   <script>
     // -------------- Leaderboard renderer --------------
-    // Loads submissions/index.json, then each submission JSON, and fills the
+    // Loads submissions/index.json, then each submission JSON and fills the
     // three leaderboard tables.
 
     const SUBMISSIONS_DIR = "submissions/";

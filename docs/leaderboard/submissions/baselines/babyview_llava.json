@@ -1,7 +1,7 @@
 {
   "id": "babyview_llava",
   "model": "LLaVA",
-  "team": "EgoBabyVLM (paper)",
+  "team": "Meta FAIR",
   "architecture": "generative",
   "training_data": "BabyView",
   "category": "baseline",

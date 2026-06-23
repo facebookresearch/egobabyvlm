@@ -1,14 +1,14 @@
 <p align="center">
   <a href="https://facebookresearch.github.io/egobabyvlm/">
     <picture>
-      <source media="(prefers-color-scheme: dark)" srcset=".github/assets/banner-dark.svg">
-      <img alt="EgoBabyVLM — Benchmarking Cross-Modal Learning from Naturalistic Egocentric Video Data" src=".github/assets/banner-light.svg">
+      <source media="(prefers-color-scheme: dark)" srcset=".github/assets/header_full_negative.svg">
+      <img alt="Meta · A Meta FAIR release — Benchmarking cross-modal learning from naturalistic egocentric video data" src=".github/assets/header_full_positive.svg" width="540">
     </picture>
   </a>
 </p>
 
 <p align="center">
-  <a href="https://facebookresearch.github.io/egobabyvlm/"><img alt="Visit the EgoBabyVLM challenge site" src="https://img.shields.io/badge/EgoBabyVLM%20Challenge%20site-Visit%20%E2%86%92-0064e0?style=for-the-badge&labelColor=2c3543"></a>
+  <a href="https://facebookresearch.github.io/egobabyvlm/"><img alt="Visit the challenge site" src="https://img.shields.io/badge/Challenge%20site-Visit%20%E2%86%92-4a5568?style=for-the-badge&labelColor=2c3543"></a>
 </p>
 
 <p align="center">
@@ -20,19 +20,20 @@
   <a href="https://arxiv.org/abs/2605.19130"><img alt="arXiv" src="https://img.shields.io/badge/arXiv-2605.19130-4a5568?style=flat-square&labelColor=2c3543&logo=arxiv&logoColor=cbd5e0"></a>
 </p>
 
-Challenge infrastructure for **EgoBabyVLM**. Accompanies the paper
-[*EgoBabyVLM: Benchmarking Cross-Modal Learning from Naturalistic Egocentric
-Video Data*](https://arxiv.org/abs/2605.19130). Brought to you by researchers
-at Meta, Stanford, ENS, and UTokyo.
+Challenge infrastructure accompanying the paper
+[*Benchmarking Cross-Modal Learning from Naturalistic Egocentric Video
+Data*](https://arxiv.org/abs/2605.19130). Brought to you by researchers
+at Meta, Stanford, ENS and UTokyo.
 
-### The Challenge
+### The challenge
 
 Train a VLM on the [BabyView 2025.1](https://databrary.org/volume/1882)
-corpus (≈863 h of head-mounted-camera video from children) and nothing
-else — no extra image, video, text, or audio data may be used for any
-encoder pretraining, fine-tuning, or evaluation. The challenge is to
-beat the baselines on a fixed evaluation suite and close the gap to
-web-scale pretrained models.
+corpus (≈863 h of head-mounted-camera video from children, collected
+by Stanford University and hosted on NYU Databrary) and nothing else —
+no extra image, video, text or audio data may be used for any encoder
+pretraining, fine-tuning or evaluation. The challenge is to beat the
+baselines on a fixed evaluation suite and close the gap to web-scale
+pretrained models.
 
 Submissions are scored on three families of tasks, each with subgroup
 aggregates and an overall:
@@ -44,7 +45,7 @@ aggregates and an overall:
 | **Language** | Syntax (3), Semantics (2) | Zorro; LongTail-Swap (Inflection, Agreement, Word); Visual-Property Swap (color, material, size, shape). |
 
 <p align="center">
-  <img src=".github/assets/overview.png" alt="EgoBabyVLM overview: train a VLM on BabyView 2025.1, evaluate on vision, cross-modal, and language metrics." width="800" />
+  <img src=".github/assets/overview.png" alt="Overview: train a VLM on BabyView 2025.1, evaluate on vision, cross-modal and language metrics." width="800" />
 </p>
 
 The paper shows weakly-aligned naturalistic egocentric input drives
@@ -68,7 +69,7 @@ apps/
 │   ├── dinov2/           # DINOv2 SSL + ViT-B/14 feature extractor
 │   ├── lm_training/      # BERT MLM and GPT-2 from-scratch trainers
 │   ├── clip/             # CLIP+ contrastive trainer (4 modes: contrastive, +MLM, +DINOv2, triple)
-│   └── llava/            # EgoBabyLLaVA generative VLM trainer
+│   └── llava/            # LLaVA-style generative VLM trainer
 ├── alignment_scoring/    # CLIP / VQA / STS / captioning pipelines for cross-modal alignment scoring
 ├── benchmark_creation/   # Machine-DevBench corpus-grounded benchmark generator
 └── swapbench/            # LongTail-Swap + VP-Swap generators
@@ -97,7 +98,7 @@ produced them. The minimum end-to-end path:
 3. **Train your own model on BabyView** — any architecture, any
    objective, as long as the training data comes only from BabyView
    2025.1 (no extra image / video / text / audio data for pretraining,
-   fine-tuning, or evaluation).
+   fine-tuning or evaluation).
 4. **Score your model** with `evaluation/eval_launcher` over the three
    families.
 5. **Open a PR against the leaderboard repo** with a JSON file
@@ -107,10 +108,10 @@ produced them. The minimum end-to-end path:
    for the JSON schema and PR template.
 
 > [!IMPORTANT]
-> Submissions are marked **verified** when we can reproduce the scores
-> from the provided code. Leaderboard-only submissions (a
-> paper / report with numbers but no runnable code) are still welcome
-> and will appear on the board, but won't carry the verified mark.
+> Submissions linking to runnable training code are marked **reproducible**.
+> Organizers don't rerun the code — the mark just signals anyone could.
+> Leaderboard-only submissions (paper or report without runnable code) are
+> welcome but unmarked.
 
 > [!TIP]
 > For validation and method exploration we recommend training on
@@ -125,7 +126,7 @@ The `apps/baselines/` trees ship the four trainers we used in the paper,
 along with `apps/data_preprocessing/` for the BabyView → manifest
 pipeline they consume. Useful as starting points, sanity checks, or
 warm-starts for your own approach — but bring your own trainer if you
-prefer; the challenge encourages alternative architectures, objectives,
+prefer; the challenge encourages alternative architectures, objectives
 and curricula.
 
 <details>
@@ -135,7 +136,7 @@ and curricula.
 - `apps/baselines/lm_training/` — BERT MLM and GPT-2 from-scratch.
 - `apps/baselines/clip/` — CLIP+ contrastive trainer with four modes
   (contrastive, +MLM, +DINOv2, triple).
-- `apps/baselines/llava/` — EgoBabyLLaVA generative VLM trainer.
+- `apps/baselines/llava/` — LLaVA-style generative VLM trainer.
 - `apps/data_preprocessing/` — video → frames + WhisperX transcripts →
   `(frame, utterance)` manifests.
 
@@ -162,7 +163,7 @@ references.
 </details>
 
 > [!NOTE]
-> `apps/alignment_scoring/`, `apps/benchmark_creation/`, and
+> `apps/alignment_scoring/`, `apps/benchmark_creation/` and
 > `apps/swapbench/` are toolkits used to produce the paper's analyses
 > and benchmarks. Not on the critical path for a submission, but
 > useful for re-running those experiments or generating benchmarks for
@@ -206,7 +207,7 @@ alignment-finetune-lora                   # apps/alignment_scoring (LoRA finetun
 alignment-create-shuffled-manifest        # apps/alignment_scoring
 ```
 
-DINOv2, LLaVA, BERT, GPT-2, Machine-DevBench generation, and the
+DINOv2, LLaVA, BERT, GPT-2, Machine-DevBench generation and the
 evaluation launcher are invoked via `pixi run -e dev python -m apps.<…>`
 or `pixi run -e dev python -m evaluation.…`. See the corresponding
 component READMEs.
@@ -240,7 +241,7 @@ pixi run -e dev python -m evaluation.eval_launcher \
     name=my_run
 ```
 
-Override `model=…` to swap encoders, or any individual task YAML in
+Override `model=…` to swap encoders or any individual task YAML in
 `evaluation/configs/eval/`. Off-the-shelf model configs (`dino`,
 `clip_image`, `bert_base`, …) are useful for sanity-checking the eval
 setup before plugging in your own.
@@ -265,13 +266,13 @@ pixi run -e dev torchrun --standalone --nproc-per-node=4 \
 ```
 
 `data=ego4d` selects the multi-frame-per-utterance loader used for
-BabyView, Ego4D, and HowTo. For COCO use `data=coco`. See
+BabyView, Ego4D and HowTo. For COCO use `data=coco`. See
 [`apps/baselines/clip/README.md`](apps/baselines/clip/README.md) for
 the other modes and the single-GPU recipe.
 </details>
 
 <details>
-<summary>EgoBabyLLaVA (generative) — Phase 1 + Phase 2</summary>
+<summary>LLaVA-style generative VLM — Phase 1 + Phase 2</summary>
 
 ```bash
 sbatch apps/baselines/llava/scripts/phase1_pretrain.sh
@@ -315,7 +316,7 @@ please consider citing:
 
 ### Licenses
 
-The majority of EgoBabyVLM is licensed under [CC-BY-NC 4.0](LICENSE),
+The majority of this code is licensed under [CC-BY-NC 4.0](LICENSE),
 with the following exceptions:
 
 | Component | Path | License |

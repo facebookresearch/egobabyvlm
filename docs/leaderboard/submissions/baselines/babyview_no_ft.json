@@ -1,7 +1,7 @@
 {
   "id": "babyview_no_ft",
   "model": "BabyView (no FT)",
-  "team": "EgoBabyVLM (paper)",
+  "team": "Meta FAIR",
   "architecture": "—",
   "training_data": "BabyView",
   "category": "baseline",

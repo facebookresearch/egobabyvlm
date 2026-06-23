@@ -1,7 +1,7 @@
 {
   "id": "babyview_clip_plus",
   "model": "CLIP+",
-  "team": "EgoBabyVLM (paper)",
+  "team": "Meta FAIR",
   "architecture": "contrastive",
   "training_data": "BabyView",
   "category": "baseline",
