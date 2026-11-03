@@ -6,14 +6,14 @@
 
 # BabyView: (utterance, frame) pairs, one random frame per utterance at train
 # time. Shares the BabyView reader with the EgoVLP baseline. Manifests and frames
-# are read from $BABYVIEW_ROOT ({train,val}.json, frames/resize_256/frames).
+# are read from $BABYVIEW_ROOT ({train,val}.json, frames).
 # @package data
 
 dataset:
   _target_: apps.baselines.flamingo.data.build_flamingo_babyview
   manifest_train: ${oc.env:BABYVIEW_ROOT}/train.json
   manifest_val: ${oc.env:BABYVIEW_ROOT}/val.json
-  image_root: ${oc.env:BABYVIEW_ROOT}/frames/resize_256/frames
+  image_root: ${oc.env:BABYVIEW_ROOT}/frames
   prompt_template: "<image> {text}"
   max_length: 64
   media_token: ${model.media_token}
