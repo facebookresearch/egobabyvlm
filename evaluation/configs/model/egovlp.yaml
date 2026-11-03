@@ -1,0 +1,17 @@
+# Copyright (c) Meta Platforms, Inc. and affiliates.
+# All rights reserved.
+#
+# This source code is licensed under the license found in the
+# LICENSE file in the root directory of this source tree.
+
+# Fine-tuned EgoVLP (Frozen-in-Time: SpaceTimeTransformer + DistilBERT, 256-d
+# projection) as a MultiModalFeatureExtractor. Still images are fed as 1-frame
+# clips; MachineDevBench scores cosine similarity of L2-normalized image/text
+# embeddings, the same path as the CLIP+ dual encoder.
+# Override `kwargs.checkpoint_path` for your run (an EgoVLP-native `.pth`
+# written by apps/baselines/egovlp/training/train.py).
+_target_: "apps.baselines.egovlp.trained_extractor.EgoVLPFeatureExtractor"
+name: "egovlp"
+kwargs:
+  checkpoint_path: ???
+  normalize: true

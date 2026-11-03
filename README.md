@@ -69,7 +69,8 @@ apps/
 │   ├── dinov2/           # DINOv2 SSL + ViT-B/14 feature extractor
 │   ├── lm_training/      # BERT MLM and GPT-2 from-scratch trainers
 │   ├── clip/             # CLIP+ contrastive trainer (4 modes: contrastive, +MLM, +DINOv2, triple)
-│   └── llava/            # LLaVA-style generative VLM trainer
+│   ├── llava/            # LLaVA-style generative VLM trainer
+│   └── egovlp/           # EgoVLP (Frozen-in-Time) fine-tuning from the EgoClip checkpoint
 ├── alignment_scoring/    # CLIP / VQA / STS / captioning pipelines for cross-modal alignment scoring
 ├── benchmark_creation/   # Machine-DevBench corpus-grounded benchmark generator
 └── swapbench/            # LongTail-Swap + VP-Swap generators
@@ -122,7 +123,7 @@ produced them. The minimum end-to-end path:
 
 ### Reference baselines
 
-The `apps/baselines/` trees ship the four trainers we used in the paper,
+The `apps/baselines/` trees ship the trainers we used in the paper,
 along with `apps/data_preprocessing/` for the BabyView → manifest
 pipeline they consume. Useful as starting points, sanity checks, or
 warm-starts for your own approach — but bring your own trainer if you
@@ -137,6 +138,8 @@ and curricula.
 - `apps/baselines/clip/` — CLIP+ contrastive trainer with four modes
   (contrastive, +MLM, +DINOv2, triple).
 - `apps/baselines/llava/` — LLaVA-style generative VLM trainer.
+- `apps/baselines/egovlp/` — EgoVLP dual encoder fine-tuned from its
+  released EgoClip checkpoint (pretrained on Ego4D).
 - `apps/data_preprocessing/` — video → frames + WhisperX transcripts →
   `(frame, utterance)` manifests.
 
@@ -198,6 +201,7 @@ egobabyvlm-filter-vtc                     # apps/data_preprocessing/transcriptio
 egobabyvlm-build-clip-manifest            # apps/data_preprocessing/manifests
 egobabyvlm-train-contrastive              # apps/baselines/clip/training
 egobabyvlm-export-text-encoder-to-hf      # apps/baselines/clip/scripts (BERT → HF for lm_eval)
+egobabyvlm-train-egovlp                   # apps/baselines/egovlp/training
 egobabyvlm-swapbench-build-word-lists     # apps/swapbench (LongTail-Swap + VP-Swap)
 egobabyvlm-swapbench-lt-swap              # apps/swapbench
 egobabyvlm-swapbench-vp-swap              # apps/swapbench
@@ -282,6 +286,18 @@ sbatch apps/baselines/llava/scripts/phase2_finetune.sh
 See [`apps/baselines/llava/README.md`](apps/baselines/llava/README.md)
 for the three-phase recipe (GPT-2 from scratch → projector → joint
 fine-tune).
+</details>
+
+<details>
+<summary>EgoVLP — fine-tune from the EgoClip checkpoint</summary>
+
+```bash
+SETTING=coco_p50 SEED=42 EGOVLP_CHECKPOINT=/path/to/egovlp.pth \
+    sbatch apps/baselines/egovlp/scripts/train_egovlp.sh
+```
+
+See [`apps/baselines/egovlp/README.md`](apps/baselines/egovlp/README.md)
+for the checkpoint download, data variables and the paper's 18 runs.
 </details>
 
 ### Tests
