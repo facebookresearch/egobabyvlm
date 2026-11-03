@@ -342,6 +342,7 @@ with the following exceptions:
 | Perception-LM | `apps/alignment_scoring/third_party/perception_models/` (PLM portion) | [FAIR Noncommercial Research License](apps/alignment_scoring/third_party/perception_models/LICENSE.PLM) |
 | LongTail-Swap | `apps/swapbench/third_party/lt_swap/` | [CC-BY-NC 4.0](apps/swapbench/third_party/lt_swap/LICENSE) |
 | LLaVA-derived code | `apps/baselines/llava/` | Apache License 2.0 (per-file headers) |
+| EgoVLP / Frozen-in-Time-derived code | `apps/baselines/egovlp/model/video_transformer.py` | MIT License; builds on timm, Apache License 2.0 (per-file header) |
 
 Please retain all upstream copyright notices and license headers when
 reusing files from these directories.

@@ -17,8 +17,8 @@ encoder, projected to a shared 256-d space. We initialize from the released
 EgoClip-pretrained checkpoint, feed still images as 1-frame clips, and score
 image–text pairs by cosine similarity, the same path as the CLIP+ dual encoder.
 
-Code originally derived from EgoVLP (MIT) and Frozen-in-Time (MIT); see file
-headers for attribution.
+Code originally derived from EgoVLP (MIT) and Frozen-in-Time (MIT), which build
+on timm's Vision Transformer (Apache-2.0); see file headers for attribution.
 
 > [!NOTE]
 > The EgoClip checkpoint was pretrained on Ego4D, i.e. on external egocentric
