@@ -66,6 +66,7 @@ from apps.baselines.egovlp.data.collate import KEY_CAPTIONS, KEY_CLIP
 from apps.baselines.egovlp.model import (
     DEFAULT_TEXT_MODEL,
     EgoVLPConfig,
+    EgoVLPModel,
     build_egovlp_model,
     save_egovlp_checkpoint,
 )
@@ -161,7 +162,7 @@ def build_loader(
     shuffle: bool,
     drop_last: bool,
 ) -> DataLoader:
-    sampler = DistributedSampler(dataset, shuffle=shuffle) if world_size > 1 else None
+    sampler: DistributedSampler | None = DistributedSampler(dataset, shuffle=shuffle) if world_size > 1 else None
     return DataLoader(
         dataset,
         batch_size=batch_size,
@@ -192,7 +193,7 @@ class _ContrastiveWrapper(nn.Module):
     makes multi-GPU gradient all-reduce correct.
     """
 
-    def __init__(self, model: nn.Module) -> None:
+    def __init__(self, model: EgoVLPModel) -> None:
         super().__init__()
         self.model = model
         self.logit_scale = nn.Parameter(torch.tensor(math.log(1.0 / 0.07)))

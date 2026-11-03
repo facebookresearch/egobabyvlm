@@ -347,6 +347,7 @@ class SpaceTimeTransformer(nn.Module):
         )
         self.norm = norm_layer(embed_dim)
 
+        self.pre_logits: nn.Module
         if representation_size:
             self.num_features = representation_size
             self.pre_logits = nn.Sequential(
@@ -517,7 +518,7 @@ class FrozenInTime(nn.Module):
         self.txt_proj = nn.Sequential(nn.ReLU(), nn.Linear(txt_dim, projection_dim))
         self.vid_proj = nn.Sequential(nn.Linear(ftr_dim, projection_dim))
 
-        if load_checkpoint not in ("", None):
+        if load_checkpoint:
             state_dict = _load_egovlp_state_dict(load_checkpoint)
             missing, unexpected = self.load_state_dict(state_dict, strict=True)
             logger.info(
