@@ -23,8 +23,9 @@ headers for attribution.
 > [!NOTE]
 > The EgoClip checkpoint was pretrained on Ego4D, i.e. on external egocentric
 > data that the other baselines never see. We do not redistribute it: download
-> it from the EgoVLP repo. Ego4D-derived weights are subject to the
-> [Ego4D license](https://ego4ddataset.com/ego4d-license/).
+> it from the EgoVLP repo. EgoVLP's code is MIT-licensed; the Ego4D data it was
+> pretrained on is provided under the Ego4D license agreement (see
+> [ego4d-data.org](https://ego4d-data.org/docs/start-here/)).
 
 ### Layout
 
@@ -50,8 +51,8 @@ with `strict=True`. The upstream repo is not needed at runtime.
 
 ### Setup
 
-1. **EgoClip checkpoint**: download the pretrained EgoVLP weights from the
-   "Pretrained Weights" section of the
+1. **EgoClip checkpoint**: download `EgoVLP_PT_BEST` (EgoClip pretraining
+   with EgoNCE) from the "Pretrained Weights" section of the
    [EgoVLP README](https://github.com/showlab/EgoVLP#-pretrained-weights) and
    set `EGOVLP_CHECKPOINT=/path/to/egovlp.pth`.
 2. **DistilBERT**: `distilbert-base-uncased` is fetched from the Hugging Face
