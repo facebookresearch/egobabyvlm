@@ -69,7 +69,7 @@ Data locations are read from environment variables:
 | `COCO_MC_SPLIT_DIR` | `coco_metaclip_val.txt`: held-out validation captions (every other caption is train) | COCO-MC |
 | `COCO_MC_PERMUTATION_DIR` | `permutation_metadata_cocomc_train_p{25,50,75,100}_seed42.json` | COCO-MC |
 | `COCO_IMAGE_DIR` | COCO images as `{coco_id:012d}.jpg` | COCO-MC |
-| `BABYVIEW_ROOT` | `{train,val}.json` manifests (from `egobabyvlm-build-clip-manifest`) + frames under `frames/resize_256/frames` | BabyView |
+| `BABYVIEW_ROOT` | `{train,val}.json` manifests from `egobabyvlm-build-clip-manifest` and the extracted frames under `frames/` (the manifests' `frame_filenames` are relative to it; override with `--babyview_image_root`) | BabyView |
 
 Every COCO caption is paired with its COCO image and each of its 5 MetaCLIP
 images. The train split must contain exactly 495,380 pairs (asserted), so that

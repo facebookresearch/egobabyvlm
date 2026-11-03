@@ -14,7 +14,7 @@ and ``__getitem__`` (to skip unreadable frames); frame sampling, image loading
 and the transform reuse the base class.
 
 Default locations come from ``$BABYVIEW_ROOT``, laid out as
-``{train,val}.json`` plus frames under ``frames/resize_256/frames``. Override
+``{train,val}.json`` plus frames under ``frames``. Override
 per file with ``--babyview_{train,val}_json`` / ``--babyview_image_root``.
 """
 
@@ -35,7 +35,7 @@ logger = logging.getLogger(__name__)
 BABYVIEW_ROOT = os.environ.get("BABYVIEW_ROOT")
 BABYVIEW_TRAIN_JSON = f"{BABYVIEW_ROOT}/train.json" if BABYVIEW_ROOT else None
 BABYVIEW_VAL_JSON = f"{BABYVIEW_ROOT}/val.json" if BABYVIEW_ROOT else None
-BABYVIEW_IMAGE_ROOT = f"{BABYVIEW_ROOT}/frames/resize_256/frames" if BABYVIEW_ROOT else None
+BABYVIEW_IMAGE_ROOT = f"{BABYVIEW_ROOT}/frames" if BABYVIEW_ROOT else None
 
 
 class BabyViewCaptionsDataset(HowToCaptionsDataset):
