@@ -177,6 +177,16 @@ class FlamingoTrainer:
             total_correct += int((ll_pos > ll_neg).sum().item())
             total += int(ll_pos.shape[0])
 
+        if is_dist_avail_and_initialized():
+            # Each rank saw only its DistributedSampler shard; sum across ranks.
+            stats = torch.tensor([total_loss, n, total_correct, total], dtype=torch.float64, device=self.device)
+            torch.distributed.all_reduce(stats)
+            total_loss, n, total_correct, total = (
+                stats[0].item(),
+                int(stats[1].item()),
+                int(stats[2].item()),
+                int(stats[3].item()),
+            )
         if n == 0:
             return None
         return {
@@ -186,7 +196,7 @@ class FlamingoTrainer:
 
     # ------------------------------------------------------------------ checkpoint
 
-    def _save(self, tag: str = "latest") -> Path | None:
+    def _save(self, tag: str = "latest", *, epoch_complete: bool = True) -> Path | None:
         if not is_main_process():
             return None
         save_dir = Path(self.config.checkpoint.save_dir)
@@ -201,6 +211,7 @@ class FlamingoTrainer:
             epoch=self.epoch,
             step=self.global_step,
             best_val_loss=self.best_val_loss,
+            epoch_complete=epoch_complete,
         )
         logger.info("Saved checkpoint to %s", path)
         return path
@@ -211,6 +222,12 @@ class FlamingoTrainer:
         prune_checkpoints(self.config.checkpoint.save_dir, "epoch_*.pt", int(self.config.checkpoint.keep_last))
 
     def resume(self, path: str | Path) -> None:
+        """Resume after the last *completed* epoch stored in ``path``.
+
+        Mid-epoch saves (``interrupted.pt``) are rejected: restarting after them
+        would skip the rest of that epoch. Resume from ``latest.pt`` instead,
+        which is written at the end of every epoch.
+        """
         payload = load_checkpoint(
             path,
             model=self.model,
@@ -218,6 +235,9 @@ class FlamingoTrainer:
             scheduler=self.scheduler,
             map_location=self.device,
         )
+        if not payload.get("epoch_complete", True):
+            msg = f"{path} was saved mid-epoch; resume from latest.pt (end of the last completed epoch) instead."
+            raise ValueError(msg)
         self.epoch = int(payload.get("epoch", 0)) + 1
         self.global_step = int(payload.get("step", 0))
         self.best_val_loss = float(payload.get("best_val_loss", float("inf")))
@@ -226,7 +246,7 @@ class FlamingoTrainer:
     def _install_signal_handlers(self) -> None:
         def _handler(signum: int, _frame: object) -> None:
             logger.warning("Received signal %d — saving checkpoint before exit", signum)
-            self._save(tag="interrupted")
+            self._save(tag="interrupted", epoch_complete=False)
             raise KeyboardInterrupt
 
         signal.signal(signal.SIGINT, _handler)

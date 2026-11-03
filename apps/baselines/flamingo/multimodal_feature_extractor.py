@@ -97,6 +97,12 @@ class FlamingoMultiModalAdapter(nn.Module):
             self._feature_dim,
         )
 
+    def to(self, *args: Any, **kwargs: Any) -> FlamingoMultiModalAdapter:  # type: ignore[override]  # noqa: ANN401
+        """Move the model and keep the cached input device in sync (the eval harness calls ``.to``)."""
+        super().to(*args, **kwargs)
+        self._device = next(self._model.parameters()).device
+        return self
+
     # ------------------------------------------------------------------ protocol
 
     @property

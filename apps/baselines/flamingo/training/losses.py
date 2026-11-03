@@ -151,7 +151,8 @@ class FlamingoTrainingModule(nn.Module):
                 txt_sum = masked_mean(txt_states, attention_mask)
                 zi = F.normalize(aux.img_proj(img_sum), dim=-1)
                 zt = F.normalize(aux.txt_proj(txt_sum), dim=-1)
-                scale = aux.log_temp.exp().clamp(max=100.0)
+                # Temperature divides the logits: bound it below (CLIP caps logit scale at 100).
+                scale = aux.log_temp.exp().clamp(min=0.01)
                 logits_c = zi @ zt.t() / scale
                 tgt_c = torch.arange(zi.shape[0], device=zi.device)
                 contrastive_loss = 0.5 * (F.cross_entropy(logits_c, tgt_c) + F.cross_entropy(logits_c.t(), tgt_c))

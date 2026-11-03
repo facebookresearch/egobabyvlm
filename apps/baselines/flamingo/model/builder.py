@@ -149,26 +149,31 @@ def load_pretrained_model(
         media_token=config.media_token,
     )
     if config.media_token_id is not None and int(config.media_token_id) != media_token_id:
-        # Non-fatal: warn via exception message only if it would corrupt scoring.
-        config = replace(config, media_token_id=media_token_id)
+        # The tokenizer at decoder_init_path changed since training: <image> would
+        # map to a different embedding row and break cross-attention masking.
+        msg = (
+            f"Tokenizer from {_tokenizer_source(config)!r} gives media_token_id={media_token_id}, but the "
+            f"checkpoint was trained with {config.media_token_id}. Point decoder_init_path at the training tokenizer."
+        )
+        raise ValueError(msg)
 
     # Rebuild with a scratch GPT-2 (identical module structure) then load weights —
     # avoids a redundant HF download for hf_gpt2 / phase0 checkpoints.
     build_cfg = replace(config, decoder_init="scratch", decoder_init_path=None)
     model = FlamingoVLM(build_cfg)
     model.config = config  # restore provenance (real decoder_init etc.)
+    # Strict: the checkpoint stores the vision tower, Perceiver and decoder, so any
+    # mismatch means a wrong architecture (e.g. a torch.hub DINOv2 fallback, or a
+    # decoder whose sizes differ from FlamingoConfig's hidden_size / n_layer /
+    # n_head / max_position_embeddings) and would otherwise score garbage.
     missing, unexpected = model.load_state_dict(payload["model_state_dict"], strict=False)
     if missing or unexpected:
-        # Surface a clear signal without silently accepting a wrong architecture.
-        import logging
-
-        logging.getLogger(__name__).warning(
-            "Flamingo load_state_dict: %d missing, %d unexpected keys (missing=%s unexpected=%s)",
-            len(missing),
-            len(unexpected),
-            missing[:8],
-            unexpected[:8],
+        msg = (
+            f"Flamingo checkpoint {ckpt_file} does not match the rebuilt model: {len(missing)} missing keys "
+            f"(e.g. {missing[:3]}), {len(unexpected)} unexpected keys (e.g. {unexpected[:3]}). Check "
+            "vision_tower_path and that the decoder sizes in flamingo_config match the trained GPT-2."
         )
+        raise RuntimeError(msg)
 
     model.to(device=resolved_device, dtype=torch_dtype)
     model.eval()

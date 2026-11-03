@@ -40,8 +40,12 @@ def save_checkpoint(
     epoch: int,
     step: int,
     best_val_loss: float = float("inf"),
+    epoch_complete: bool = True,
 ) -> None:
-    """Save a self-contained Flamingo checkpoint (rank 0 only)."""
+    """Save a self-contained Flamingo checkpoint (rank 0 only).
+
+    ``epoch_complete=False`` marks a mid-epoch save (``interrupted.pt``).
+    """
     if not is_main_process():
         return
 
@@ -57,6 +61,7 @@ def save_checkpoint(
         "epoch": epoch,
         "step": step,
         "best_val_loss": best_val_loss,
+        "epoch_complete": epoch_complete,
         "config": cfg_dict,
     }
     atomic_torch_save(payload, path)

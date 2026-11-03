@@ -60,9 +60,9 @@ class FrozenDINOv2VisionTower(nn.Module):
             (default ``"dinov2_vitb14"``).
         vision_tower_path: Custom COCO-MC DINOv2 teacher checkpoint
             (``teacher_checkpoint.pth``); its sibling ``config.yaml`` is
-            auto-resolved. This is the DEFAULT loading path. If it is ``None``
-            or missing, the tower falls back to torch.hub ImageNet weights
-            (INCOMPATIBLE architecture — a loud warning is emitted).
+            auto-resolved. A path that does not exist raises. If it is ``None``,
+            the tower uses torch.hub ImageNet weights (a different architecture,
+            not usable with checkpoints trained on a custom tower).
         freeze: Freeze the backbone (default ``True`` — Flamingo keeps DINOv2
             frozen and trains only the resampler / cross-attn / decoder).
     """
@@ -76,13 +76,10 @@ class FrozenDINOv2VisionTower(nn.Module):
     ) -> None:
         super().__init__()
         if vision_tower_path and not Path(vision_tower_path).exists():
-            logger.warning(
-                "Flamingo DINOv2 vision_tower_path %r does not exist; falling back to torch.hub %r. "
-                "The hub ViT-B/14 architecture is INCOMPATIBLE with the custom COCO-MC DINOv2 "
-                "(swiglufused, block_chunks=2) and will produce WRONG features — fix the checkpoint path.",
-                vision_tower_path,
-                model_name,
-            )
+            # A silent torch.hub fallback would build an incompatible architecture
+            # (the custom DINOv2 uses swiglufused FFNs, block_chunks=2).
+            msg = f"Flamingo DINOv2 vision_tower_path {vision_tower_path!r} does not exist."
+            raise FileNotFoundError(msg)
         args = _VisionTowerArgs(vision_tower_path=vision_tower_path, freeze_vision_tower=freeze)
         self.tower = DINOv2ViTB14VisionTower(model_name, args, delay_load=False)
         self.freeze = freeze
