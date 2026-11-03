@@ -114,3 +114,51 @@ def test_babyview_skips_missing_frames(tmp_path: Path) -> None:
     assert caption == "look"
     assert sample_id == "v1_2"
     assert _is_color(image, (0, 255, 0))
+
+
+@pytest.mark.parametrize("member_name", ["./u1.jpeg", "u1.jpeg"])
+def test_metaclip_reader_accepts_both_tar_member_names(tmp_path: Path, member_name: str) -> None:
+    import io
+    import tarfile
+
+    from apps.baselines.egovlp.data.coco_metaclip import _MetaclipImageReader
+
+    buf = io.BytesIO()
+    Image.new("RGB", (8, 8), (10, 200, 30)).save(buf, format="JPEG")
+    tar_path = tmp_path / "shard.tar"
+    with tarfile.open(tar_path, "w") as tar:
+        info = tarfile.TarInfo(member_name)
+        info.size = len(buf.getvalue())
+        tar.addfile(info, io.BytesIO(buf.getvalue()))
+
+    reader = _MetaclipImageReader(extracted_root=None)
+    assert _is_color(reader.read("u1", str(tar_path)), (10, 200, 30))
+    with pytest.raises(FileNotFoundError):
+        reader.read("missing", str(tar_path))
+
+
+def test_stage_marker_only_written_on_success(tmp_path: Path) -> None:
+    from apps.baselines.egovlp.data import stage_metaclip
+
+    manifest = tmp_path / "m.jsonl"
+    manifest.write_text(
+        json.dumps(
+            {
+                "coco_id": 1,
+                "caption": "c",
+                "matches": [{"uuid": "u1", "shard_id": 0, "tar_path": str(tmp_path / "missing.tar")}],
+            }
+        )
+    )
+    out = stage_metaclip.stage_all(str(tmp_path / "scratch"), str(manifest), num_workers=1)
+    assert not (Path(out) / "_done").exists()  # the tar is missing -> failure -> no marker
+
+
+def test_babyview_logs_skipped_frames(tmp_path: Path, caplog: pytest.LogCaptureFixture) -> None:
+    _write_image(tmp_path / "frames" / "ok.jpg", (0, 0, 0))
+    manifest = tmp_path / "train.json"
+    manifest.write_text(json.dumps([{"utterance": "u", "frames": ["gone.jpg", "ok.jpg"]}]))
+    ds = BabyViewCaptionsDataset(manifest, tmp_path / "frames", transform=None, multiple_frames=False)
+    with caplog.at_level("WARNING"):
+        ds[0]
+    assert "gone.jpg" in caplog.text

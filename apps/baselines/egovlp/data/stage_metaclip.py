@@ -169,8 +169,8 @@ def stage_all(
 ) -> str:
     """Extract every needed MetaCLIP jpeg into ``{scratch_root}/extracted``.
 
-    Idempotent: a marker file ``extracted/_done`` short-circuits a re-run for the
-    same ``(manifest, limit)``. Returns the ``extracted`` dir (pass this as
+    Idempotent: a marker file ``extracted/_done`` (written only when every image
+    was staged) short-circuits a re-run for the same ``(manifest, limit)``. Returns the ``extracted`` dir (pass this as
     ``--extracted_root``).
     """
     manifest_path = str(manifest_path)
@@ -225,6 +225,13 @@ def stage_all(
         n_failed,
         n_tar_failed,
     )
+    if n_failed or n_tar_failed:
+        # Leave no marker so a re-run retries the missing images (already-staged
+        # files are skipped, so the retry is cheap).
+        logger.warning(
+            "[stage] %d images / %d tars failed; re-run to retry (no _done marker written)", n_failed, n_tar_failed
+        )
+        return str(out_root)
     with marker.open("w") as f:
         f.write(expected)
     return str(out_root)

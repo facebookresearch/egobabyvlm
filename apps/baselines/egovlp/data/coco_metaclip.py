@@ -177,11 +177,16 @@ class _MetaclipImageReader:
             msg = f"metaclip uuid {uuid} not in scratch and has no tar_path"
             raise FileNotFoundError(msg)
         tf = self._get_tar(tar_path)
-        member = tf.extractfile(f"./{uuid}.jpeg")
-        if member is None:
-            msg = f"could not extract ./{uuid}.jpeg from {tar_path}"
-            raise FileNotFoundError(msg)
-        return Image.open(io.BytesIO(member.read())).convert("RGB")
+        # Tar members may be stored as "./uuid.jpeg" or "uuid.jpeg" (as in stage_metaclip).
+        for name in (f"./{uuid}.jpeg", f"{uuid}.jpeg"):
+            try:
+                member = tf.extractfile(name)
+            except KeyError:
+                continue
+            if member is not None:
+                return Image.open(io.BytesIO(member.read())).convert("RGB")
+        msg = f"could not extract {uuid}.jpeg from {tar_path}"
+        raise FileNotFoundError(msg)
 
 
 class CocoMetaclipCaptionsDataset(Dataset):

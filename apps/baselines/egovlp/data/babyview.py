@@ -21,6 +21,7 @@ per file with ``--babyview_{train,val}_json`` / ``--babyview_image_root``.
 from __future__ import annotations
 
 import json
+import logging
 import os
 import random
 from typing import Any
@@ -28,6 +29,8 @@ from typing import Any
 from PIL import Image
 
 from apps.baselines.clip.data.captions import HowToCaptionsDataset
+
+logger = logging.getLogger(__name__)
 
 BABYVIEW_ROOT = os.environ.get("BABYVIEW_ROOT")
 BABYVIEW_TRAIN_JSON = f"{BABYVIEW_ROOT}/train.json" if BABYVIEW_ROOT else None
@@ -76,7 +79,10 @@ class BabyViewCaptionsDataset(HowToCaptionsDataset):
             for frame in frames:
                 try:
                     image = Image.open(self._resolve_image_path(frame)).convert("RGB")
-                except (FileNotFoundError, OSError):
+                except (FileNotFoundError, OSError) as exc:
+                    # Same skip-and-fall-back behaviour as the paper runs, but
+                    # visible: a wrong image_root shows up as a flood of warnings.
+                    logger.warning("BabyView: skipping unreadable frame %s (%s)", frame, exc)
                     continue
                 if self.transform is not None:
                     image = self.transform(image)
