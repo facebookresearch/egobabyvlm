@@ -362,6 +362,7 @@ with the following exceptions:
 | LongTail-Swap | `apps/swapbench/third_party/lt_swap/` | [CC-BY-NC 4.0](apps/swapbench/third_party/lt_swap/LICENSE) |
 | LLaVA-derived code | `apps/baselines/llava/` | Apache License 2.0 (per-file headers) |
 | EgoVLP / Frozen-in-Time-derived code | `apps/baselines/egovlp/model/video_transformer.py` | MIT License; builds on timm, Apache License 2.0 (per-file header) |
+| flamingo-pytorch-derived code | `apps/baselines/flamingo/modeling/{perceiver_resampler,gated_cross_attention}.py` | MIT License (per-file headers) |
 
 Please retain all upstream copyright notices and license headers when
 reusing files from these directories.
