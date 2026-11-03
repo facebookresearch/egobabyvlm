@@ -72,21 +72,20 @@ class FlamingoMultiModalAdapter(nn.Module):
             raise ValueError(msg)
         self.prompt_template = prompt_template
 
-        if isinstance(torch_dtype, str):
-            torch_dtype = getattr(torch, torch_dtype)
+        dtype: torch.dtype = getattr(torch, torch_dtype) if isinstance(torch_dtype, str) else torch_dtype
 
         tokenizer, model, image_processor, context_len = load_pretrained_model(
             model_path,
             device=device,
             vision_tower_path=vision_tower_path,
-            torch_dtype=torch_dtype,
+            torch_dtype=dtype,
         )
         self.tokenizer = tokenizer
         self._model = model
         self._image_processor = image_processor
         self._context_len = context_len
         self._device = next(model.parameters()).device
-        self._dtype = torch_dtype
+        self._dtype = dtype
         self._feature_dim = int(model.config.hidden_size)
 
         logger.info(

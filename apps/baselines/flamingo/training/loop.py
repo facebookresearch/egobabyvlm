@@ -24,7 +24,7 @@ import logging
 import signal
 import time
 from pathlib import Path
-from typing import TYPE_CHECKING, Any
+from typing import TYPE_CHECKING, Any, cast
 
 import torch
 
@@ -151,7 +151,7 @@ class FlamingoTrainer:
         if self.val_loader is None:
             return None
         self.training_module.eval()
-        vlm = unwrap_model(self.model)
+        vlm = cast("FlamingoVLM", unwrap_model(self.model))
         total_loss = 0.0
         total_correct = 0
         total = 0
@@ -267,7 +267,7 @@ class FlamingoTrainer:
                 epoch_metrics = self.train_epoch()
                 logger.info("Epoch %d train: %s", epoch, epoch_metrics)
 
-                gate = unwrap_model(self.model).gate_summary()
+                gate = cast("FlamingoVLM", unwrap_model(self.model)).gate_summary()
                 wandb_log(
                     {**{f"epoch/{k}": v for k, v in epoch_metrics.items()}, **gate, "epoch": epoch},
                     step=self.global_step,

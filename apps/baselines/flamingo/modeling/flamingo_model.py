@@ -33,6 +33,7 @@ from torch import nn
 from apps.baselines.flamingo.constants import DEFAULT_MEDIA_TOKEN, IGNORE_INDEX
 from apps.baselines.flamingo.modeling.aux_heads import FlamingoAuxHeads
 from apps.baselines.flamingo.modeling.decoder import FlamingoGPT2Decoder, build_gpt2_backbone
+from apps.baselines.flamingo.modeling.gated_cross_attention import GatedCrossAttentionBlock
 from apps.baselines.flamingo.modeling.perceiver_resampler import PerceiverResampler
 from apps.baselines.flamingo.modeling.vision_tower import FrozenDINOv2VisionTower
 
@@ -183,7 +184,7 @@ class FlamingoVLM(nn.Module):
         """
         for name, param in self.decoder.named_parameters():
             if not name.startswith("gated_attn_layers"):
-                param.requires_grad_(requires_grad=False)
+                param.requires_grad_(False)  # noqa: FBT003 - torch stub is positional
 
     # ------------------------------------------------------------------ helpers
 
@@ -207,7 +208,7 @@ class FlamingoVLM(nn.Module):
         attn_vals: list[float] = []
         ff_vals: list[float] = []
         for block in self.decoder.gated_attn_layers:
-            if block is None:
+            if not isinstance(block, GatedCrossAttentionBlock):  # None placeholder
                 continue
             a, f = block.gate_values()
             attn_vals.append(a)

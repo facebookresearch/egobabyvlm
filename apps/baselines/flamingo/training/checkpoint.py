@@ -14,7 +14,7 @@ standalone via ``apps.baselines.flamingo.model.builder.load_pretrained_model``.
 from __future__ import annotations
 
 from pathlib import Path  # noqa: TC003 - used at runtime by callers' type hints
-from typing import TYPE_CHECKING, Any
+from typing import TYPE_CHECKING, Any, cast
 
 import torch
 
@@ -52,7 +52,7 @@ def save_checkpoint(
     from omegaconf import DictConfig, OmegaConf
 
     cfg_dict = OmegaConf.to_container(config, resolve=True) if isinstance(config, DictConfig) else config
-    vlm = unwrap_model(model)
+    vlm = cast("FlamingoVLM", unwrap_model(model))
     payload: dict[str, Any] = {
         "model_state_dict": vlm.state_dict(),
         "flamingo_config": config_to_dict(vlm.config),

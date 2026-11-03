@@ -32,6 +32,7 @@ from __future__ import annotations
 
 import logging
 from dataclasses import dataclass
+from typing import cast
 
 import torch
 from torch import nn
@@ -158,21 +159,21 @@ class FlamingoGPT2Decoder(nn.Module):
         self.n_layer = gpt2.config.n_layer
         self.cross_attn_every = cross_attn_every
 
-        self.gated_attn_layers = nn.ModuleList(
-            [
-                GatedCrossAttentionBlock(
-                    dim=self.hidden_size,
-                    dim_head=cross_attn_dim_head,
-                    heads=cross_attn_heads,
-                    only_attend_immediate_media=only_attend_immediate_media,
-                    gate_init=gate_init,
-                    gate_mode=gate_mode,
-                )
-                if (i % cross_attn_every) == 0
-                else None
-                for i in range(self.n_layer)
-            ]
-        )
+        # None placeholders keep list index == decoder layer index.
+        gated_blocks: list[GatedCrossAttentionBlock | None] = [
+            GatedCrossAttentionBlock(
+                dim=self.hidden_size,
+                dim_head=cross_attn_dim_head,
+                heads=cross_attn_heads,
+                only_attend_immediate_media=only_attend_immediate_media,
+                gate_init=gate_init,
+                gate_mode=gate_mode,
+            )
+            if (i % cross_attn_every) == 0
+            else None
+            for i in range(self.n_layer)
+        ]
+        self.gated_attn_layers = nn.ModuleList(cast("list[nn.Module]", gated_blocks))
 
         # Tied LM head (GPT-2 convention).
         self.lm_head = nn.Linear(self.hidden_size, self.wte.num_embeddings, bias=False)

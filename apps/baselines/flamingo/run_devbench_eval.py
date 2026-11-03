@@ -41,7 +41,7 @@ import argparse
 import json
 import logging
 from pathlib import Path
-from typing import TYPE_CHECKING, Any
+from typing import TYPE_CHECKING, Any, cast
 
 import numpy as np
 import torch
@@ -80,7 +80,7 @@ _CHANCE: dict[str, float] = {
 def build_model(model_path: str, model_cfg_path: str, device: str = "cuda") -> FlamingoMultiModalAdapter:
     """Instantiate the FlamingoMultiModalAdapter exactly like the eval module."""
     cfg = OmegaConf.load(model_cfg_path)
-    kwargs = OmegaConf.to_container(cfg.kwargs, resolve=True)
+    kwargs = cast("dict[str, Any]", OmegaConf.to_container(cfg.kwargs, resolve=True))
     kwargs["model_path"] = model_path
     model = instantiate({"_target_": cfg._target_}, **kwargs)
     model.eval()

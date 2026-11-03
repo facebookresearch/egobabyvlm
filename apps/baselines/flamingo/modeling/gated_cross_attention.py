@@ -209,12 +209,12 @@ class GatedCrossAttentionBlock(nn.Module):
             self.attn_gate = nn.Parameter(torch.tensor([init]))
             self.ff_gate = nn.Parameter(torch.tensor([init]))
             if gate_mode == "frozen_open":
-                self.attn_gate.requires_grad_(requires_grad=False)
-                self.ff_gate.requires_grad_(requires_grad=False)
+                self.attn_gate.requires_grad_(False)  # noqa: FBT003 - torch stub is positional
+                self.ff_gate.requires_grad_(False)  # noqa: FBT003
 
     def gate_values(self) -> tuple[float, float]:
         """Return the current ``(tanh(attn_gate), tanh(ff_gate))`` for logging."""
-        if self.gate_mode == "none":
+        if self.attn_gate is None or self.ff_gate is None:  # gate_mode == "none"
             return (1.0, 1.0)
         return (float(self.attn_gate.tanh().item()), float(self.ff_gate.tanh().item()))
 
@@ -228,7 +228,7 @@ class GatedCrossAttentionBlock(nn.Module):
         attn_out = self.attn(x, media, media_locations=media_locations)
         ff_scale: torch.Tensor | float
         attn_scale: torch.Tensor | float
-        if self.gate_mode == "none":
+        if self.attn_gate is None or self.ff_gate is None:  # gate_mode == "none"
             attn_scale = 1.0
             ff_scale = 1.0
         else:

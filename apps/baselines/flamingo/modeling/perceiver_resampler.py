@@ -44,6 +44,8 @@ the resampler's ``latents`` / ``time_pos_emb`` by name.
 
 from __future__ import annotations
 
+from typing import cast
+
 import torch
 from torch import nn
 
@@ -185,7 +187,8 @@ class PerceiverResampler(nn.Module):
         b, t = x.shape[0], x.shape[1]
         latents = self.latents.unsqueeze(0).unsqueeze(0).expand(b, t, -1, -1)  # (B, T, M, D)
 
-        for attn, ff in self.layers:
+        for layer in self.layers:
+            attn, ff = cast("nn.ModuleList", layer)
             latents = attn(x, latents) + latents
             latents = ff(latents) + latents
 
