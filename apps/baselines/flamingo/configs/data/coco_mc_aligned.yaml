@@ -1,0 +1,33 @@
+# Copyright (c) Meta Platforms, Inc. and affiliates.
+# All rights reserved.
+#
+# This source code is licensed under the license found in the
+# LICENSE file in the root directory of this source tree.
+
+# COCO-MC ALIGNED (percent=0): true image-caption pairs. This is the main
+# training condition. Shares the COCO-MC loader with the EgoVLP baseline
+# (apps.baselines.egovlp.data.coco_metaclip).
+# @package data
+
+dataset:
+  _target_: apps.baselines.flamingo.data.build_flamingo_coco_metaclip
+  percent: 0                 # 0 = aligned (true pairs)
+  seed: 42                   # permutation seed (fixed, decoupled from training seed)
+  # Pre-staged MetaCLIP jpegs ({scratch_root}/extracted from
+  # apps.baselines.egovlp.data.stage_metaclip). null = read from the source tars
+  # (slow; fine for smoke tests). Data locations: COCO_MC_* / COCO_IMAGE_DIR env
+  # vars (see apps/baselines/egovlp/README.md).
+  extracted_root: null
+  check_train_size: true     # set false only for tiny subsetted smoke manifests
+  prompt_template: "<image> {text}"
+  max_length: 64
+  media_token: ${model.media_token}
+  on_load_error: skip        # skip + log unreadable images; abort after max_load_failures
+  max_load_failures: 100
+
+batch_size: 32
+val_batch_size: 32
+num_workers: 8
+pin_memory: true
+augment: false
+image_size: 224

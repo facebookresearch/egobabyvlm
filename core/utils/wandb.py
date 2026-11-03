@@ -147,6 +147,12 @@ def init_wandb(  # noqa: PLR0913
 def wandb_log(data: dict[str, Any], *, step: int | None = None, disable_format: bool = False) -> None:
     """Log a dict to wandb on the main process; no-op when wandb is unavailable.
 
+    Also a no-op when no active run exists (``wandb.run is None``), e.g. when
+    ``init_wandb`` was called with ``project=None`` because logging is disabled.
+    This mirrors :func:`finish_wandb`'s ``wandb.run is not None`` guard and lets
+    trainers call ``wandb_log`` unconditionally (the CLIP/LLaVA convention)
+    without crashing with "You must call wandb.init() before wandb.log()".
+
     Args:
         data: Flat dict of metrics.
         step: Optional global step.
@@ -154,7 +160,7 @@ def wandb_log(data: dict[str, Any], *, step: int | None = None, disable_format: 
             ``val_*`` key prefixes to ``train/*`` / ``val/*`` so the
             grouped-metric x-axes set up via ``metric_axes`` apply.
     """
-    if not _is_wandb_available or not is_main_process():
+    if not _is_wandb_available or not is_main_process() or wandb.run is None:
         return
     formatted = (
         data if disable_format else {k.replace("val_", "val/").replace("train_", "train/"): v for k, v in data.items()}

@@ -1,0 +1,22 @@
+# Copyright (c) Meta Platforms, Inc. and affiliates.
+# All rights reserved.
+#
+# This source code is licensed under the license found in the
+# LICENSE file in the root directory of this source tree.
+
+# FlamingoMultiModalAdapter wrapping a trained Flamingo checkpoint
+# (apps/baselines/flamingo). Scoring is the mean caption-token log-likelihood
+# given the image under the LLaVA scoring prompt. Override `kwargs.model_path`
+# for your run: the final-epoch `.pt` (the paper uses epoch_0009.pt), or a run's
+# checkpoint dir (picks latest.pt).
+_target_: "apps.baselines.flamingo.multimodal_feature_extractor.FlamingoMultiModalAdapter"
+name: "flamingo"
+kwargs:
+  model_path: ???
+  # null = the DINOv2 tower recorded in the checkpoint config (each run uses the
+  # tower pretrained on its own training corpus). Set it if that path moved.
+  vision_tower_path: null
+  device: "cuda"
+  torch_dtype: "float32"
+  # The LLaVA scoring prompt ({text} must be last).
+  prompt_template: "<image>\nDescribe this image. {text}"

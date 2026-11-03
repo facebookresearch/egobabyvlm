@@ -70,7 +70,8 @@ apps/
 │   ├── lm_training/      # BERT MLM and GPT-2 from-scratch trainers
 │   ├── clip/             # CLIP+ contrastive trainer (4 modes: contrastive, +MLM, +DINOv2, triple)
 │   ├── llava/            # LLaVA-style generative VLM trainer
-│   └── egovlp/           # EgoVLP (Frozen-in-Time) fine-tuning from the EgoClip checkpoint
+│   ├── egovlp/           # EgoVLP (Frozen-in-Time) fine-tuning from the EgoClip checkpoint
+│   └── flamingo/         # Flamingo-style generative VLM (DINOv2 + Perceiver + gated GPT-2)
 ├── alignment_scoring/    # CLIP / VQA / STS / captioning pipelines for cross-modal alignment scoring
 ├── benchmark_creation/   # Machine-DevBench corpus-grounded benchmark generator
 └── swapbench/            # LongTail-Swap + VP-Swap generators
@@ -140,6 +141,8 @@ and curricula.
 - `apps/baselines/llava/` — LLaVA-style generative VLM trainer.
 - `apps/baselines/egovlp/` — EgoVLP dual encoder fine-tuned from its
   released EgoClip checkpoint (pretrained on Ego4D).
+- `apps/baselines/flamingo/` — Flamingo-style generative VLM on the LLaVA
+  baseline's encoders (frozen DINOv2 + Phase-0 GPT-2).
 - `apps/data_preprocessing/` — video → frames + WhisperX transcripts →
   `(frame, utterance)` manifests.
 
@@ -202,6 +205,7 @@ egobabyvlm-build-clip-manifest            # apps/data_preprocessing/manifests
 egobabyvlm-train-contrastive              # apps/baselines/clip/training
 egobabyvlm-export-text-encoder-to-hf      # apps/baselines/clip/scripts (BERT → HF for lm_eval)
 egobabyvlm-train-egovlp                   # apps/baselines/egovlp/training
+egobabyvlm-train-flamingo                 # apps/baselines/flamingo/training
 egobabyvlm-swapbench-build-word-lists     # apps/swapbench (LongTail-Swap + VP-Swap)
 egobabyvlm-swapbench-lt-swap              # apps/swapbench
 egobabyvlm-swapbench-vp-swap              # apps/swapbench
@@ -298,6 +302,21 @@ SETTING=coco_p50 SEED=42 EGOVLP_CHECKPOINT=/path/to/egovlp.pth \
 
 See [`apps/baselines/egovlp/README.md`](apps/baselines/egovlp/README.md)
 for the checkpoint download, data variables and the paper's 18 runs.
+</details>
+
+<details>
+<summary>Flamingo — DINOv2 + Perceiver + gated cross-attention GPT-2</summary>
+
+```bash
+CONDITION=p0 SEED=42 \
+COCOMC_VISION_TOWER_PATH=/path/to/dinov2/teacher_checkpoint.pth \
+COCOMC_DECODER_INIT_PATH=/path/to/phase0_gpt2 \
+EXTRACTED_ROOT=/path/to/scratch/coco_metaclip/extracted \
+    sbatch --ntasks-per-node=4 --gpus-per-node=4 apps/baselines/flamingo/scripts/train_flamingo.sh
+```
+
+See [`apps/baselines/flamingo/README.md`](apps/baselines/flamingo/README.md)
+for the encoders, paper settings and the log-likelihood evaluation.
 </details>
 
 ### Tests

@@ -1,0 +1,29 @@
+# Copyright (c) Meta Platforms, Inc. and affiliates.
+# All rights reserved.
+#
+# This source code is licensed under the license found in the
+# LICENSE file in the root directory of this source tree.
+
+# COCO-MC SHUFFLED: `percent` of the training captions permuted (default 100 =
+# fully shuffled; the paper also uses 25/50/75 via data.dataset.percent=...).
+# Permutation files use seed 42, shared with the CLIP+ and LLaVA runs.
+# @package data
+
+dataset:
+  _target_: apps.baselines.flamingo.data.build_flamingo_coco_metaclip
+  percent: 100               # 100 = fully shuffled (control)
+  seed: 42
+  extracted_root: null
+  check_train_size: true
+  prompt_template: "<image> {text}"
+  max_length: 64
+  media_token: ${model.media_token}
+  on_load_error: skip
+  max_load_failures: 100
+
+batch_size: 32
+val_batch_size: 32
+num_workers: 8
+pin_memory: true
+augment: false
+image_size: 224
