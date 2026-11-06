@@ -1,0 +1,15 @@
+# Copyright (c) Meta Platforms, Inc. and affiliates.
+# All rights reserved.
+#
+# This source code is licensed under the license found in the
+# LICENSE file in the root directory of this source tree.
+
+# Save every epoch, keep the last 3 epoch_*.pt. best.pt = min validation loss;
+# latest.pt / interrupted.pt are always kept. The paper evaluates the final
+# epoch (epoch_0009.pt == latest.pt after a full run).
+# @package checkpoint
+
+save_dir: ${oc.env:HOME}/egobabyvlm_experiments/flamingo/${name}/checkpoints
+save_every: 1
+keep_last: 3
+resume_from: null

@@ -1,0 +1,15 @@
+# Copyright (c) Meta Platforms, Inc. and affiliates.
+# All rights reserved.
+#
+# This source code is licensed under the license found in the
+# LICENSE file in the root directory of this source tree.
+
+# Paper objective: teacher-forced caption log-likelihood only. All auxiliary
+# terms off.
+# @package objective
+
+caption_loss_weight: 1.0
+hard_negative_loss_weight: 0.0
+hard_negative_margin: 1.0
+itm_loss_weight: 0.0
+contrastive_loss_weight: 0.0

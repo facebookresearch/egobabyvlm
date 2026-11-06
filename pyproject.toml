@@ -24,6 +24,7 @@ alignment-create-shuffled-manifest = "apps.alignment_scoring.scripts.create_shuf
 egobabyvlm-train-contrastive = "apps.baselines.clip.training.train:main"
 egobabyvlm-export-text-encoder-to-hf = "apps.baselines.clip.scripts.export_text_encoder_to_hf:main"
 egobabyvlm-train-egovlp = "apps.baselines.egovlp.training.train:main"
+egobabyvlm-train-flamingo = "apps.baselines.flamingo.training.train:main"
 egobabyvlm-extract-frames = "apps.data_preprocessing.frames.extract_frames:main"
 egobabyvlm-transcribe-whisperx = "apps.data_preprocessing.transcription.whisperx_transcribe:main"
 egobabyvlm-filter-vtc = "apps.data_preprocessing.transcription.filter_with_vtc:main"

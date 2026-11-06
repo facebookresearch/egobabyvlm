@@ -1,0 +1,53 @@
+# Copyright (c) Meta Platforms, Inc. and affiliates.
+# All rights reserved.
+#
+# This source code is licensed under the license found in the
+# LICENSE file in the root directory of this source tree.
+
+# Flamingo architecture used in the paper: frozen DINOv2 ViT-B/14 ->
+# Perceiver Resampler (64 latents, depth 2) -> GPT-2 Small with a gated
+# cross-attention block before every layer, gates pinned open.
+# @package model
+
+# Tokenizer / media wiring. With decoder_init=phase0_ckpt the tokenizer is
+# loaded from decoder_init_path (tokenizer_name only applies to scratch/hf_gpt2).
+tokenizer_name: gpt2
+media_token: "<image>"
+
+# Frozen DINOv2 ViT-B/14 teacher checkpoint pretrained on the training corpus
+# (apps/baselines/dinov2). The run's config.yaml is resolved from the checkpoint
+# dir. 256 patch tokens (CLS dropped) feed the Perceiver.
+vision_encoder: dinov2_vitb14   # torch.hub fallback only; incompatible with custom checkpoints
+vision_tower_path: ???
+freeze_vision: true
+
+# Perceiver Resampler
+perceiver_num_latents: 64
+perceiver_depth: 2
+perceiver_heads: 8
+perceiver_dim_head: 64
+perceiver_num_time_embeds: 4
+perceiver_ff_mult: 4
+
+# Gated cross-attention
+cross_attn_every: 1            # a gated block before every GPT-2 layer
+cross_attn_heads: 12
+cross_attn_dim_head: 64
+only_attend_immediate_media: true
+gate_init: 0.0                 # used only by gate_mode=learnable
+# learnable | frozen_open | none. frozen_open pins tanh(gate) at tanh(3) ~= 0.995
+# and freezes it.
+gate_mode: frozen_open
+
+# Decoder: Phase-0 GPT-2 Small (apps/baselines/lm_training) pretrained on the
+# training corpus; trained (not frozen) during Flamingo training.
+decoder_init: phase0_ckpt
+decoder_init_path: ???
+hidden_size: 768
+n_layer: 12
+n_head: 12
+max_position_embeddings: 1024
+
+# Aux heads (only built when an objective aux weight > 0; all 0 in the paper)
+aux_proj_dim: 256
+contrastive_init_temp: 0.07

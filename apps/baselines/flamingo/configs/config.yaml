@@ -1,0 +1,26 @@
+# Copyright (c) Meta Platforms, Inc. and affiliates.
+# All rights reserved.
+#
+# This source code is licensed under the license found in the
+# LICENSE file in the root directory of this source tree.
+
+# Default composition for the Flamingo trainer (defaults = paper settings).
+# Override on the CLI, e.g.:
+#   python -m apps.baselines.flamingo.training.train \
+#     name=flamingo_cocomc_p0_seed42 seed=42 \
+#     data=coco_mc_aligned \
+#     model.vision_tower_path=/path/to/dinov2/teacher_checkpoint.pth \
+#     model.decoder_init_path=/path/to/phase0_gpt2 \
+#     data.dataset.extracted_root=/path/to/scratch/coco_metaclip/extracted
+
+defaults:
+  - base_flamingo_trainer
+  - model: flamingo_default
+  - data: coco_mc_aligned
+  - optim: adamw_default
+  - objective: caption_ll
+  - checkpoint: default
+  - wandb: default
+  - _self_
+
+name: ???
