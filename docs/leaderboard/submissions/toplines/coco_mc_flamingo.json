@@ -1,0 +1,14 @@
+{
+  "id": "coco_mc_flamingo",
+  "model": "Flamingo",
+  "team": "Meta FAIR",
+  "architecture": "cross-attention",
+  "training_data": "COCO-MC",
+  "category": "topline",
+  "n_seeds": 3,
+  "multimodal": {
+    "lexical": "58.4 ± 2.4",
+    "grammatical": "59.9 ± 1.9",
+    "overall": "59.2 ± 1.0"
+  }
+}

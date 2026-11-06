@@ -1,0 +1,14 @@
+{
+  "id": "coco_mc_egovlp",
+  "model": "EgoVLP (Ego4D-pretrained)",
+  "team": "Meta FAIR",
+  "architecture": "contrastive",
+  "training_data": "COCO-MC",
+  "category": "topline",
+  "n_seeds": 3,
+  "multimodal": {
+    "lexical": "75.1 ± 0.6",
+    "grammatical": "66.2 ± 1.5",
+    "overall": "70.6 ± 0.4"
+  }
+}
